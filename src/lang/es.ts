@@ -671,59 +671,59 @@ export const es = {
     wildcards: {
           "wildcard-stop-loss": {
                 "name": "Stop Loss",
-                "description": "Limita la pérdida de esta ronda."
+                "description": "Limita las pérdidas de esta ronda si Iñigo falla: como máximo perderá 5 puntos y beberá 1 trago."
           },
           "wildcard-banco-central": {
                 "name": "Banco Central",
-                "description": "Inyecta confianza inmediata en el mercado."
+                "description": "El Banco Central inyecta liquidez en Iñigo Capital S.A.: suma 10 puntos inmediatamente y no añade tragos."
           },
           "wildcard-rally-alcista": {
                 "name": "Rally alcista",
-                "description": "Durante dos rondas, los aciertos suman puntos adicionales."
+                "description": "Activa Mercado alcista durante 2 rondas. Mientras esté activo, los aciertos suman puntos adicionales según el nivel del efecto."
           },
           "wildcard-reset-mercado": {
                 "name": "Reset de Mercado",
-                "description": "Elimina catalizadores y efectos acumulados sin tocar la cotización."
+                "description": "Elimina todos los catalizadores acumulados y efectos activos. No modifica la puntuación, pero Iñigo bebe 3 tragos por costes regulatorios."
           },
           "wildcard-liquidez-limitada": {
                 "name": "Liquidez limitada",
-                "description": "Bloquea catalizadores defensivos durante dos rondas."
+                "description": "Activa Liquidez limitada durante 2 rondas: Iñigo no puede usar catalizadores defensivos. No altera puntos directamente."
           },
           "wildcard-analista-externo": {
                 "name": "Analista externo",
-                "description": "Otra persona debe responder la pregunta por Iñigo. Puede ser alguien del grupo o un desconocido. No puede usarse en preguntas personales."
+                "description": "Otra persona debe responder por Iñigo. Si acierta, Iñigo recibe los puntos de la ronda. Si falla, Iñigo pierde los puntos de la ronda y bebe 1 trago adicional. No puede usarse en preguntas personales."
           },
           "wildcard-profit-taking": {
                 "name": "Recogida de beneficios",
-                "description": "Si Iñigo acierta la pregunta, puede mandar beber 3 tragos a otra persona porque el mercado reparte beneficios."
+                "description": "Si Iñigo acierta la pregunta, mantiene los puntos ganados en la ronda y puede mandar beber 3 tragos a otra persona."
           },
           "wildcard-seguro-de-credito": {
                 "name": "Seguro de crédito",
-                "description": "Si Iñigo falla, otra persona del grupo bebe por él. Iñigo mantiene la pérdida de puntos, pero evita los tragos base."
+                "description": "Si Iñigo falla, mantiene la pérdida de puntos de la ronda, pero otra persona del grupo bebe por él los tragos base de la penalización."
           },
           "wildcard-prima-de-riesgo": {
                 "name": "Prima de riesgo",
-                "description": "Aumenta el castigo por fallar. Durante tres rondas, cada fallo añade 1 trago extra."
+                "description": "Activa Prima de riesgo durante 3 rondas. Cada fallo añade 1 trago extra. No altera puntos directamente."
           },
           "wildcard-flash-crash": {
                 "name": "Flash crash",
-                "description": "Caída repentina de mercado. Iñigo pierde puntos inmediatamente."
+                "description": "Caída repentina de mercado: Iñigo pierde 12 puntos inmediatamente y bebe 1 trago."
           },
           "wildcard-short-squeeze": {
                 "name": "Short squeeze",
-                "description": "La ronda se vuelve explosiva: si Iñigo acierta, suma muchos más puntos; si falla, la caída también es mayor."
+                "description": "Activa Volatilidad durante 1 ronda. La pregunta se vuelve más explosiva: los aciertos suman más puntos y los fallos restan más puntos según el nivel del efecto."
           },
           "wildcard-ampliacion-capital": {
                 "name": "Ampliación de capital",
-                "description": "Iñigo puede pedir ayuda a dos personas del grupo antes de responder. Si acierta, recibe la puntuación normal. Si falla, todos los que ayudaron beben 1 trago."
+                "description": "Iñigo puede pedir ayuda a 2 personas del grupo antes de responder. Si acierta, recibe los puntos normales de la ronda. Si falla, pierde los puntos normales de la ronda y los 2 ayudantes beben 1 trago cada uno."
           },
           "wildcard-dividendo-extraordinario": {
                 "name": "Dividendo extraordinario",
-                "description": "Si Iñigo acierta esta ronda, gana puntos adicionales. Si falla, no tiene efecto."
+                "description": "Si Iñigo acierta esta ronda, suma 8 puntos adicionales además de los puntos normales de la pregunta. Si falla, no tiene efecto adicional."
           },
           "wildcard-opinion-segunda-firma": {
                 "name": "Segunda firma",
-                "description": "Iñigo puede responder y después pedir una segunda opinión a alguien del grupo. La respuesta final será la que decida Iñigo."
+                "description": "Iñigo puede responder y después pedir una segunda opinión a alguien del grupo. La respuesta final la decide Iñigo. No altera puntos directamente."
           }
     },
     effectLabels: {
