@@ -30,7 +30,7 @@ function getBaseScore(round: Round, result: RoundResult): ScoreResult {
   };
 }
 
-function applyEffect(result: ScoreResult, effect: GameEffect, roundResult: RoundResult): ScoreResult {
+function applyScoringEffect(result: ScoreResult, effect: GameEffect, round: Round, roundResult: RoundResult): ScoreResult {
   const next = { ...result, appliedEffectLabels: [...result.appliedEffectLabels] };
 
   if (effect.type === "RISK_PREMIUM" && roundResult === "FAILURE") {
@@ -62,8 +62,47 @@ function applyEffect(result: ScoreResult, effect: GameEffect, roundResult: Round
     next.appliedEffectLabels.push(effect.label);
   }
 
+  if (effect.type === "ADD_SCORE_ON_SUCCESS" && roundResult === "SUCCESS") {
+    next.scoreDelta += effect.extraScore ?? 0;
+    next.appliedEffectLabels.push(effect.label);
+  }
+
+  if (effect.type === "TRANSFER_DRINKS_ON_FAILURE" && roundResult === "FAILURE") {
+    let transferredDrinks = 0;
+
+    if (effect.transferBaseDrinks) {
+      transferredDrinks += Math.min(round.failureDrinks, next.drinks);
+    }
+
+    if (effect.transferExtraDrinks) {
+      transferredDrinks = next.drinks;
+    }
+
+    next.drinks = Math.max(0, next.drinks - transferredDrinks);
+    next.appliedEffectLabels.push(effect.label);
+  }
+
+  if (effect.type === "ROUND_RULE") {
+    if (roundResult === "SUCCESS" && effect.onSuccessDrinks) {
+      next.drinks += effect.onSuccessDrinks;
+      next.appliedEffectLabels.push(effect.label);
+    }
+
+    if (roundResult === "FAILURE" && effect.onFailureDrinks) {
+      next.drinks += effect.onFailureDrinks;
+      next.appliedEffectLabels.push(effect.label);
+    }
+  }
+
+  return next;
+}
+
+function applyLossLimit(result: ScoreResult, effect: GameEffect, roundResult: RoundResult): ScoreResult {
+  const next = { ...result, appliedEffectLabels: [...result.appliedEffectLabels] };
+
   if (effect.type === "LOSS_LIMIT" && roundResult === "FAILURE") {
-    next.scoreDelta = Math.max(next.scoreDelta, -(effect.maxScorePenalty ?? 5));
+    const limitedScoreDelta = Math.max(next.scoreDelta, -(effect.maxScorePenalty ?? 5));
+    next.scoreDelta = Object.is(limitedScoreDelta, -0) ? 0 : limitedScoreDelta;
     next.drinks = Math.min(next.drinks, effect.maxDrinks ?? 1);
     next.appliedEffectLabels.push(effect.label);
   }
@@ -77,21 +116,35 @@ export function calculateRoundResultScore(
   roundResult: RoundResult
 ): ScoreResult {
   const baseResult = getBaseScore(round, roundResult);
-  const withEffects = state.activeEffects.reduce(
-    (result, effect) => applyEffect(result, effect, roundResult),
+  const lossLimitEffects = state.activeEffects.filter((effect) => effect.type === "LOSS_LIMIT");
+  const scoringEffects = state.activeEffects.filter((effect) => effect.type !== "LOSS_LIMIT");
+  const withScoringEffects = scoringEffects.reduce(
+    (result, effect) => applyScoringEffect(result, effect, round, roundResult),
     baseResult
+  );
+
+  const withCriticalZone = roundResult === "FAILURE" && state.marketStatus === "CRITICAL_ZONE"
+    ? {
+        scoreDelta: withScoringEffects.scoreDelta - CRITICAL_ZONE_EXTRA_SCORE_PENALTY,
+        drinks: withScoringEffects.drinks + CRITICAL_ZONE_EXTRA_DRINKS,
+        appliedEffectLabels: [...withScoringEffects.appliedEffectLabels, copy.messages.criticalZoneSurcharge]
+      }
+    : withScoringEffects;
+
+  const withLossLimits = lossLimitEffects.reduce(
+    (result, effect) => applyLossLimit(result, effect, roundResult),
+    withCriticalZone
   );
 
   if (roundResult === "FAILURE" && state.marketStatus === "CRITICAL_ZONE") {
     return {
-      scoreDelta: withEffects.scoreDelta - CRITICAL_ZONE_EXTRA_SCORE_PENALTY,
-      drinks: Math.min(withEffects.drinks + CRITICAL_ZONE_EXTRA_DRINKS, ORDINARY_MAX_DRINKS),
-      appliedEffectLabels: [...withEffects.appliedEffectLabels, copy.messages.criticalZoneSurcharge]
+      ...withLossLimits,
+      drinks: Math.min(withLossLimits.drinks, ORDINARY_MAX_DRINKS)
     };
   }
 
   return {
-    ...withEffects,
-    drinks: Math.min(withEffects.drinks, ORDINARY_MAX_DRINKS)
+    ...withLossLimits,
+    drinks: Math.min(withLossLimits.drinks, ORDINARY_MAX_DRINKS)
   };
 }

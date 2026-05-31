@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { copy } from "../../lang";
 
@@ -9,7 +9,9 @@ export function MarketHeader() {
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/icon.avif" alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-broker-border bg-broker-surface text-broker-green">
+              <FontAwesomeIcon icon={faBuildingColumns} className="h-4 w-4" aria-hidden="true" />
+            </span>
             <span className="min-w-0">
               <span className="block truncate text-sm font-black uppercase tracking-[0.08em] text-broker-greenDark">
                 {copy.app.gameTitle}

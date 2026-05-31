@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullseye, faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
+import { lazy, Suspense } from "react";
 import { getMarketStatusLabel, getNextThreshold } from "../../domain/marketStatusEngine";
 import type { AppConfig, GameState } from "../../domain/types";
-import { MiniMarketChart } from "./MiniMarketChart";
 import { ScoreProgress } from "./ScoreProgress";
 import { copy } from "../../lang";
+
+const MiniMarketChart = lazy(() => import("./MiniMarketChart").then((module) => ({ default: module.MiniMarketChart })));
 
 interface QuoteTickerProps {
   config: AppConfig;
@@ -46,12 +48,14 @@ export function QuoteTicker({ config, state }: QuoteTickerProps) {
       </div>
 
       <div className="mt-5">
-        <MiniMarketChart
-          history={state.scoreHistory}
-          timeline={state.scoreTimeline}
-          showExtremes
-          showExtremeSummary={false}
-        />
+        <Suspense fallback={<div className="h-48 w-full rounded-md bg-broker-bg" role="presentation" />}>
+          <MiniMarketChart
+            history={state.scoreHistory}
+            timeline={state.scoreTimeline}
+            showExtremes
+            showExtremeSummary={false}
+          />
+        </Suspense>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">

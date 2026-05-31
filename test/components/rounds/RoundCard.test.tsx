@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { RoundCard } from "./RoundCard";
-import { sampleRound } from "../../test/fixtures";
+import { RoundCard } from "../../../src/components/rounds/RoundCard";
+import { sampleRound } from "../../fixtures";
 
 describe("RoundCard", () => {
   it("keeps Rocio audit answers hidden until the reveal action", async () => {

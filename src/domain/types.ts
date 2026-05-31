@@ -34,7 +34,10 @@ export type ActiveEffectType =
   | "BULL_MARKET"
   | "LEVERAGE"
   | "LIMITED_LIQUIDITY"
-  | "LOSS_LIMIT";
+  | "LOSS_LIMIT"
+  | "ADD_SCORE_ON_SUCCESS"
+  | "TRANSFER_DRINKS_ON_FAILURE"
+  | "ROUND_RULE";
 
 export type GameResult = "MERGER_APPROVED" | "MANUAL_END" | "IN_PROGRESS";
 
@@ -58,6 +61,47 @@ export type WildcardEffect =
   | {
       kind: "MARKET_RESET";
       drinks?: number;
+    }
+  | {
+      kind: "ADD_SCORE_ON_SUCCESS";
+      extraScore: number;
+    }
+  | {
+      kind: "TRANSFER_DRINKS_ON_FAILURE";
+      target: "GROUP_MEMBER" | "OTHER_PLAYER";
+      transferBaseDrinks: boolean;
+      transferExtraDrinks: boolean;
+      scorePenaltyStillApplies: boolean;
+    }
+  | {
+      kind: "ON_SUCCESS_DRINK_ASSIGNMENT";
+      target: "GROUP_MEMBER" | "OTHER_PLAYER";
+      drinks: number;
+      requiresSuccess: boolean;
+    }
+  | {
+      kind: "DELEGATE_ANSWER";
+      delegateCanBe: Array<"GROUP_MEMBER" | "STRANGER">;
+      forbiddenRoundTypes?: RoundType[];
+      resultAppliesToGroom: boolean;
+      onDelegateFailure?: {
+        extraDrinks: number;
+      };
+    }
+  | {
+      kind: "GROUP_HELP";
+      helperCount: number;
+      forbiddenRoundTypes?: RoundType[];
+      resultAppliesToGroom: boolean;
+      onFailure?: {
+        helperDrinks: number;
+      };
+    }
+  | {
+      kind: "SECOND_OPINION";
+      delegateCanBe: Array<"GROUP_MEMBER" | "STRANGER">;
+      forbiddenRoundTypes?: RoundType[];
+      resultAppliesToGroom: boolean;
     };
 
 export interface AppConfig {
@@ -112,6 +156,11 @@ export interface GameEffect {
   sourceWildcardId?: string;
   maxScorePenalty?: number;
   maxDrinks?: number;
+  extraScore?: number;
+  onSuccessDrinks?: number;
+  onFailureDrinks?: number;
+  transferBaseDrinks?: boolean;
+  transferExtraDrinks?: boolean;
 }
 
 export interface ScoreTimelinePoint {

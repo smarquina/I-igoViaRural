@@ -8,7 +8,8 @@ export const es = {
   },
   app: {
     gameTitle: "Despedida ViaRural Broker",
-    openSettings: "Abrir configuración"
+    openSettings: "Abrir configuración",
+    loadingMarket: "Cargando mercado..."
   },
   onboarding: {
     steps: [
@@ -79,9 +80,11 @@ export const es = {
   },
   wildcards: {
     positiveCard: "Carta positiva",
+    negativeCard: "Carta negativa",
     activeCatalyst: "Catalizador activo",
     keep: "Guardarla",
     useNow: "Activarlo ahora",
+    dismiss: "Entendido",
     accumulated: "Catalizadores acumulados",
     inPortfolio: (count: number) => `${count} en cartera`,
     catalystDrawn: "catalizador robado",
@@ -689,6 +692,38 @@ export const es = {
           "wildcard-analista-externo": {
                 "name": "Analista externo",
                 "description": "Otra persona debe responder la pregunta por Iñigo. Puede ser alguien del grupo o un desconocido. No puede usarse en preguntas personales."
+          },
+          "wildcard-profit-taking": {
+                "name": "Recogida de beneficios",
+                "description": "Si Iñigo acierta la pregunta, puede mandar beber 3 tragos a otra persona porque el mercado reparte beneficios."
+          },
+          "wildcard-seguro-de-credito": {
+                "name": "Seguro de crédito",
+                "description": "Si Iñigo falla, otra persona del grupo bebe por él. Iñigo mantiene la pérdida de puntos, pero evita los tragos base."
+          },
+          "wildcard-prima-de-riesgo": {
+                "name": "Prima de riesgo",
+                "description": "Aumenta el castigo por fallar. Durante tres rondas, cada fallo añade 1 trago extra."
+          },
+          "wildcard-flash-crash": {
+                "name": "Flash crash",
+                "description": "Caída repentina de mercado. Iñigo pierde puntos inmediatamente."
+          },
+          "wildcard-short-squeeze": {
+                "name": "Short squeeze",
+                "description": "La ronda se vuelve explosiva: si Iñigo acierta, suma muchos más puntos; si falla, la caída también es mayor."
+          },
+          "wildcard-ampliacion-capital": {
+                "name": "Ampliación de capital",
+                "description": "Iñigo puede pedir ayuda a dos personas del grupo antes de responder. Si acierta, recibe la puntuación normal. Si falla, todos los que ayudaron beben 1 trago."
+          },
+          "wildcard-dividendo-extraordinario": {
+                "name": "Dividendo extraordinario",
+                "description": "Si Iñigo acierta esta ronda, gana puntos adicionales. Si falla, no tiene efecto."
+          },
+          "wildcard-opinion-segunda-firma": {
+                "name": "Segunda firma",
+                "description": "Iñigo puede responder y después pedir una segunda opinión a alguien del grupo. La respuesta final será la que decida Iñigo."
           }
     },
     effectLabels: {

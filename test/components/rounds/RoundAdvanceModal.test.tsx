@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { RoundAdvanceModal } from "./RoundAdvanceModal";
-import { sampleRound } from "../../test/fixtures";
+import { RoundAdvanceModal } from "../../../src/components/rounds/RoundAdvanceModal";
+import { sampleRound } from "../../fixtures";
 
 describe("RoundAdvanceModal", () => {
   it("shows the next round number and question type", () => {

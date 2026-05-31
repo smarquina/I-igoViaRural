@@ -1,5 +1,5 @@
-import { calculateMarketStatus } from "../domain/marketStatusEngine";
-import type { AppConfig, GameState, Round, Wildcard } from "../domain/types";
+import { calculateMarketStatus } from "../../src/domain/marketStatusEngine";
+import type { AppConfig, GameState, Round, Wildcard } from "../../src/domain/types";
 
 export const sampleConfig: AppConfig = {
   gameTitle: "Despedida ViaRural Broker",
@@ -40,7 +40,7 @@ export const sampleWildcard: Wildcard = {
   description: "Limita la pérdida de esta ronda.",
   effect: {
     kind: "LIMIT_ROUND_LOSS",
-    maxScorePenalty: 5,
+    maxScorePenalty: 0,
     maxDrinks: 1
   },
   isImmediate: false,

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { QuoteTicker } from "./QuoteTicker";
-import { createSampleState, sampleConfig } from "../../test/fixtures";
+import { QuoteTicker } from "../../../src/components/market/QuoteTicker";
+import { createSampleState, sampleConfig } from "../../fixtures";
 
 describe("QuoteTicker", () => {
   it("renders the current score, session extremes, market status and configured thresholds", () => {

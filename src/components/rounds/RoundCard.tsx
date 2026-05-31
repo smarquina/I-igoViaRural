@@ -49,27 +49,27 @@ export function RoundCard({ round, roundNumber, phase }: RoundCardProps) {
         ) : null}
       </div>
 
-      <dl className="mt-5 grid grid-cols-3 gap-2 text-center text-xs">
-        <div className="rounded-md bg-broker-bg p-2">
-          <dt className="flex items-center justify-center gap-1 text-broker-muted">
+      <dl className="mt-4 grid grid-cols-3 gap-1.5 text-[11px]">
+        <div className="flex min-w-0 items-center justify-center gap-1 rounded bg-broker-bg px-1.5 py-1">
+          <dt className="flex min-w-0 items-center gap-1 text-broker-muted">
             <FontAwesomeIcon icon={faPlus} className="h-3 w-3" aria-hidden="true" />
-            {copy.rounds.success}
+            <span className="truncate">{copy.rounds.success}</span>
           </dt>
-          <dd className="font-black text-broker-bullish">+{round.successScore}</dd>
+          <dd className="shrink-0 font-black text-broker-bullish">+{round.successScore}</dd>
         </div>
-        <div className="rounded-md bg-broker-bg p-2">
-          <dt className="flex items-center justify-center gap-1 text-broker-muted">
+        <div className="flex min-w-0 items-center justify-center gap-1 rounded bg-broker-bg px-1.5 py-1">
+          <dt className="flex min-w-0 items-center gap-1 text-broker-muted">
             <FontAwesomeIcon icon={faPercent} className="h-3 w-3" aria-hidden="true" />
-            {copy.rounds.partial}
+            <span className="truncate">{copy.rounds.partial}</span>
           </dt>
-          <dd className="font-black text-broker-warning">{round.allowsPartial ? `+${round.partialSuccessScore ?? 0}` : copy.common.no}</dd>
+          <dd className="shrink-0 font-black text-broker-warning">{round.allowsPartial ? `+${round.partialSuccessScore ?? 0}` : copy.common.no}</dd>
         </div>
-        <div className="rounded-md bg-broker-bg p-2">
-          <dt className="flex items-center justify-center gap-1 text-broker-muted">
+        <div className="flex min-w-0 items-center justify-center gap-1 rounded bg-broker-bg px-1.5 py-1">
+          <dt className="flex min-w-0 items-center gap-1 text-broker-muted">
             <FontAwesomeIcon icon={faMinus} className="h-3 w-3" aria-hidden="true" />
-            {copy.rounds.failure}
+            <span className="truncate">{copy.rounds.failure}</span>
           </dt>
-          <dd className="font-black text-broker-bearish">-{round.failureScorePenalty}</dd>
+          <dd className="shrink-0 font-black text-broker-bearish">-{round.failureScorePenalty}</dd>
         </div>
       </dl>
 

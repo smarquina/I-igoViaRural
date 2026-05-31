@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { GameProvider } from "../app/GameContext";
-import { STORAGE_KEYS } from "../domain/constants";
-import { MergerTargetSettingsPage } from "./MergerTargetSettingsPage";
+import { GameProvider } from "../../src/app/GameContext";
+import { STORAGE_KEYS } from "../../src/domain/constants";
+import { MergerTargetSettingsPage } from "../../src/pages/MergerTargetSettingsPage";
 
 function renderMergerTargetSettings() {
   render(

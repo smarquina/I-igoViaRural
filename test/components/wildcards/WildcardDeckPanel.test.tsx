@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
-import { WildcardDeckPanel } from "./WildcardDeckPanel";
-import { createSampleState, sampleWildcard } from "../../test/fixtures";
+import { WildcardDeckPanel } from "../../../src/components/wildcards/WildcardDeckPanel";
+import { createSampleState, sampleWildcard } from "../../fixtures";
 
 describe("WildcardDeckPanel", () => {
   it("disables wildcard usage after one wildcard has already been used this round", () => {

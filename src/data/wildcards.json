@@ -1,11 +1,13 @@
 [
   {
     "id": "wildcard-stop-loss",
+    "name": "Stop Loss",
     "type": "GOOD",
     "timing": "BEFORE_ANSWER",
+    "description": "Limita las pérdidas de esta ronda si Iñigo falla.",
     "effect": {
       "kind": "LIMIT_ROUND_LOSS",
-      "maxScorePenalty": 5,
+      "maxScorePenalty": 0,
       "maxDrinks": 1
     },
     "isImmediate": false,
@@ -14,8 +16,10 @@
   },
   {
     "id": "wildcard-banco-central",
+    "name": "Banco Central",
     "type": "GOOD",
     "timing": "BEFORE_ANSWER",
+    "description": "El Banco Central inyecta liquidez en Iñigo Capital S.A. y sube su cotización.",
     "effect": {
       "kind": "ADJUST_SCORE",
       "scoreDelta": 10,
@@ -27,13 +31,16 @@
   },
   {
     "id": "wildcard-rally-alcista",
+    "name": "Rally alcista",
     "type": "SPECIAL",
     "timing": "BEFORE_ANSWER",
+    "description": "Durante dos rondas, los aciertos suman puntos adicionales.",
     "effect": {
       "kind": "ADD_EFFECT",
       "effect": {
         "id": "effect-bull-market",
         "type": "BULL_MARKET",
+        "label": "Mercado alcista",
         "level": 2,
         "remainingRounds": 2
       }
@@ -44,8 +51,10 @@
   },
   {
     "id": "wildcard-reset-mercado",
+    "name": "Reset de Mercado",
     "type": "MIXED",
     "timing": "BEFORE_ANSWER",
+    "description": "Elimina todos los catalizadores acumulados y efectos activos, pero no modifica la puntuación.",
     "effect": {
       "kind": "MARKET_RESET",
       "drinks": 3
@@ -56,13 +65,16 @@
   },
   {
     "id": "wildcard-liquidez-limitada",
+    "name": "Liquidez limitada",
     "type": "BAD",
     "timing": "BEFORE_ANSWER",
+    "description": "Durante dos rondas, Iñigo no puede usar catalizadores defensivos.",
     "effect": {
       "kind": "ADD_EFFECT",
       "effect": {
         "id": "effect-limited-liquidity",
         "type": "LIMITED_LIQUIDITY",
+        "label": "Liquidez limitada",
         "remainingRounds": 2
       }
     },
@@ -72,8 +84,10 @@
   },
   {
     "id": "wildcard-analista-externo",
+    "name": "Analista externo",
     "type": "MIXED",
     "timing": "BEFORE_ANSWER",
+    "description": "Otra persona debe responder la pregunta por Iñigo. Puede ser alguien del grupo o un desconocido. No puede usarse en preguntas personales.",
     "effect": {
       "kind": "DELEGATE_ANSWER",
       "delegateCanBe": [
@@ -94,5 +108,149 @@
     "isImmediate": false,
     "isAccumulated": true,
     "isDefensive": false
+  },
+  {
+    "id": "wildcard-profit-taking",
+    "name": "Recogida de beneficios",
+    "type": "GOOD",
+    "timing": "ON_SUCCESS",
+    "description": "Si Iñigo acierta la pregunta, puede mandar beber 3 tragos a otra persona porque el mercado reparte beneficios.",
+    "effect": {
+      "kind": "ON_SUCCESS_DRINK_ASSIGNMENT",
+      "target": "OTHER_PLAYER",
+      "drinks": 3,
+      "requiresSuccess": true
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
+  },
+  {
+    "id": "wildcard-seguro-de-credito",
+    "name": "Seguro de crédito",
+    "type": "GOOD",
+    "timing": "ON_FAILURE",
+    "description": "Si Iñigo falla, otra persona del grupo bebe por él. Iñigo mantiene la pérdida de puntos, pero evita los tragos base.",
+    "effect": {
+      "kind": "TRANSFER_DRINKS_ON_FAILURE",
+      "target": "GROUP_MEMBER",
+      "transferBaseDrinks": true,
+      "transferExtraDrinks": false,
+      "scorePenaltyStillApplies": true
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": true
+  },
+  {
+    "id": "wildcard-prima-de-riesgo",
+    "name": "Prima de riesgo",
+    "type": "BAD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Aumenta el castigo por fallar. Durante tres rondas, cada fallo añade 1 trago extra.",
+    "effect": {
+      "kind": "ADD_EFFECT",
+      "effect": {
+        "id": "effect-risk-premium",
+        "type": "RISK_PREMIUM",
+        "label": "Prima de riesgo",
+        "level": 1,
+        "remainingRounds": 3
+      }
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
+  },
+  {
+    "id": "wildcard-flash-crash",
+    "name": "Flash crash",
+    "type": "BAD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Caída repentina de mercado. Iñigo pierde puntos inmediatamente.",
+    "effect": {
+      "kind": "ADJUST_SCORE",
+      "scoreDelta": -12,
+      "drinks": 1
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
+  },
+  {
+    "id": "wildcard-short-squeeze",
+    "name": "Short squeeze",
+    "type": "SPECIAL",
+    "timing": "BEFORE_ANSWER",
+    "description": "La ronda se vuelve explosiva: si Iñigo acierta, suma muchos más puntos; si falla, la caída también es mayor.",
+    "effect": {
+      "kind": "ADD_EFFECT",
+      "effect": {
+        "id": "effect-short-squeeze",
+        "type": "VOLATILITY",
+        "label": "Short squeeze",
+        "level": 2,
+        "remainingRounds": 1
+      }
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
+  },
+  {
+    "id": "wildcard-ampliacion-capital",
+    "name": "Ampliación de capital",
+    "type": "GOOD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Iñigo puede pedir ayuda a dos personas del grupo antes de responder. Si acierta, recibe la puntuación normal. Si falla, todos los que ayudaron beben 1 trago.",
+    "effect": {
+      "kind": "GROUP_HELP",
+      "helperCount": 2,
+      "forbiddenRoundTypes": [
+        "INTERNAL_AUDIT"
+      ],
+      "resultAppliesToGroom": true,
+      "onFailure": {
+        "helperDrinks": 1
+      }
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": true
+  },
+  {
+    "id": "wildcard-dividendo-extraordinario",
+    "name": "Dividendo extraordinario",
+    "type": "GOOD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Si Iñigo acierta esta ronda, gana puntos adicionales. Si falla, no tiene efecto.",
+    "effect": {
+      "kind": "ADD_SCORE_ON_SUCCESS",
+      "extraScore": 8
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
+  },
+  {
+    "id": "wildcard-opinion-segunda-firma",
+    "name": "Segunda firma",
+    "type": "GOOD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Iñigo puede responder y después pedir una segunda opinión a alguien del grupo. La respuesta final será la que decida Iñigo.",
+    "effect": {
+      "kind": "SECOND_OPINION",
+      "delegateCanBe": [
+        "GROUP_MEMBER"
+      ],
+      "forbiddenRoundTypes": [
+        "INTERNAL_AUDIT",
+        "SENTIMENTAL_MARKET"
+      ],
+      "resultAppliesToGroom": true
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": true
   }
 ]

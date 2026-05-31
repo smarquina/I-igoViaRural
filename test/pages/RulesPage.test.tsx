@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { RulesPage } from "./RulesPage";
+import { RulesPage } from "../../src/pages/RulesPage";
 
 describe("RulesPage", () => {
   it("reuses the initial onboarding rules flow", () => {

@@ -1,6 +1,6 @@
-import { createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "./roundEngine";
-import type { AppConfig, Round } from "./types";
-import { sampleRound, sampleWildcard } from "../test/fixtures";
+import { createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "../../src/domain/roundEngine";
+import type { AppConfig, Round } from "../../src/domain/types";
+import { sampleRound, sampleWildcard } from "../fixtures";
 
 const sampleConfig: AppConfig = {
   gameTitle: "Despedida ViaRural Broker",

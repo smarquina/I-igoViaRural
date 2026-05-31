@@ -1,14 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import auditData from "../data/bride-audit-questions.json";
-import configData from "../data/config.json";
-import roundsData from "../data/rounds.json";
-import wildcardsData from "../data/wildcards.json";
 import {
   advanceRound,
   applyBailoutChoice,
   applyMergerAttemptResult,
-  buildRoundDeck,
   createInitialGameState,
   getCurrentRound,
   getNextRandomRoundIndex,
@@ -29,6 +24,7 @@ import { calculateMarketStatus } from "../domain/marketStatusEngine";
 import type { AppConfig, BailoutChoice, GameState, Round, RoundResult, Wildcard } from "../domain/types";
 import { isPositiveWildcard, useWildcard as applyWildcard } from "../domain/wildcardEngine";
 import { copy } from "../lang";
+import { availableWildcards, defaultConfig, roundDeck } from "../data/gameContent";
 
 interface GameContextValue {
   config: AppConfig;
@@ -46,58 +42,11 @@ interface GameContextValue {
   drawWildcard: () => void;
   keepDrawnWildcard: () => void;
   useDrawnWildcardNow: () => void;
+  dismissDrawnWildcard: () => void;
   applyMergerResult: (successfulPhases: number) => void;
   applyBailout: (choice: BailoutChoice) => void;
   clearSavedGame: () => void;
 }
-
-type RawRound = Omit<Round, "title" | "text" | "answer">;
-type RoundContent = { title: string; text: string; answer?: string };
-type WildcardContent = { name: string; description: string };
-type RawWildcard = Omit<Wildcard, "name" | "description" | "effect"> & {
-  effect: Wildcard["effect"] | { kind: string; effect?: Partial<Wildcard["effect"] extends { effect: infer Effect } ? Effect : never> };
-};
-
-const roundContentById = copy.gameContent.rounds as Record<string, RoundContent>;
-const wildcardContentById = copy.gameContent.wildcards as Record<string, WildcardContent>;
-const effectLabelById = copy.gameContent.effectLabels as Record<string, string>;
-
-function hydrateRound(round: RawRound): Round {
-  const content = roundContentById[round.id];
-
-  return {
-    ...round,
-    title: content.title,
-    text: content.text,
-    ...(content.answer ? { answer: content.answer } : {})
-  };
-}
-
-function hydrateWildcard(wildcard: RawWildcard): Wildcard {
-  const content = wildcardContentById[wildcard.id];
-  const effect = wildcard.effect.kind === "ADD_EFFECT"
-    ? {
-        ...wildcard.effect,
-        effect: {
-          ...wildcard.effect.effect,
-          label: effectLabelById[wildcard.effect.effect?.id ?? ""]
-        }
-      }
-    : wildcard.effect;
-
-  return {
-    ...wildcard,
-    name: content.name,
-    description: content.description,
-    effect: effect as Wildcard["effect"]
-  };
-}
-
-const defaultConfig = { ...configData, gameTitle: copy.app.gameTitle } as AppConfig;
-const rounds = (roundsData as RawRound[]).map(hydrateRound);
-const auditQuestions = (auditData as RawRound[]).map(hydrateRound);
-const availableWildcards = (wildcardsData as RawWildcard[]).map(hydrateWildcard);
-const roundDeck = buildRoundDeck(rounds, auditQuestions);
 
 const GameContext = createContext<GameContextValue | null>(null);
 
@@ -221,6 +170,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         ...previousState,
         hasDrawnWildcardThisRound: true
       };
+      setDrawnWildcardOffer(nextWildcard);
 
       return {
         ...applyWildcard(stateWithDrawFlag, nextWildcard, config),
@@ -254,6 +204,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
     });
     setDrawnWildcardOffer(null);
   }, [config, drawnWildcardOffer]);
+
+  const dismissDrawnWildcard = useCallback(() => {
+    setDrawnWildcardOffer(null);
+  }, []);
 
   const applyMergerResult = useCallback((successfulPhases: number) => {
     setState((previousState) => applyMergerAttemptResult(previousState, successfulPhases, config));
@@ -299,6 +253,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       drawWildcard,
       keepDrawnWildcard,
       useDrawnWildcardNow,
+      dismissDrawnWildcard,
       applyMergerResult,
       applyBailout,
       clearSavedGame
@@ -317,6 +272,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       drawWildcard,
       keepDrawnWildcard,
       useDrawnWildcardNow,
+      dismissDrawnWildcard,
       applyMergerResult,
       applyBailout,
       clearSavedGame

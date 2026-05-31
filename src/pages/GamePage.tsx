@@ -24,7 +24,8 @@ export function GamePage() {
     useWildcardById,
     drawWildcard,
     keepDrawnWildcard,
-    useDrawnWildcardNow
+    useDrawnWildcardNow,
+    dismissDrawnWildcard
   } = useGame();
   const navigate = useNavigate();
   const previousRoundIndexRef = useRef(state.currentRoundIndex);
@@ -92,6 +93,7 @@ export function GamePage() {
           wildcard={drawnWildcardOffer}
           onKeep={keepDrawnWildcard}
           onUseNow={useDrawnWildcardNow}
+          onDismiss={dismissDrawnWildcard}
         />
       ) : null}
       <RoundAdvanceModal

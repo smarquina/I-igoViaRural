@@ -1,5 +1,5 @@
-import { calculateMarketStatus } from "./marketStatusEngine";
-import { sampleConfig } from "../test/fixtures";
+import { calculateMarketStatus } from "../../src/domain/marketStatusEngine";
+import { sampleConfig } from "../fixtures";
 
 describe("calculateMarketStatus", () => {
   it("prioritizes bailout over critical zone", () => {

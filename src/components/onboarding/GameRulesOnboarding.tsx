@@ -74,7 +74,7 @@ export function GameRulesOnboarding({ finalLabel, onComplete, onSkip }: GameRule
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-broker-soft text-broker-greenDark">
           <FontAwesomeIcon icon={currentStep.icon} className="h-5 w-5" aria-hidden="true" />
         </div>
-        <div className="rounded-full bg-broker-bg px-3 py-1 text-xs font-black text-broker-muted">
+        <div className="rounded-full bg-broker-bg px-3 py-1 text-xs font-black text-broker-ink">
           {stepIndex + 1}/{onboardingSteps.length}
         </div>
       </div>

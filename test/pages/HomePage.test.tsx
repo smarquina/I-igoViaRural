@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { GameProvider } from "../app/GameContext";
-import { STORAGE_KEYS } from "../domain/constants";
-import { HomePage } from "./HomePage";
+import { GameProvider } from "../../src/app/GameContext";
+import { STORAGE_KEYS } from "../../src/domain/constants";
+import { HomePage } from "../../src/pages/HomePage";
 
 function renderHome() {
   render(
