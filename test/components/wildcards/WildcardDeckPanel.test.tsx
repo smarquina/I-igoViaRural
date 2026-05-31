@@ -89,4 +89,21 @@ describe("WildcardDeckPanel", () => {
     expect(screen.getByText("Efectos acumulados")).toBeInTheDocument();
     expect(screen.getByText(/Mercado alcista/)).toBeInTheDocument();
   });
+
+  it("renders catalyst activity messages inside the catalysts card", () => {
+    render(
+      <WildcardDeckPanel
+        state={createSampleState()}
+        wildcards={[sampleWildcard]}
+        effects={[]}
+        activityMessage="Stop Loss limita la pérdida de esta ronda."
+        onUse={vi.fn()}
+        onDraw={vi.fn()}
+      />
+    );
+
+    const section = screen.getByRole("heading", { name: /catalizadores acumulados/i }).closest("section");
+
+    expect(section).toContainElement(screen.getByText("Stop Loss limita la pérdida de esta ronda."));
+  });
 });

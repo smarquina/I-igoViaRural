@@ -1,8 +1,7 @@
-import { MERGER_FAILURE_DRINKS, MERGER_FAILURE_SCORE_PENALTY } from "./constants";
 import { decrementRoundEffects } from "./effectEngine";
 import { calculateMarketStatus } from "./marketStatusEngine";
 import { calculateRoundResultScore } from "./scoreEngine";
-import type { AppConfig, BailoutChoice, GameState, Round, RoundResult, Wildcard } from "./types";
+import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "./types";
 import { copy } from "../lang";
 
 function createScorePoint(score: number, event: string) {
@@ -169,17 +168,32 @@ export function resolveAndAdvanceRound(
   };
 }
 
-export function applyMergerAttemptResult(state: GameState, successfulPhases: number, config?: AppConfig): GameState {
-  if (successfulPhases >= 2) {
+export function applyMergerAttemptResult(state: GameState, resolution: MergerAttemptResolution, config?: AppConfig): GameState {
+  const successScore = resolution.passedPhases.reduce((total, phase) => total + phase.successScore, 0);
+  const partialScore = resolution.partialPhases.reduce((total, phase) => total + (phase.partialSuccessScore ?? 0), 0);
+  const earnedScore = successScore + partialScore;
+
+  if (resolution.successfulPhases >= 2) {
+    const nextScore = state.score + earnedScore;
+
     return {
       ...state,
+      score: nextScore,
+      scoreHistory: [...state.scoreHistory, nextScore],
+      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.messages.mergerApproved)],
+      marketStatus: calculateMarketStatus(nextScore, config),
       isGameFinished: true,
       gameResult: "MERGER_APPROVED",
+      lastScoreDelta: earnedScore,
+      lastDrinkPenalty: 0,
       lastEventMessage: copy.messages.mergerApproved
     };
   }
 
-  const nextScore = state.score - MERGER_FAILURE_SCORE_PENALTY;
+  const scorePenalty = resolution.failedPhases.reduce((total, phase) => total + phase.failureScorePenalty, 0);
+  const drinks = resolution.failedPhases.reduce((total, phase) => total + phase.failureDrinks, 0);
+  const scoreDelta = earnedScore - scorePenalty;
+  const nextScore = state.score + scoreDelta;
 
   return {
     ...state,
@@ -187,10 +201,10 @@ export function applyMergerAttemptResult(state: GameState, successfulPhases: num
     scoreHistory: [...state.scoreHistory, nextScore],
     scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.mergerFailed)],
     marketStatus: calculateMarketStatus(nextScore, config),
-    totalDrinks: state.totalDrinks + MERGER_FAILURE_DRINKS,
-    lastScoreDelta: -MERGER_FAILURE_SCORE_PENALTY,
-    lastDrinkPenalty: MERGER_FAILURE_DRINKS,
-    lastEventMessage: copy.messages.mergerFailed
+    totalDrinks: state.totalDrinks + drinks,
+    lastScoreDelta: scoreDelta,
+    lastDrinkPenalty: drinks,
+    lastEventMessage: copy.messages.mergerFailedWithPenalty(scorePenalty, earnedScore, drinks)
   };
 }
 

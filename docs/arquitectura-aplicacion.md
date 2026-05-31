@@ -54,8 +54,9 @@ src/
   data/
     bride-audit-questions.json
     config.json
+    general-culture-questions.json
     rounds.json
-    rules.md
+    street-challenges.json
     wildcards.json
   domain/
     constants.ts
@@ -122,7 +123,8 @@ Los datos locales viven en `src/data`.
 - `rounds.json`: rondas generales.
 - `bride-audit-questions.json`: auditorias internas de Rocio.
 - `wildcards.json`: Catalizadores de Mercado.
-- `rules.md`: reglas resumidas heredadas.
+- `street-challenges.json`: retos de calle disponibles para la Due Diligence final.
+- `general-culture-questions.json`: preguntas de cultura general para la Due Diligence final.
 
 El mazo de juego se construye mezclando rondas generales y auditorias internas mediante `buildRoundDeck`.
 

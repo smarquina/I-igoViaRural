@@ -1,7 +1,0 @@
-# Despedida ViaRural Broker
-
-Despedida ViaRural Broker es una webapp React local y mobile-first para dirigir un juego de despedida con estética de broker ficticio.
-
-- [Aplicación local](http://localhost:4173/)
-- [README del proyecto](https://github.com/smarquina/I-igoViaRural)
-- [Producción](https://ruralholdings-despedida.web.app)

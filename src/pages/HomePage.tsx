@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
@@ -25,9 +25,11 @@ export function HomePage() {
         <header>
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-broker-border bg-broker-surface text-broker-green shadow-sm">
-                <FontAwesomeIcon icon={faBuildingColumns} className="h-6 w-6" aria-hidden="true" />
-              </div>
+              <img
+                src="/icon.avif"
+                alt={copy.app.appIconAlt}
+                className="h-12 w-12 shrink-0 rounded-xl border border-broker-border bg-broker-surface object-cover shadow-sm"
+              />
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-green">{copy.app.gameTitle}</p>
                 <h1 className="mt-1 text-xl font-black leading-tight text-broker-ink">Iñigo Capital S.A.</h1>

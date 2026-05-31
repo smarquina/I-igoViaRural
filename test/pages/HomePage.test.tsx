@@ -26,6 +26,12 @@ describe("HomePage", () => {
     expect(screen.queryByRole("link", { name: /^reglas$/i })).not.toBeInTheDocument();
   });
 
+  it("uses the app image in the initial page header", () => {
+    renderHome();
+
+    expect(screen.getByRole("img", { name: /icono de despedida viarural broker/i })).toHaveAttribute("src", "/icon.avif");
+  });
+
   it("redirects to the game page when a game has already started", () => {
     window.localStorage.setItem(STORAGE_KEYS.HAS_STARTED_GAME, "true");
 

@@ -68,14 +68,10 @@ export function GamePage() {
           state={state}
           wildcards={state.accumulatedWildcards}
           effects={state.activeEffects}
+          activityMessage={state.lastEventMessage}
           onUse={useWildcardById}
           onDraw={drawWildcard}
         />
-        {state.lastEventMessage ? (
-          <div className="rounded-md border border-broker-border bg-broker-surface px-3 py-2 text-xs font-semibold text-broker-muted">
-            {state.lastEventMessage}
-          </div>
-        ) : null}
         <RoundCard
           round={currentRound}
           roundNumber={state.roundNumber}

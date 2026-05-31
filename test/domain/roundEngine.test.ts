@@ -1,4 +1,4 @@
-import { createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "../../src/domain/roundEngine";
+import { applyMergerAttemptResult, createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "../../src/domain/roundEngine";
 import type { AppConfig, Round } from "../../src/domain/types";
 import { sampleRound, sampleWildcard } from "../fixtures";
 
@@ -70,5 +70,54 @@ describe("roundEngine", () => {
 
     expect(getNextRandomRoundIndex(rounds, ["round-1"], () => 0)).toBe(1);
     expect(getNextRandomRoundIndex(rounds, ["round-1"], () => 0.99)).toBe(2);
+  });
+
+  it("penalizes failed merger phases when due diligence is not approved", () => {
+    const state = createInitialGameState({ ...sampleConfig, initialScore: 190 });
+    const nextState = applyMergerAttemptResult(
+      state,
+      {
+        successfulPhases: 1,
+        passedPhases: [
+          {
+            id: "merger-bride-test",
+            kind: "BRIDE_QUESTION",
+            title: "Rocío",
+            text: "Pregunta acertada",
+            successScore: 20,
+            failureScorePenalty: 15,
+            failureDrinks: 3
+          }
+        ],
+        partialPhases: [],
+        failedPhases: [
+          {
+            id: "merger-challenge-test",
+            kind: "STREET_CHALLENGE",
+            title: "Reto",
+            text: "Reto fallido",
+            successScore: 15,
+            failureScorePenalty: 10,
+            failureDrinks: 2
+          },
+          {
+            id: "merger-culture-test",
+            kind: "GENERAL_CULTURE",
+            title: "Cultura",
+            text: "Pregunta fallida",
+            successScore: 15,
+            failureScorePenalty: 12,
+            failureDrinks: 3
+          }
+        ]
+      },
+      sampleConfig
+    );
+
+    expect(nextState.score).toBe(188);
+    expect(nextState.totalDrinks).toBe(5);
+    expect(nextState.lastScoreDelta).toBe(-2);
+    expect(nextState.lastDrinkPenalty).toBe(5);
+    expect(nextState.isGameFinished).toBe(false);
   });
 });

@@ -21,7 +21,7 @@ import {
   saveGameState
 } from "../domain/storage";
 import { calculateMarketStatus } from "../domain/marketStatusEngine";
-import type { AppConfig, BailoutChoice, GameState, Round, RoundResult, Wildcard } from "../domain/types";
+import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "../domain/types";
 import { isPositiveWildcard, useWildcard as applyWildcard } from "../domain/wildcardEngine";
 import { copy } from "../lang";
 import { availableWildcards, defaultConfig, roundDeck } from "../data/gameContent";
@@ -43,7 +43,7 @@ interface GameContextValue {
   keepDrawnWildcard: () => void;
   useDrawnWildcardNow: () => void;
   dismissDrawnWildcard: () => void;
-  applyMergerResult: (successfulPhases: number) => void;
+  applyMergerResult: (resolution: MergerAttemptResolution) => void;
   applyBailout: (choice: BailoutChoice) => void;
   clearSavedGame: () => void;
 }
@@ -214,8 +214,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setDrawnWildcardOffer(null);
   }, []);
 
-  const applyMergerResult = useCallback((successfulPhases: number) => {
-    setState((previousState) => applyMergerAttemptResult(previousState, successfulPhases, config));
+  const applyMergerResult = useCallback((resolution: MergerAttemptResolution) => {
+    setState((previousState) => applyMergerAttemptResult(previousState, resolution, config));
   }, [config]);
 
   const applyBailout = useCallback((choice: BailoutChoice) => {

@@ -1,0 +1,203 @@
+[
+  {
+    "id": "street-challenge-001",
+    "title": "Vender un objeto absurdo",
+    "text": "Iñigo debe elegir un objeto absurdo y sin valor real: una servilleta, un palillo, una piedra, una chapa, un ticket viejo o cualquier cosa parecida. Tiene que intentar venderlo a alguien externo al grupo como si fuera un producto único.",
+    "instructions": [
+      "Elegir un objeto pequeño y absurdo.",
+      "Preparar un discurso de venta de máximo 30 segundos.",
+      "Explicar por qué ese objeto es especial, útil o irrepetible.",
+      "Intentar que alguien externo acepte comprarlo, ponerle precio o hacer un intercambio simbólico."
+    ],
+    "examplePitch": "Buenas, estamos haciendo una prueba de despedida. Tengo este objeto exclusivo de edición limitada. No sirve prácticamente para nada, pero tiene un valor sentimental incalculable. ¿Cuánto pagarías por él?",
+    "successCriteria": "Superado si una persona externa acepta ponerle precio, comprarlo simbólicamente, intercambiarlo por otro objeto o decir claramente que lo compraría.",
+    "failureCriteria": "Fallido si nadie acepta participar o si Iñigo no consigue hacer el discurso de venta.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No insistir si alguien dice que no. No pedir dinero real salvo que la persona lo proponga en tono de broma."
+  },
+  {
+    "id": "street-challenge-002",
+    "title": "Consejo vital de un desconocido",
+    "text": "Iñigo debe pedir a una persona externa un consejo útil para sobrevivir a una despedida, una resaca, una mudanza, una comida familiar o cualquier situación complicada de la vida adulta.",
+    "instructions": [
+      "Buscar a una persona amable: camarero, pareja, persona mayor o grupo tranquilo.",
+      "Pedir un consejo de vida en una sola frase.",
+      "Repetir el consejo en voz alta ante el grupo.",
+      "El grupo decide si el consejo merece entrar en el archivo histórico de la despedida."
+    ],
+    "examplePitch": "Perdona, estamos haciendo una prueba. ¿Me darías un consejo de vida en una frase? Puede ser serio, absurdo o directamente útil para sobrevivir a esta despedida.",
+    "successCriteria": "Superado si consigue un consejo claro y lo repite al grupo.",
+    "failureCriteria": "Fallido si no consigue ningún consejo o si no se atreve a pedirlo.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "Buscar una interacción educada y breve. No grabar a la persona sin permiso."
+  },
+  {
+    "id": "street-challenge-003",
+    "title": "Brindis público improvisado",
+    "text": "Iñigo debe conseguir que una persona externa haga un brindis breve por el grupo, por la despedida o por la supervivencia del novio durante el día.",
+    "instructions": [
+      "Encontrar a alguien externo dispuesto a participar.",
+      "Explicar que es una despedida y que hace falta un brindis rápido.",
+      "Pedirle que diga una frase de brindis.",
+      "El brindis debe incluir al menos una palabra elegida por el grupo."
+    ],
+    "requiredWordExamples": [
+      "Toledo",
+      "resaca",
+      "gloria",
+      "catástrofe",
+      "campeón",
+      "última noche"
+    ],
+    "examplePitch": "Estamos de despedida y necesitamos un brindis de una frase. Tiene que incluir la palabra 'Toledo'. ¿Nos ayudas?",
+    "successCriteria": "Superado si la persona dice un brindis breve e incluye la palabra indicada.",
+    "failureCriteria": "Fallido si no consigue que nadie haga el brindis o si no incluye la palabra obligatoria.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No interrumpir comidas o conversaciones privadas. Mejor hacerlo en ambiente de bar o terraza."
+  },
+  {
+    "id": "street-challenge-004",
+    "title": "Foto con otro grupo de celebración",
+    "text": "Iñigo debe encontrar otro grupo de despedida, cumpleaños, viaje de amigos o celebración y hacerse una foto con ellos.",
+    "instructions": [
+      "Buscar otro grupo que esté claramente de celebración.",
+      "Pedir permiso para una foto rápida.",
+      "Explicar que es para superar una prueba de la despedida.",
+      "Hacerse una foto conjunta en tono simpático."
+    ],
+    "examplePitch": "Buenas, estamos de despedida. ¿Os importa haceros una foto rápida con el novio para superar una prueba?",
+    "successCriteria": "Superado si consigue una foto con otro grupo de celebración.",
+    "failureCriteria": "Fallido si no encuentra grupo o si no pide permiso correctamente.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "Siempre pedir permiso. No fotografiar a nadie que no quiera salir."
+  },
+  {
+    "id": "street-challenge-005",
+    "title": "Encuesta absurda a 3 personas",
+    "text": "Iñigo debe hacer una mini encuesta a 3 personas externas. El grupo elige una pregunta absurda y él debe conseguir 3 respuestas diferentes.",
+    "instructions": [
+      "El grupo elige una pregunta absurda.",
+      "Iñigo debe hacer la misma pregunta a 3 personas distintas.",
+      "Debe conseguir 3 respuestas diferentes.",
+      "Al terminar, el grupo vota cuál ha sido la mejor respuesta."
+    ],
+    "questionExamples": [
+      "¿Cuál es el mejor invento de la humanidad?",
+      "¿Qué animal ganaría una pelea en una oficina?",
+      "¿Qué comida representa mejor un sábado por la noche?",
+      "¿Qué frase debería decir alguien antes de entrar en una discoteca?",
+      "¿Cuál es la peor excusa para llegar tarde?"
+    ],
+    "successCriteria": "Superado si consigue 3 respuestas de 3 personas distintas.",
+    "failureCriteria": "Fallido si consigue menos de 3 respuestas.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No insistir. Si una persona no quiere responder, pasar a otra."
+  },
+  {
+    "id": "street-challenge-006",
+    "title": "Trueque imposible",
+    "text": "Iñigo debe empezar con un objeto pequeño y sin valor y conseguir cambiarlo por otro objeto diferente.",
+    "instructions": [
+      "Elegir un objeto inicial: servilleta, palillo, bolígrafo, ticket, chapa o similar.",
+      "Pedir a alguien externo que lo cambie por cualquier otra cosa.",
+      "El objeto recibido puede ser igual de absurdo, pero debe ser diferente.",
+      "Mostrar al grupo el objeto conseguido."
+    ],
+    "examplePitch": "Estamos haciendo un reto de despedida. Tengo que cambiar este objeto por cualquier otra cosa, aunque sea igual de absurda. ¿Me ayudas?",
+    "successCriteria": "Superado si consigue cambiar el objeto inicial por otro distinto.",
+    "failureCriteria": "Fallido si no consigue ningún intercambio.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No pedir objetos personales importantes ni molestar a trabajadores ocupados."
+  },
+  {
+    "id": "street-challenge-007",
+    "title": "El mazapán misterioso",
+    "text": "Reto inspirado en el mazapán toledano. Iñigo debe conseguir que alguien externo le recomiende un sitio, una marca o una forma de comer mazapán en Toledo.",
+    "instructions": [
+      "Buscar a alguien local, camarero, dependiente o visitante que conozca Toledo.",
+      "Preguntar por una recomendación relacionada con el mazapán.",
+      "La respuesta debe ser concreta: sitio, tienda, forma de comerlo o comentario útil.",
+      "Iñigo debe repetir la recomendación al grupo con tono de experto gastronómico."
+    ],
+    "examplePitch": "Estamos haciendo una prueba toledana. ¿Dónde deberíamos probar mazapán o cómo hay que comerlo para no parecer turistas perdidos?",
+    "successCriteria": "Superado si consigue una recomendación concreta relacionada con el mazapán.",
+    "failureCriteria": "Fallido si nadie le da una recomendación concreta.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No hace falta comprar nada. Basta con conseguir la recomendación."
+  },
+  {
+    "id": "street-challenge-008",
+    "title": "Caballero improvisado de Toledo",
+    "text": "Reto inspirado en la tradición espadera de Toledo. Iñigo debe conseguir que alguien externo le nombre caballero por un motivo absurdo elegido por el grupo.",
+    "instructions": [
+      "El grupo elige el motivo del nombramiento.",
+      "Iñigo busca a alguien externo dispuesto a seguir la broma.",
+      "La persona debe decir una frase solemne nombrándolo caballero.",
+      "No se puede usar ningún objeto peligroso."
+    ],
+    "titleReasonExamples": [
+      "por sobrevivir a la despedida",
+      "por beber lento pero constante",
+      "por su elegancia cuestionable",
+      "por servicios prestados a la barra",
+      "por aguantar al grupo"
+    ],
+    "examplePitch": "Toledo es tierra de espadas y necesito que alguien me nombre caballero. El motivo lo elige mi grupo, pero prometo que es una ceremonia rápida y absurda.",
+    "successCriteria": "Superado si una persona externa realiza el nombramiento simbólico.",
+    "failureCriteria": "Fallido si nadie acepta participar o si la ceremonia no se completa.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "No usar objetos peligrosos ni espadas reales. Hacerlo solo con gesto simbólico."
+  },
+  {
+    "id": "street-challenge-009",
+    "title": "Las tres culturas, tres respuestas",
+    "text": "Reto inspirado en Toledo como ciudad de las tres culturas. Iñigo debe conseguir tres palabras distintas de tres personas diferentes para describir una noche perfecta.",
+    "instructions": [
+      "Buscar tres personas distintas.",
+      "Pedir a cada una una sola palabra para describir una noche perfecta.",
+      "Las tres palabras no pueden repetirse.",
+      "Iñigo debe crear una frase final usando las tres palabras."
+    ],
+    "examplePitch": "Toledo es ciudad de mezcla y convivencia. Estamos haciendo una prueba: dime una palabra para describir una noche perfecta.",
+    "successCriteria": "Superado si consigue tres palabras distintas y construye una frase final con ellas.",
+    "failureCriteria": "Fallido si consigue menos de tres palabras o si repite palabra.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "Mantenerlo breve y amable."
+  },
+  {
+    "id": "street-challenge-010",
+    "title": "Pregón improvisado",
+    "text": "Reto inspirado en las fiestas y procesiones tradicionales de Toledo. Iñigo debe conseguir que alguien externo invente una frase solemne o de pregón para abrir oficialmente la siguiente ronda de la despedida.",
+    "instructions": [
+      "Buscar una persona que acepte participar.",
+      "Pedir una frase solemne, exagerada o graciosa para abrir la siguiente ronda.",
+      "La frase debe sonar a pregón, ceremonia o anuncio importante.",
+      "Iñigo debe repetirla después en voz alta."
+    ],
+    "examplePitch": "Estamos en Toledo y necesitamos una frase solemne para inaugurar la siguiente ronda de la despedida. ¿Nos ayudas con un pregón de una frase?",
+    "successCriteria": "Superado si consigue una frase ceremonial o solemne y la repite.",
+    "failureCriteria": "Fallido si no consigue frase o si no la repite.",
+    "successScore": 15,
+    "failureScorePenalty": 10,
+    "failureDrinks": 2,
+    "safetyNote": "Evitar bromas ofensivas con religión o procesiones. Mantenerlo respetuoso."
+  }
+]

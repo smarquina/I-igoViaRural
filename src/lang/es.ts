@@ -8,6 +8,7 @@ export const es = {
   },
   app: {
     gameTitle: "Despedida ViaRural Broker",
+    appIconAlt: "Icono de Despedida ViaRural Broker",
     openSettings: "Abrir configuración",
     loadingMarket: "Cargando mercado..."
   },
@@ -210,12 +211,26 @@ export const es = {
   merger: {
     eyebrow: "Due Diligence final",
     title: "Cierre de Fusión",
-    text: "Para aprobar la operación debe superar al menos 2 de las 3 fases exigidas por el Consejo.",
-    phases: [
-      "Pregunta de Rocío",
-      "Pregunta del mercado",
-      "Declaración de inversión"
-    ],
+    text: "Para aprobar la operación debe superar al menos 2 de las 3 fases: una pregunta de Rocío, un reto y una pregunta de cultura general. Si no llega al mínimo, se aplican las penalizaciones de cada fallo.",
+    phaseKinds: {
+      BRIDE_QUESTION: "Pregunta de Rocío",
+      STREET_CHALLENGE: "Reto",
+      GENERAL_CULTURE: "Cultura general"
+    },
+    instructions: "Instrucciones",
+    examples: "Ejemplos",
+    examplePitch: "Discurso sugerido",
+    successCriteria: "Criterio de acierto",
+    failureCriteria: "Criterio de fallo",
+    safetyNote: "Nota de seguridad",
+    revealAnswer: "Revelar respuesta",
+    answer: "Respuesta",
+    pointsOnSuccess: (score: number) => `Acierto +${score} pts`,
+    pointsOnPartial: (score: number) => `Parcial +${score} pts`,
+    penaltyOnFailure: (score: number, drinks: number) => `Fallo -${score} pts · ${drinks} tragos`,
+    markSuccess: "Marcar acierto",
+    markPartial: "Marcar parcial",
+    markFailure: "Marcar fallo",
     registerResult: (successful: number) => `Registrar resultado (${successful}/3)`
   },
   gameOver: {
@@ -258,6 +273,8 @@ export const es = {
     criticalZoneSurcharge: "Recargo por Zona Crítica",
     mergerApproved: "Fusión aprobada por el Consejo de Administración.",
     mergerFailed: "La fusión no se cierra todavía. Vuelve el mercado.",
+    mergerFailedWithPenalty: (scorePenalty: number, successScore: number, drinks: number) =>
+      `La fusión no se cierra todavía. Resultado neto: +${successScore} puntos por aciertos, -${scorePenalty} puntos por fallos y ${drinks} tragos.`,
     bailoutLiquidity: "Rescate con liquidez ejecutado.",
     assetSale: "Venta de activos ejecutada. Catalizadores liquidados.",
     extraAuditSuccess: "Auditoría extraordinaria superada.",

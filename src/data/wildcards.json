@@ -252,5 +252,20 @@
     "isImmediate": false,
     "isAccumulated": true,
     "isDefensive": true
+  },
+  {
+    "id": "wildcard-desconfianza-mercados",
+    "name": "Desconfianza de los mercados",
+    "type": "BAD",
+    "timing": "BEFORE_ANSWER",
+    "description": "Los mercados desconfían de Iñigo Capital S.A.: Iñigo bebe 4 tragos inmediatamente. No altera puntos directamente.",
+    "effect": {
+      "kind": "ADJUST_SCORE",
+      "scoreDelta": 0,
+      "drinks": 4
+    },
+    "isImmediate": false,
+    "isAccumulated": true,
+    "isDefensive": false
   }
 ]

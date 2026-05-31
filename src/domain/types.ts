@@ -204,3 +204,70 @@ export interface ScoreResult {
 }
 
 export type BailoutChoice = "LIQUIDITY" | "SELL_ASSETS" | "EXTRA_AUDIT_SUCCESS" | "EXTRA_AUDIT_FAILURE";
+
+export interface StreetChallenge {
+  id: string;
+  title: string;
+  text: string;
+  instructions: string[];
+  examplePitch?: string;
+  requiredWordExamples?: string[];
+  questionExamples?: string[];
+  titleReasonExamples?: string[];
+  successCriteria: string;
+  failureCriteria: string;
+  successScore: number;
+  failureScorePenalty: number;
+  failureDrinks: number;
+  safetyNote: string;
+}
+
+export interface GeneralCultureQuestion {
+  id: string;
+  type: "GENERAL_CULTURE";
+  title: string;
+  text: string;
+  answer?: string;
+  successScore: number;
+  partialSuccessScore?: number;
+  failureScorePenalty: number;
+  failureDrinks: number;
+  allowsPartial: boolean;
+  requiresAnswerReveal: boolean;
+}
+
+export type MergerPhaseKind = "BRIDE_QUESTION" | "STREET_CHALLENGE" | "GENERAL_CULTURE";
+
+export interface MergerPhase {
+  id: string;
+  kind: MergerPhaseKind;
+  title: string;
+  text: string;
+  answer?: string;
+  instructions?: string[];
+  examples?: string[];
+  examplePitch?: string;
+  successCriteria?: string;
+  failureCriteria?: string;
+  safetyNote?: string;
+  successScore: number;
+  partialSuccessScore?: number;
+  failureScorePenalty: number;
+  failureDrinks: number;
+  allowsPartial?: boolean;
+  requiresAnswerReveal?: boolean;
+}
+
+export type MergerPhaseOutcome = "SUCCESS" | "PARTIAL" | "FAILURE";
+
+export interface MergerPhaseResult {
+  phaseId: string;
+  outcome: MergerPhaseOutcome;
+}
+
+export interface MergerAttemptResolution {
+  successfulPhases: number;
+  passedPhases: MergerPhase[];
+  partialPhases: MergerPhase[];
+  failedPhases: MergerPhase[];
+}

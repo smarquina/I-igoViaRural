@@ -10,6 +10,7 @@ interface WildcardDeckPanelProps {
   state: GameState;
   wildcards: Wildcard[];
   effects: GameEffect[];
+  activityMessage?: string;
   onUse: (wildcardId: string) => void;
   onDraw: () => void;
 }
@@ -21,7 +22,7 @@ const typeClass: Record<Wildcard["type"], string> = {
   SPECIAL: "border-broker-wildcard text-amber-700"
 };
 
-export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: WildcardDeckPanelProps) {
+export function WildcardDeckPanel({ state, wildcards, effects, activityMessage, onUse, onDraw }: WildcardDeckPanelProps) {
   const [hintWildcardId, setHintWildcardId] = useState<string | null>(null);
   const canDraw = state.phase === "ANSWERING" && !state.hasDrawnWildcardThisRound && !state.hasUsedWildcardThisRound;
 
@@ -98,6 +99,11 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
         <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-broker-muted">{copy.wildcards.accumulatedEffects}</p>
         <ActiveEffectsBar effects={effects} />
       </div>
+      {activityMessage ? (
+        <div className="mt-3 rounded-md border border-broker-border bg-broker-surface px-3 py-2 text-xs font-semibold text-broker-muted">
+          {activityMessage}
+        </div>
+      ) : null}
     </section>
   );
 }
