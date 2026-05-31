@@ -8,9 +8,12 @@ interface RoundAdvanceModalProps {
   isOpen: boolean;
   round: Round;
   roundNumber: number;
+  mode?: "opening" | "advance";
 }
 
-export function RoundAdvanceModal({ isOpen, round, roundNumber }: RoundAdvanceModalProps) {
+export function RoundAdvanceModal({ isOpen, round, roundNumber, mode = "advance" }: RoundAdvanceModalProps) {
+  const isOpening = mode === "opening";
+
   return (
     <AnimatePresence>
       {isOpen ? (
@@ -33,15 +36,17 @@ export function RoundAdvanceModal({ isOpen, round, roundNumber }: RoundAdvanceMo
               <FontAwesomeIcon icon={faArrowTrendUp} className="h-6 w-6" aria-hidden="true" />
             </div>
             <p className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-broker-green">
-              {copy.rounds.newOperation}
+              {isOpening ? copy.rounds.marketOpening : copy.rounds.newOperation}
             </p>
             <h2 className="mt-2 text-3xl font-black text-broker-ink">{copy.rounds.round(roundNumber)}</h2>
             <div className="mt-4 rounded-md border border-broker-border bg-broker-bg p-3">
               <p className="flex items-center justify-center gap-2 text-sm font-black text-broker-ink">
                 <FontAwesomeIcon icon={faChartSimple} className="h-4 w-4 text-broker-green" aria-hidden="true" />
-                {copy.rounds.typeLabels[round.type]}
+                {isOpening ? copy.rounds.marketOpeningTitle : copy.rounds.typeLabels[round.type]}
               </p>
-              <p className="mt-1 text-xs text-broker-muted">{round.title}</p>
+              <p className="mt-1 text-xs text-broker-muted">
+                {isOpening ? copy.rounds.marketOpeningText : round.title}
+              </p>
             </div>
           </motion.section>
         </motion.div>

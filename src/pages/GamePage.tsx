@@ -11,6 +11,8 @@ import { RoundCard } from "../components/rounds/RoundCard";
 import { WildcardDeckPanel } from "../components/wildcards/WildcardDeckPanel";
 import { WildcardDrawModal } from "../components/wildcards/WildcardDrawModal";
 
+type RoundModalMode = "opening" | "advance";
+
 export function GamePage() {
   const {
     state,
@@ -26,7 +28,9 @@ export function GamePage() {
   } = useGame();
   const navigate = useNavigate();
   const previousRoundIndexRef = useRef(state.currentRoundIndex);
-  const [showRoundAdvance, setShowRoundAdvance] = useState(false);
+  const [roundModalMode, setRoundModalMode] = useState<RoundModalMode | null>(() =>
+    state.roundNumber === 1 && state.phase === "ANSWERING" ? "opening" : null
+  );
 
   useEffect(() => {
     if (state.isGameFinished) {
@@ -40,11 +44,18 @@ export function GamePage() {
     }
 
     previousRoundIndexRef.current = state.currentRoundIndex;
-    setShowRoundAdvance(true);
-    const timeoutId = window.setTimeout(() => setShowRoundAdvance(false), 4000);
+    setRoundModalMode("advance");
+  }, [state.currentRoundIndex]);
+
+  useEffect(() => {
+    if (!roundModalMode) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setRoundModalMode(null), 4000);
 
     return () => window.clearTimeout(timeoutId);
-  }, [state.currentRoundIndex]);
+  }, [roundModalMode]);
 
   return (
     <MobileShell>
@@ -84,9 +95,10 @@ export function GamePage() {
         />
       ) : null}
       <RoundAdvanceModal
-        isOpen={showRoundAdvance}
+        isOpen={Boolean(roundModalMode)}
         round={currentRound}
         roundNumber={state.roundNumber}
+        mode={roundModalMode ?? "advance"}
       />
     </MobileShell>
   );

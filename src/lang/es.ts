@@ -120,6 +120,9 @@ export const es = {
     nextRound: "Siguiente ronda",
     resolved: "Ronda resuelta. Avanza a la siguiente operación.",
     newOperation: "Nueva operación",
+    marketOpening: "Apertura de mercado",
+    marketOpeningTitle: "Se abren los mercados",
+    marketOpeningText: "Empieza una nueva sesión bursátil.",
     typeLabels: {
       INTERNAL_AUDIT: "Auditoría interna",
       SENTIMENTAL_MARKET: "Mercado sentimental",
