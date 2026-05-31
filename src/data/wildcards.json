@@ -1,10 +1,8 @@
 [
   {
     "id": "wildcard-stop-loss",
-    "name": "Stop Loss",
     "type": "GOOD",
     "timing": "BEFORE_ANSWER",
-    "description": "Limita la pérdida de esta ronda.",
     "effect": {
       "kind": "LIMIT_ROUND_LOSS",
       "maxScorePenalty": 5,
@@ -16,10 +14,8 @@
   },
   {
     "id": "wildcard-banco-central",
-    "name": "Banco Central",
     "type": "GOOD",
     "timing": "BEFORE_ANSWER",
-    "description": "Inyecta confianza inmediata en el mercado.",
     "effect": {
       "kind": "ADJUST_SCORE",
       "scoreDelta": 10,
@@ -31,16 +27,13 @@
   },
   {
     "id": "wildcard-rally-alcista",
-    "name": "Rally alcista",
     "type": "SPECIAL",
     "timing": "BEFORE_ANSWER",
-    "description": "Durante dos rondas, los aciertos suman puntos adicionales.",
     "effect": {
       "kind": "ADD_EFFECT",
       "effect": {
         "id": "effect-bull-market",
         "type": "BULL_MARKET",
-        "label": "Mercado alcista",
         "level": 2,
         "remainingRounds": 2
       }
@@ -51,10 +44,8 @@
   },
   {
     "id": "wildcard-reset-mercado",
-    "name": "Reset de Mercado",
     "type": "MIXED",
     "timing": "BEFORE_ANSWER",
-    "description": "Elimina catalizadores y efectos acumulados sin tocar la cotización.",
     "effect": {
       "kind": "MARKET_RESET",
       "drinks": 3
@@ -65,16 +56,13 @@
   },
   {
     "id": "wildcard-liquidez-limitada",
-    "name": "Liquidez limitada",
     "type": "BAD",
     "timing": "BEFORE_ANSWER",
-    "description": "Bloquea catalizadores defensivos durante dos rondas.",
     "effect": {
       "kind": "ADD_EFFECT",
       "effect": {
         "id": "effect-limited-liquidity",
         "type": "LIMITED_LIQUIDITY",
-        "label": "Liquidez limitada",
         "remainingRounds": 2
       }
     },
@@ -84,10 +72,8 @@
   },
   {
     "id": "wildcard-analista-externo",
-    "name": "Analista externo",
     "type": "MIXED",
     "timing": "BEFORE_ANSWER",
-    "description": "Otra persona debe responder la pregunta por Iñigo. Puede ser alguien del grupo o un desconocido. No puede usarse en preguntas personales.",
     "effect": {
       "kind": "DELEGATE_ANSWER",
       "delegateCanBe": [

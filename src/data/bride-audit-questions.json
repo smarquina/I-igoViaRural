@@ -2,9 +2,6 @@
   {
     "id": "audit-001",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu película favorita?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -15,9 +12,6 @@
   {
     "id": "audit-002",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué talla de pie usas?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -28,9 +22,6 @@
   {
     "id": "audit-003",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué color de bragas prevalece en su armario?",
-    "answer": "",
     "successScore": 25,
     "partialSuccessScore": 12,
     "failureScorePenalty": 20,
@@ -41,9 +32,6 @@
   {
     "id": "audit-004",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién es responsable de preparar la comida en casa?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -54,9 +42,6 @@
   {
     "id": "audit-005",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu programa de televisión favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -67,9 +52,6 @@
   {
     "id": "audit-006",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu bebida alcohólica favorita?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -80,9 +62,6 @@
   {
     "id": "audit-007",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién de su familia te gusta menos?",
-    "answer": "",
     "successScore": 25,
     "partialSuccessScore": 12,
     "failureScorePenalty": 20,
@@ -93,9 +72,6 @@
   {
     "id": "audit-008",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién de sus familiares te gusta más?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -106,9 +82,6 @@
   {
     "id": "audit-009",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es su plato favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -119,9 +92,6 @@
   {
     "id": "audit-010",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál era el nombre de tu primera pareja?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -132,9 +102,6 @@
   {
     "id": "audit-011",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué edad tenías cuando besaste al primer chico?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -145,9 +112,6 @@
   {
     "id": "audit-012",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu libro favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -158,9 +122,6 @@
   {
     "id": "audit-013",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu deporte favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -171,9 +132,6 @@
   {
     "id": "audit-014",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Te gusta bailar?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -184,9 +142,6 @@
   {
     "id": "audit-015",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu color favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -197,9 +152,6 @@
   {
     "id": "audit-016",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿En qué país te gustaría vivir?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -210,9 +162,6 @@
   {
     "id": "audit-017",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién es el más activo?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -223,9 +172,6 @@
   {
     "id": "audit-018",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién fue tu mejor amigo de infancia?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -236,9 +182,6 @@
   {
     "id": "audit-019",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál fue tu asignatura favorita en el colegio?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -249,9 +192,6 @@
   {
     "id": "audit-020",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cómo le prefieres: en pinta deportiva, elegante para un matrimonio o en pijama?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -262,9 +202,6 @@
   {
     "id": "audit-021",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué es lo que más te enoja: que se demore en arreglarse para salir, que no haga deporte u otra cosa?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -275,9 +212,6 @@
   {
     "id": "audit-022",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu plan ideal?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -288,9 +222,6 @@
   {
     "id": "audit-023",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué es lo que más te gusta del novio?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -301,9 +232,6 @@
   {
     "id": "audit-024",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuándo fue el primer beso?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -314,9 +242,6 @@
   {
     "id": "audit-025",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿En qué lugar os disteis el primer beso?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -327,9 +252,6 @@
   {
     "id": "audit-026",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es la anécdota que más recuerdas?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -340,9 +262,6 @@
   {
     "id": "audit-027",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuándo te pidió matrimonio?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -353,9 +272,6 @@
   {
     "id": "audit-028",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué tipo de películas te gustan: romántica, drama, acción, comedia u otra?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -366,9 +282,6 @@
   {
     "id": "audit-029",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué es lo que más te gusta hacer con tu pareja: deporte, cocinar, conversar de la vida u otra cosa?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -379,9 +292,6 @@
   {
     "id": "audit-030",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué es lo que más te gusta de él: sus ojos, sus anchas espaldas, sus manos, su sonrisa u otra cosa?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -392,9 +302,6 @@
   {
     "id": "audit-031",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es la cosa que más te enfada del novio?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -405,9 +312,6 @@
   {
     "id": "audit-032",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu número de teléfono?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -418,9 +322,6 @@
   {
     "id": "audit-033",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuántas veces al día te lavas los dientes?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -431,9 +332,6 @@
   {
     "id": "audit-034",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿En qué posición duermes?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -444,9 +342,6 @@
   {
     "id": "audit-035",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿A qué hora pones el primer despertador para ir a trabajar?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -457,9 +352,6 @@
   {
     "id": "audit-036",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué tomas de desayuno usualmente?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -470,9 +362,6 @@
   {
     "id": "audit-037",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál ha sido el regalo suyo que más te ha gustado?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -483,9 +372,6 @@
   {
     "id": "audit-038",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué nombre es el que más te gusta que te diga?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -496,9 +382,6 @@
   {
     "id": "audit-039",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu quinto apellido?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -509,9 +392,6 @@
   {
     "id": "audit-040",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cada cuántos días te depilas?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -522,9 +402,6 @@
   {
     "id": "audit-041",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cómo conseguiste su número de teléfono?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -535,9 +412,6 @@
   {
     "id": "audit-042",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Dónde fue el primer beso?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -548,9 +422,6 @@
   {
     "id": "audit-043",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es la anécdota que más veces le has contado a Sergio de tu infancia?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -561,9 +432,6 @@
   {
     "id": "audit-044",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿En qué lugar disfrutas más con el sexo?",
-    "answer": "",
     "successScore": 25,
     "partialSuccessScore": 12,
     "failureScorePenalty": 20,
@@ -574,9 +442,6 @@
   {
     "id": "audit-045",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Dónde fue la primera cita?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -587,9 +452,6 @@
   {
     "id": "audit-046",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién propuso la fecha de la boda?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -600,9 +462,6 @@
   {
     "id": "audit-047",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es el pasatiempo favorito para hacer en conjunto?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -613,9 +472,6 @@
   {
     "id": "audit-048",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién lleva los pantalones en la relación?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -626,9 +482,6 @@
   {
     "id": "audit-049",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Esperáis tener hijos?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -639,9 +492,6 @@
   {
     "id": "audit-050",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuántos hijos esperáis tener?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -652,9 +502,6 @@
   {
     "id": "audit-051",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué tareas son de la novia y cuáles del novio?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -665,9 +512,6 @@
   {
     "id": "audit-052",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién dio el primer beso?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -678,9 +522,6 @@
   {
     "id": "audit-053",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién es mejor en la cocina?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -691,9 +532,6 @@
   {
     "id": "audit-054",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién es más desordenado?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -704,9 +542,6 @@
   {
     "id": "audit-055",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién se queda dormido en una película?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -717,9 +552,6 @@
   {
     "id": "audit-056",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Quién suele llegar más tarde cuando quedáis?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -730,9 +562,6 @@
   {
     "id": "audit-057",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál fue el primer regalo que le hiciste y cuál fue el último?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -743,9 +572,6 @@
   {
     "id": "audit-058",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu actor favorito?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -756,9 +582,6 @@
   {
     "id": "audit-059",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "Nombra una manía que tengas.",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -769,9 +592,6 @@
   {
     "id": "audit-060",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál fue tu primer trabajo?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -782,9 +602,6 @@
   {
     "id": "audit-061",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué sueles utilizar para dormir?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -795,9 +612,6 @@
   {
     "id": "audit-062",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué día es la boda?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -808,9 +622,6 @@
   {
     "id": "audit-063",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué nombre pondrías a tu hijo e hija?",
-    "answer": "",
     "successScore": 20,
     "partialSuccessScore": 10,
     "failureScorePenalty": 15,
@@ -821,9 +632,6 @@
   {
     "id": "audit-064",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Cuál es tu lado favorito en la cama?",
-    "answer": "",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -834,9 +642,6 @@
   {
     "id": "audit-065",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "Si no ejercieses tu profesión actual, ¿a qué te gustaría dedicarte?",
-    "answer": "",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -847,9 +652,6 @@
   {
     "id": "audit-066",
     "type": "INTERNAL_AUDIT",
-    "title": "Auditoría interna de Rocío",
-    "text": "¿Qué mata más la pasión con Iñigo?",
-    "answer": "",
     "successScore": 25,
     "partialSuccessScore": 12,
     "failureScorePenalty": 20,

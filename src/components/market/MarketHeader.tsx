@@ -12,7 +12,7 @@ export function MarketHeader() {
             <img src="/icon.avif" alt="" className="h-8 w-8 shrink-0 rounded-md object-cover" />
             <span className="min-w-0">
               <span className="block truncate text-sm font-black uppercase tracking-[0.08em] text-broker-greenDark">
-                Despedida ViaRural Broker
+                {copy.app.gameTitle}
               </span>
               <span className="mt-0.5 block text-xs text-broker-muted">Iñigo Capital S.A. → Rocío Holdings</span>
             </span>

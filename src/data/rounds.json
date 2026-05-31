@@ -2,8 +2,6 @@
   {
     "id": "round-014",
     "type": "SENTIMENTAL_MARKET",
-    "title": "Mercado sentimental",
-    "text": "¿Qué es lo mejor que te ha aportado Rocío desde que estáis juntos?",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 10,
@@ -14,9 +12,6 @@
   {
     "id": "round-027",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera avanzada",
-    "text": "¿Qué es un ETF y qué lo diferencia de un fondo de inversión tradicional?",
-    "answer": "Un ETF, o fondo cotizado, es un fondo de inversión que se negocia en bolsa como si fuera una acción. A diferencia de muchos fondos tradicionales, puede comprarse y venderse durante la sesión bursátil a precio de mercado. Normalmente replica un índice, sector, materia prima o cesta de activos.",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -27,8 +22,6 @@
   {
     "id": "round-004",
     "type": "GAMBLER_QUESTION",
-    "title": "Pregunta gamberra",
-    "text": "¿Qué amigo del grupo es más peligroso cuando hay barra libre? Di por qué.",
     "successScore": 10,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -38,9 +31,6 @@
   {
     "id": "round-019",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué es un activo refugio?",
-    "answer": "Un activo refugio es una inversión que tiende a conservar mejor su valor en momentos de incertidumbre o tensión del mercado, aunque no está libre de riesgo.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -51,8 +41,6 @@
   {
     "id": "round-009",
     "type": "MARKET_ROAST",
-    "title": "Rating del grupo",
-    "text": "Elige a tres amigos: el más fiable, el más imprevisible y el que nunca debería tomar decisiones importantes después de medianoche.",
     "successScore": 5,
     "failureScorePenalty": 5,
     "failureDrinks": 1,
@@ -62,9 +50,6 @@
   {
     "id": "round-030",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera avanzada",
-    "text": "¿Qué es la PAC y por qué puede ser relevante para una entidad financiera rural?",
-    "answer": "La PAC es la Política Agrícola Común de la Unión Europea. Regula ayudas, pagos e intervenciones dirigidas al sector agrario y al desarrollo rural. Para una entidad financiera rural puede ser relevante porque afecta a agricultores, ganaderos, cooperativas, inversiones en explotaciones, financiación de campañas y anticipos de ayudas.",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -75,8 +60,6 @@
   {
     "id": "round-001",
     "type": "SENTIMENTAL_MARKET",
-    "title": "Mercado sentimental",
-    "text": "¿Cuál fue uno de los primeros planes con Rocío en los que pensaste: “esto va en serio”?",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 10,
@@ -87,9 +70,6 @@
   {
     "id": "round-022",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué significa que una empresa salga a bolsa?",
-    "answer": "Salir a bolsa significa que una empresa empieza a cotizar en un mercado bursátil, de modo que sus acciones pueden comprarse y venderse por inversores.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -100,8 +80,6 @@
   {
     "id": "round-011",
     "type": "GAMBLER_QUESTION",
-    "title": "Pregunta gamberra",
-    "text": "Cuenta una noche de fiesta que acabó de una forma que nadie esperaba.",
     "successScore": 10,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -111,9 +89,6 @@
   {
     "id": "round-028",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera avanzada",
-    "text": "En una hipoteca, ¿qué diferencia hay entre tipo fijo, tipo variable y tipo mixto?",
-    "answer": "En una hipoteca a tipo fijo, el interés y la cuota se mantienen estables durante toda la vida del préstamo. En una hipoteca variable, el interés se revisa periódicamente según un índice de referencia, como el euríbor, por lo que la cuota puede subir o bajar. En una hipoteca mixta, hay un primer periodo a tipo fijo y después pasa a tipo variable.",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -124,8 +99,6 @@
   {
     "id": "round-023",
     "type": "MARKET_ROAST",
-    "title": "Cartera de amigos",
-    "text": "Elige tres amigos: uno para un plan tranquilo, otro para una fiesta y otro para una emergencia. El grupo vota si has elegido bien.",
     "successScore": 5,
     "failureScorePenalty": 5,
     "failureDrinks": 1,
@@ -135,9 +108,6 @@
   {
     "id": "round-016",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué es la volatilidad en los mercados?",
-    "answer": "La volatilidad mide cuánto varía el precio de un activo en un periodo de tiempo. A mayor volatilidad, mayores oscilaciones y mayor incertidumbre sobre su precio.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -148,8 +118,6 @@
   {
     "id": "round-006",
     "type": "STREET_CHALLENGE",
-    "title": "Prueba de calle",
-    "text": "Consigue que alguien de fuera del grupo diga una razón por la que Rocío debería casarse contigo.",
     "successScore": 15,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -159,9 +127,6 @@
   {
     "id": "round-024",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué es la prima de riesgo?",
-    "answer": "La prima de riesgo es la rentabilidad adicional que se exige a una inversión por asumir más riesgo frente a otra considerada más segura.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -172,8 +137,6 @@
   {
     "id": "round-012",
     "type": "HOSTILE_TAKEOVER",
-    "title": "OPA hostil",
-    "text": "Cuenta una anécdota que tus amigos saben y Rocío quizá no conoce del todo.",
     "successScore": 15,
     "failureScorePenalty": 20,
     "failureDrinks": 4,
@@ -183,9 +146,6 @@
   {
     "id": "round-029",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera avanzada",
-    "text": "¿Qué diferencia hay entre TIN y TAE en un préstamo?",
-    "answer": "El TIN es el tipo de interés nominal, es decir, el precio que la entidad cobra por prestar el dinero. La TAE incluye el TIN y también otros costes asociados, como comisiones o gastos, expresados de forma anual. Por eso la TAE suele ser más útil para comparar préstamos.",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -196,8 +156,6 @@
   {
     "id": "round-018",
     "type": "GAMBLER_QUESTION",
-    "title": "Pregunta gamberra",
-    "text": "¿Qué defecto tuyo debería conocer bien Rocío antes de casarse contigo?",
     "successScore": 10,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -207,9 +165,6 @@
   {
     "id": "round-013",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué significa diversificar una cartera de inversión?",
-    "answer": "Diversificar consiste en repartir la inversión entre distintos activos, sectores o mercados para reducir el riesgo de depender demasiado de una sola posición.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -220,8 +175,6 @@
   {
     "id": "round-021",
     "type": "HOSTILE_TAKEOVER",
-    "title": "OPA hostil",
-    "text": "Di una cosa en la que Rocío suele tener razón, aunque te cueste admitirlo.",
     "successScore": 15,
     "failureScorePenalty": 20,
     "failureDrinks": 4,
@@ -231,9 +184,6 @@
   {
     "id": "round-031",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera avanzada",
-    "text": "Un cliente pide un préstamo personal y otro una hipoteca. ¿Qué diferencias principales debería tener en cuenta el banco al analizar el riesgo?",
-    "answer": "En una hipoteca suele existir una garantía real, normalmente la vivienda, y el plazo suele ser más largo. En un préstamo personal normalmente no hay garantía hipotecaria específica, por lo que el análisis se centra más en ingresos, estabilidad laboral, endeudamiento, historial de pagos y capacidad de devolución. En ambos casos se analiza solvencia, importe, plazo, tipo de interés y finalidad.",
     "successScore": 15,
     "partialSuccessScore": 8,
     "failureScorePenalty": 12,
@@ -244,8 +194,6 @@
   {
     "id": "round-005",
     "type": "MARKET_ROAST",
-    "title": "Roast de mercado",
-    "text": "Divide al grupo en tres categorías: los tranquilos, los imprevisibles y los que son un peligro. El grupo decide si acepta tu clasificación.",
     "successScore": 5,
     "failureScorePenalty": 5,
     "failureDrinks": 1,
@@ -255,9 +203,6 @@
   {
     "id": "round-002",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué es una OPA?",
-    "answer": "Una OPA, u Oferta Pública de Adquisición, es una operación en la que una persona o sociedad ofrece públicamente a los accionistas de una empresa cotizada comprar sus acciones u otros valores a un precio determinado.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -268,8 +213,6 @@
   {
     "id": "round-020",
     "type": "SENTIMENTAL_MARKET",
-    "title": "Mercado sentimental",
-    "text": "¿Qué cualidad de Rocío te ayuda más cuando tienes un mal día?",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 10,
@@ -280,9 +223,6 @@
   {
     "id": "round-010",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué es un stop-loss?",
-    "answer": "Un stop-loss es una orden o regla de gestión del riesgo que busca limitar pérdidas cerrando una posición cuando el precio alcanza un nivel previamente definido.",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 8,
@@ -293,8 +233,6 @@
   {
     "id": "round-026",
     "type": "STREET_CHALLENGE",
-    "title": "Prueba de calle",
-    "text": "Pide a alguien que haga una recomendación rápida sobre ti: ¿Rocío debería elegirte, pensárselo o salir corriendo?",
     "successScore": 15,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -304,9 +242,6 @@
   {
     "id": "round-007",
     "type": "BANKING_STOCK_MARKET",
-    "title": "Cultura financiera",
-    "text": "¿Qué diferencia hay entre una OPA amistosa y una OPA hostil?",
-    "answer": "Una OPA amistosa cuenta con la aceptación o acuerdo de los órganos de gobierno de la sociedad afectada. Una OPA hostil se presenta sin esa aceptación previa.",
     "successScore": 12,
     "partialSuccessScore": 6,
     "failureScorePenalty": 10,
@@ -317,8 +252,6 @@
   {
     "id": "round-015",
     "type": "MARKET_ROAST",
-    "title": "Consejo de administración",
-    "text": "¿Qué amigo del grupo no debería ser responsable de organizar nada serio? Explica el motivo.",
     "successScore": 5,
     "failureScorePenalty": 5,
     "failureDrinks": 1,
@@ -328,8 +261,6 @@
   {
     "id": "round-008",
     "type": "SENTIMENTAL_MARKET",
-    "title": "Mercado sentimental",
-    "text": "¿Qué momento con Rocío recuerdas como uno de los más importantes de vuestra relación?",
     "successScore": 10,
     "partialSuccessScore": 5,
     "failureScorePenalty": 10,
@@ -340,8 +271,6 @@
   {
     "id": "round-003",
     "type": "HOSTILE_TAKEOVER",
-    "title": "OPA hostil",
-    "text": "Cuenta una decisión de soltero de la que hoy no estarías especialmente orgulloso.",
     "successScore": 15,
     "failureScorePenalty": 20,
     "failureDrinks": 4,
@@ -351,8 +280,6 @@
   {
     "id": "round-017",
     "type": "STREET_CHALLENGE",
-    "title": "Prueba de calle",
-    "text": "Haz un anuncio de 20 segundos explicando por qué Iñigo es una buena elección para casarse con Rocío.",
     "successScore": 15,
     "failureScorePenalty": 10,
     "failureDrinks": 2,
@@ -362,8 +289,6 @@
   {
     "id": "round-025",
     "type": "GAMBLER_QUESTION",
-    "title": "Pregunta gamberra",
-    "text": "¿Cuál diría Rocío que es tu mayor peligro como marido?",
     "successScore": 10,
     "failureScorePenalty": 10,
     "failureDrinks": 2,

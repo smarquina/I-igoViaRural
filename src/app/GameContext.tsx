@@ -51,10 +51,52 @@ interface GameContextValue {
   clearSavedGame: () => void;
 }
 
-const defaultConfig = configData as AppConfig;
-const rounds = roundsData as Round[];
-const auditQuestions = auditData as Round[];
-const availableWildcards = wildcardsData as Wildcard[];
+type RawRound = Omit<Round, "title" | "text" | "answer">;
+type RoundContent = { title: string; text: string; answer?: string };
+type WildcardContent = { name: string; description: string };
+type RawWildcard = Omit<Wildcard, "name" | "description" | "effect"> & {
+  effect: Wildcard["effect"] | { kind: string; effect?: Partial<Wildcard["effect"] extends { effect: infer Effect } ? Effect : never> };
+};
+
+const roundContentById = copy.gameContent.rounds as Record<string, RoundContent>;
+const wildcardContentById = copy.gameContent.wildcards as Record<string, WildcardContent>;
+const effectLabelById = copy.gameContent.effectLabels as Record<string, string>;
+
+function hydrateRound(round: RawRound): Round {
+  const content = roundContentById[round.id];
+
+  return {
+    ...round,
+    title: content.title,
+    text: content.text,
+    ...(content.answer ? { answer: content.answer } : {})
+  };
+}
+
+function hydrateWildcard(wildcard: RawWildcard): Wildcard {
+  const content = wildcardContentById[wildcard.id];
+  const effect = wildcard.effect.kind === "ADD_EFFECT"
+    ? {
+        ...wildcard.effect,
+        effect: {
+          ...wildcard.effect.effect,
+          label: effectLabelById[wildcard.effect.effect?.id ?? ""]
+        }
+      }
+    : wildcard.effect;
+
+  return {
+    ...wildcard,
+    name: content.name,
+    description: content.description,
+    effect: effect as Wildcard["effect"]
+  };
+}
+
+const defaultConfig = { ...configData, gameTitle: copy.app.gameTitle } as AppConfig;
+const rounds = (roundsData as RawRound[]).map(hydrateRound);
+const auditQuestions = (auditData as RawRound[]).map(hydrateRound);
+const availableWildcards = (wildcardsData as RawWildcard[]).map(hydrateWildcard);
 const roundDeck = buildRoundDeck(rounds, auditQuestions);
 
 const GameContext = createContext<GameContextValue | null>(null);

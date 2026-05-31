@@ -63,7 +63,7 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
                 <div className="flex items-start justify-between gap-2">
                   <span className="flex items-center gap-1.5 text-xs font-black uppercase">
                     <FontAwesomeIcon icon={wildcard.isDefensive ? faShieldHalved : faWandMagicSparkles} className="h-3.5 w-3.5" aria-hidden="true" />
-                    {wildcard.type}
+                    {copy.wildcards.typeLabels[wildcard.type]}
                   </span>
                   <button
                     type="button"

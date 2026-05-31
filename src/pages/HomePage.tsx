@@ -27,7 +27,7 @@ export function HomePage() {
             <div className="flex items-center gap-3">
               <img src="/icon.avif" alt="" className="h-12 w-12 rounded-xl object-cover shadow-sm" />
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-green">Despedida ViaRural Broker</p>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-green">{copy.app.gameTitle}</p>
                 <h1 className="mt-1 text-xl font-black leading-tight text-broker-ink">Iñigo Capital S.A.</h1>
               </div>
             </div>
