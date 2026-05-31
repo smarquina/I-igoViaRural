@@ -12,7 +12,7 @@ import {
 import {
   buildEffectiveConfig,
   clearGameState,
-  clearStartedGameFlag,
+  clearStoredAppData,
   hasSavedGame,
   loadSavedSettings,
   loadGameState,
@@ -85,8 +85,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [drawnWildcardOffer, setDrawnWildcardOffer] = useState<Wildcard | null>(null);
 
   useEffect(() => {
-    saveGameState(state);
-  }, [state]);
+    if (hasStarted) {
+      saveGameState(state);
+      return;
+    }
+
+    clearGameState();
+  }, [hasStarted, state]);
 
   const currentRound = useMemo(
     () => getCurrentRound(roundDeck, state.currentRoundIndex),
@@ -229,12 +234,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [config]);
 
   const clearSavedGame = useCallback(() => {
-    clearGameState();
-    clearStartedGameFlag();
+    clearStoredAppData();
+    const resetConfig = buildEffectiveConfig(defaultConfig, {});
+    setConfig(resetConfig);
     setHasStarted(false);
     setDrawnWildcardOffer(null);
-    setState(createFreshState(config));
-  }, [config]);
+    setState(createFreshState(resetConfig));
+  }, []);
 
   const value = useMemo<GameContextValue>(
     () => ({

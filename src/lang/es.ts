@@ -62,8 +62,8 @@ export const es = {
     dataVersion: (version: string) => `Versión de datos ${version}`,
     rules: "Reglas",
     mergerValue: "Valor de fusión",
-    restartGame: "Reiniciar partida",
-    restartConfirm: "¿Reiniciar la partida y limpiar el estado guardado?"
+    restartGame: "Restablecer partida",
+    restartConfirm: "¿Restablecer la partida y borrar todos los datos guardados en este navegador?"
   },
   mergerSettings: {
     title: "Valor de fusión",

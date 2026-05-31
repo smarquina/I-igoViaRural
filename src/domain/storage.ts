@@ -93,6 +93,16 @@ export function clearStartedGameFlag(): void {
   window.localStorage.removeItem(STORAGE_KEYS.HAS_STARTED_GAME);
 }
 
+export function clearStoredAppData(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  Object.values(STORAGE_KEYS).forEach((key) => {
+    window.localStorage.removeItem(key);
+  });
+}
+
 export function loadSavedSettings(): StoredSettings {
   if (typeof window === "undefined") {
     return {};

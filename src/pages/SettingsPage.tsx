@@ -46,16 +46,14 @@ export function SettingsPage() {
             <FontAwesomeIcon icon={faBullseye} className="h-4 w-4" aria-hidden="true" />
             {copy.settings.mergerValue}
           </Link>
-          {hasStartedGame ? (
-            <button
-              type="button"
-              onClick={handleReset}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-broker-bearish bg-broker-bearish/10 px-4 text-sm font-black text-broker-bearish"
-            >
-              <FontAwesomeIcon icon={faRotateRight} className="h-4 w-4" aria-hidden="true" />
-              {copy.settings.restartGame}
-            </button>
-          ) : null}
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-broker-bearish bg-broker-bearish/10 px-4 text-sm font-black text-broker-bearish"
+          >
+            <FontAwesomeIcon icon={faRotateRight} className="h-4 w-4" aria-hidden="true" />
+            {copy.settings.restartGame}
+          </button>
         </section>
       </main>
     </MobileShell>
