@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight, faCheck, faCircleXmark, faPercent, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import type { GamePhase, RoundResult } from "../../domain/types";
+import { copy } from "../../lang";
 
 interface RoundActionBarProps {
   phase: GamePhase;
@@ -19,7 +20,7 @@ export function RoundActionBar({ phase, allowsPartial, onResolve, onNext }: Roun
           className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-broker-green px-4 text-sm font-black text-white"
         >
           <FontAwesomeIcon icon={faAnglesRight} className="h-5 w-5" aria-hidden="true" />
-          Siguiente ronda
+          {copy.rounds.nextRound}
         </button>
       </div>
     );
@@ -33,7 +34,7 @@ export function RoundActionBar({ phase, allowsPartial, onResolve, onNext }: Roun
         className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-md border border-broker-bearish bg-broker-bearish/10 text-sm font-black text-broker-bearish"
       >
         <FontAwesomeIcon icon={faCircleXmark} className="h-4 w-4" aria-hidden="true" />
-        Fallo
+        {copy.rounds.failure}
       </button>
       {allowsPartial ? (
         <button
@@ -42,12 +43,12 @@ export function RoundActionBar({ phase, allowsPartial, onResolve, onNext }: Roun
           className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-md border border-broker-warning bg-broker-warning/20 text-sm font-black text-amber-800"
         >
           <FontAwesomeIcon icon={faPercent} className="h-4 w-4" aria-hidden="true" />
-          Parcial
+          {copy.rounds.partial}
         </button>
       ) : (
         <div className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-md border border-broker-border bg-broker-bg text-sm font-black text-broker-muted">
           <FontAwesomeIcon icon={faShieldHalved} className="h-4 w-4" aria-hidden="true" />
-          Sin parcial
+          {copy.rounds.noPartial}
         </div>
       )}
       <button
@@ -56,7 +57,7 @@ export function RoundActionBar({ phase, allowsPartial, onResolve, onNext }: Roun
         className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-md bg-broker-green text-sm font-black text-white"
       >
         <FontAwesomeIcon icon={faCheck} className="h-4 w-4" aria-hidden="true" />
-        Acierto
+        {copy.rounds.success}
       </button>
     </div>
   );

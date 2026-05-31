@@ -4,6 +4,7 @@ import {
   ORDINARY_MAX_DRINKS
 } from "./constants";
 import type { GameEffect, GameState, Round, RoundResult, ScoreResult } from "./types";
+import { copy } from "../lang";
 
 function getBaseScore(round: Round, result: RoundResult): ScoreResult {
   if (result === "SUCCESS") {
@@ -85,7 +86,7 @@ export function calculateRoundResultScore(
     return {
       scoreDelta: withEffects.scoreDelta - CRITICAL_ZONE_EXTRA_SCORE_PENALTY,
       drinks: Math.min(withEffects.drinks + CRITICAL_ZONE_EXTRA_DRINKS, ORDINARY_MAX_DRINKS),
-      appliedEffectLabels: [...withEffects.appliedEffectLabels, "Recargo por Zona Crítica"]
+      appliedEffectLabels: [...withEffects.appliedEffectLabels, copy.messages.criticalZoneSurcharge]
     };
   }
 
@@ -94,4 +95,3 @@ export function calculateRoundResultScore(
     drinks: Math.min(withEffects.drinks, ORDINARY_MAX_DRINKS)
   };
 }
-

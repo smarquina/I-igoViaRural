@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
 import { MarketHeader } from "../components/market/MarketHeader";
+import { copy } from "../lang";
 
 export function MergerTargetSettingsPage() {
   const { config, updateMergerTargetScore } = useGame();
@@ -18,12 +19,12 @@ export function MergerTargetSettingsPage() {
     const parsedScore = Number(targetScore);
 
     if (!Number.isInteger(parsedScore) || parsedScore < minTargetScore) {
-      setStatusMessage(`Introduce un valor entero de ${minTargetScore} puntos o más.`);
+      setStatusMessage(copy.mergerSettings.invalidScore(minTargetScore));
       return;
     }
 
     updateMergerTargetScore(parsedScore);
-    setStatusMessage(`Valor de fusión guardado en ${parsedScore} puntos.`);
+    setStatusMessage(copy.mergerSettings.savedScore(parsedScore));
   };
 
   return (
@@ -32,7 +33,7 @@ export function MergerTargetSettingsPage() {
       <main className="flex-1 overflow-y-auto px-4 py-5">
         <Link to="/settings" className="inline-flex items-center gap-2 text-sm font-bold text-broker-muted">
           <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4" aria-hidden="true" />
-          Volver
+          {copy.common.back}
         </Link>
 
         <div className="mt-5 flex items-center gap-3">
@@ -40,14 +41,14 @@ export function MergerTargetSettingsPage() {
             <FontAwesomeIcon icon={faBullseye} className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
-            <h1 className="text-2xl font-black text-broker-ink">Valor de fusión</h1>
-            <p className="text-sm text-broker-muted">Objetivo actual: {config.mergerTargetScore} puntos</p>
+            <h1 className="text-2xl font-black text-broker-ink">{copy.mergerSettings.title}</h1>
+            <p className="text-sm text-broker-muted">{copy.mergerSettings.currentTarget(config.mergerTargetScore)}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-5 rounded-md border border-broker-border bg-broker-surface p-4">
           <label htmlFor="merger-target-score" className="text-sm font-black text-broker-ink">
-            Puntos necesarios para el Cierre de Fusión
+            {copy.mergerSettings.label}
           </label>
           <input
             id="merger-target-score"
@@ -60,7 +61,7 @@ export function MergerTargetSettingsPage() {
             className="mt-2 min-h-12 w-full rounded-md border border-broker-border bg-broker-bg px-3 text-lg font-black text-broker-ink outline-none focus:border-broker-green"
           />
           <p className="mt-2 text-xs leading-relaxed text-broker-muted">
-            Este valor se guarda en el navegador y sobrescribe el objetivo por defecto de 190 puntos.
+            {copy.mergerSettings.help}
           </p>
 
           <button
@@ -68,7 +69,7 @@ export function MergerTargetSettingsPage() {
             className="mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-broker-green px-4 text-sm font-black text-white"
           >
             <FontAwesomeIcon icon={faFloppyDisk} className="h-4 w-4" aria-hidden="true" />
-            Guardar valor
+            {copy.mergerSettings.save}
           </button>
         </form>
 

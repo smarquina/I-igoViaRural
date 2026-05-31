@@ -1,4 +1,5 @@
 import type { AppConfig } from "../../domain/types";
+import { copy } from "../../lang";
 
 interface ScoreProgressProps {
   config: AppConfig;
@@ -8,11 +9,11 @@ interface ScoreProgressProps {
 export function ScoreProgress({ config, score }: ScoreProgressProps) {
   const mergerTarget = config.mergerTargetScore;
   const markers = [
-    { value: config.bailoutScore, label: "Rescate" },
-    { value: config.criticalZoneScore, label: "Crítica" },
-    { value: config.stableMarketScore, label: "Estable" },
-    { value: config.hotMarketScore, label: "Caliente" },
-    { value: mergerTarget, label: "Fusión" }
+    { value: config.bailoutScore, label: copy.market.progressLabels.bailout },
+    { value: config.criticalZoneScore, label: copy.market.progressLabels.critical },
+    { value: config.stableMarketScore, label: copy.market.progressLabels.stable },
+    { value: config.hotMarketScore, label: copy.market.progressLabels.hot },
+    { value: mergerTarget, label: copy.market.progressLabels.merger }
   ];
   const bailoutWidth = (config.bailoutScore / mergerTarget) * 100;
   const criticalWidth = ((config.criticalZoneScore - config.bailoutScore) / mergerTarget) * 100;
@@ -24,7 +25,7 @@ export function ScoreProgress({ config, score }: ScoreProgressProps) {
   const markerLeft = `clamp(28px, ${percent}%, calc(100% - 28px))`;
 
   return (
-    <div aria-label={`Progreso hacia la fusión: ${score} de ${mergerTarget} puntos`}>
+    <div aria-label={copy.market.progressToMerger(score, mergerTarget)}>
       <div className="relative h-8 overflow-hidden rounded-full bg-broker-border">
         <div className="absolute inset-y-0 left-0 bg-broker-bearish" style={{ width: `${bailoutWidth}%` }} />
         <div className="absolute inset-y-0 bg-red-800" style={{ left: `${bailoutWidth}%`, width: `${criticalWidth}%` }} />
@@ -38,9 +39,9 @@ export function ScoreProgress({ config, score }: ScoreProgressProps) {
         <div
           className="absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 bg-broker-bg px-2 py-0.5 text-[11px] font-black text-broker-ink shadow-sm"
           style={{ left: markerLeft }}
-          aria-label={`Valor actual: ${score} puntos`}
+          aria-label={copy.market.currentValue(score)}
         >
-          {score} pts
+          {score} {copy.common.pointsShort}
         </div>
       </div>
       <div className="relative mt-2 h-10 text-[10px] text-broker-muted">

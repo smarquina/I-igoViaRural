@@ -28,6 +28,7 @@ import {
 import { calculateMarketStatus } from "../domain/marketStatusEngine";
 import type { AppConfig, BailoutChoice, GameState, Round, RoundResult, Wildcard } from "../domain/types";
 import { isPositiveWildcard, useWildcard as applyWildcard } from "../domain/wildcardEngine";
+import { copy } from "../lang";
 
 interface GameContextValue {
   config: AppConfig;
@@ -147,7 +148,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       ) {
         return {
           ...previousState,
-          lastEventMessage: "Solo se puede robar una carta al inicio de cada ronda."
+          lastEventMessage: copy.wildcards.onlyAtRoundStart
         };
       }
 
@@ -161,7 +162,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         return {
           ...previousState,
           hasDrawnWildcardThisRound: true,
-          lastEventMessage: "No quedan catalizadores disponibles en el mazo local."
+          lastEventMessage: copy.wildcards.deckEmpty
         };
       }
 
@@ -170,7 +171,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         return {
           ...previousState,
           hasDrawnWildcardThisRound: true,
-          lastEventMessage: `Catalizador positivo robado: ${nextWildcard.name}. Decide si guardarlo o activarlo ahora.`
+          lastEventMessage: copy.wildcards.positiveDrawn(nextWildcard.name)
         };
       }
 
@@ -181,7 +182,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
       return {
         ...applyWildcard(stateWithDrawFlag, nextWildcard, config),
-        lastEventMessage: `Catalizador negativo aplicado inmediatamente: ${nextWildcard.name}.`
+        lastEventMessage: copy.wildcards.negativeApplied(nextWildcard.name)
       };
     });
   }, [config, drawnWildcardOffer]);
@@ -195,7 +196,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       return {
         ...previousState,
         accumulatedWildcards: [...previousState.accumulatedWildcards, drawnWildcardOffer],
-        lastEventMessage: `Catalizador guardado en cartera: ${drawnWildcardOffer.name}.`
+        lastEventMessage: copy.wildcards.saved(drawnWildcardOffer.name)
       };
     });
     setDrawnWildcardOffer(null);
@@ -287,7 +288,7 @@ export function useGame() {
   const value = useContext(GameContext);
 
   if (!value) {
-    throw new Error("useGame must be used inside GameProvider");
+    throw new Error(copy.errors.gameProviderRequired);
   }
 
   return value;

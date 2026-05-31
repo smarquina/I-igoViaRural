@@ -3,6 +3,7 @@ import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
+import { copy } from "../lang";
 
 export function GameOverPage() {
   const { state, startNewGame } = useGame();
@@ -19,27 +20,27 @@ export function GameOverPage() {
       <main className="flex flex-1 flex-col justify-between px-5 py-7">
         <section>
           <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-lime">
-            {isApproved ? "Operación aprobada" : "Cierre manual"}
+            {isApproved ? copy.gameOver.approvedEyebrow : copy.gameOver.manualEyebrow}
           </p>
           <h1 className="mt-3 text-3xl font-black leading-tight text-broker-ink">
-            {isApproved ? "Fusión aprobada" : "Partida cerrada"}
+            {isApproved ? copy.gameOver.approvedTitle : copy.gameOver.manualTitle}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-broker-muted">
             {isApproved
-              ? "Iñigo Capital S.A. y Rocío Holdings quedan autorizadas para la operación."
-              : "El Consejo de Administración ha cerrado la sesión bursátil."}
+              ? copy.gameOver.approvedText
+              : copy.gameOver.manualText}
           </p>
 
           <dl className="mt-8 grid grid-cols-2 gap-3">
             {[
-              ["Puntuación", `${state.score} pts`],
-              ["Rondas", String(state.resolvedRoundIds.length)],
-              ["Aciertos", String(state.totalSuccesses)],
-              ["Parciales", String(state.totalPartialSuccesses)],
-              ["Fallos", String(state.totalFailures)],
-              ["Tragos", String(state.totalDrinks)],
-              ["Catalizadores aplicados", String(state.usedWildcardIds.length)],
-              ["Mayor cotización", `${Math.max(...state.scoreHistory)} pts`]
+              [copy.gameOver.stats.score, `${state.score} ${copy.common.pointsShort}`],
+              [copy.gameOver.stats.rounds, String(state.resolvedRoundIds.length)],
+              [copy.gameOver.stats.successes, String(state.totalSuccesses)],
+              [copy.gameOver.stats.partials, String(state.totalPartialSuccesses)],
+              [copy.gameOver.stats.failures, String(state.totalFailures)],
+              [copy.gameOver.stats.drinks, String(state.totalDrinks)],
+              [copy.gameOver.stats.appliedCatalysts, String(state.usedWildcardIds.length)],
+              [copy.gameOver.stats.maxQuote, `${Math.max(...state.scoreHistory)} ${copy.common.pointsShort}`]
             ].map(([label, value]) => (
               <div key={label} className="rounded-md border border-broker-border bg-broker-surface p-3">
                 <dt className="text-xs text-broker-muted">{label}</dt>
@@ -56,13 +57,13 @@ export function GameOverPage() {
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-broker-green px-4 text-sm font-black text-white"
           >
             <FontAwesomeIcon icon={faRotateRight} className="h-4 w-4" aria-hidden="true" />
-            Nueva sesión
+            {copy.gameOver.newSession}
           </button>
           <Link
             to="/"
             className="inline-flex min-h-12 w-full items-center justify-center rounded-md border border-broker-border bg-broker-surface px-4 text-sm font-black text-broker-ink"
           >
-            Volver al inicio
+            {copy.gameOver.backHome}
           </Link>
         </section>
       </main>

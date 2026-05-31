@@ -6,6 +6,7 @@ import {
   STABLE_MARKET_SCORE
 } from "./constants";
 import type { AppConfig, MarketStatus } from "./types";
+import { copy } from "../lang";
 
 type MarketThresholds = Pick<
   AppConfig,
@@ -49,40 +50,31 @@ export function calculateMarketStatus(score: number, config?: MarketThresholds):
 }
 
 export function getMarketStatusLabel(status: MarketStatus): string {
-  const labels: Record<MarketStatus, string> = {
-    MERGER_ATTEMPT: "Cierre de Fusión disponible",
-    HOT_MARKET: "Mercado caliente",
-    STABLE_MARKET: "Mercado estable",
-    WEAK_MARKET: "Mercado débil",
-    CRITICAL_ZONE: "Zona crítica",
-    BAILOUT_REQUIRED: "Rescate bancario obligatorio"
-  };
-
-  return labels[status];
+  return copy.market.statusLabels[status];
 }
 
 export function getNextThreshold(score: number, config?: MarketThresholds): string {
   const thresholds = getThresholds(config);
 
   if (score <= thresholds.bailoutScore) {
-    return "Elegir rescate";
+    return copy.market.nextThresholds.chooseBailout;
   }
 
   if (score < thresholds.criticalZoneScore) {
-    return `${thresholds.criticalZoneScore + 1} pts para salir de quiebra severa`;
+    return copy.market.nextThresholds.leaveSevereBankruptcy(thresholds.criticalZoneScore + 1);
   }
 
   if (score < thresholds.stableMarketScore) {
-    return `${thresholds.stableMarketScore} pts para mercado estable`;
+    return copy.market.nextThresholds.stableMarket(thresholds.stableMarketScore);
   }
 
   if (score < thresholds.hotMarketScore) {
-    return `${thresholds.hotMarketScore} pts para mercado caliente`;
+    return copy.market.nextThresholds.hotMarket(thresholds.hotMarketScore);
   }
 
   if (score < thresholds.mergerTargetScore) {
-    return `${thresholds.mergerTargetScore} pts para cierre`;
+    return copy.market.nextThresholds.closeMerger(thresholds.mergerTargetScore);
   }
 
-  return "Due Diligence final";
+  return copy.market.nextThresholds.finalDueDiligence;
 }

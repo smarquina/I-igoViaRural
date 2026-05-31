@@ -1,5 +1,6 @@
 import { STORAGE_KEYS } from "./constants";
 import type { AppConfig, GameState } from "./types";
+import { copy } from "../lang";
 
 interface StoredSettings {
   mergerTargetScore?: number;
@@ -12,7 +13,7 @@ function buildLegacyTimeline(scoreHistory: number[]) {
   return scoreHistory.map((score, index) => ({
     score,
     timestamp: new Date(sessionStart.getTime() + index * 5 * 60 * 1000).toISOString(),
-    event: index === 0 ? "Apertura de sesión" : `Movimiento histórico ${index}`
+    event: index === 0 ? copy.timeline.sessionOpening : copy.timeline.historicalMove(index)
   }));
 }
 
@@ -30,7 +31,7 @@ function normalizeGameState(state: GameState): GameState {
     hasDrawnWildcardThisRound: withTimeline.hasDrawnWildcardThisRound ?? false,
     shownRoundIds: withTimeline.shownRoundIds ?? withTimeline.resolvedRoundIds ?? [],
     lastEventMessage:
-      withTimeline.lastEventMessage === "Se abre la sesión." ? undefined : withTimeline.lastEventMessage
+      withTimeline.lastEventMessage === copy.messages.oldSessionOpening ? undefined : withTimeline.lastEventMessage
   };
 }
 

@@ -1,6 +1,7 @@
 import { createChart, AreaSeries, LineStyle, type IChartApi, type ISeriesApi, type UTCTimestamp } from "lightweight-charts";
 import { useEffect, useMemo, useRef } from "react";
 import type { ScoreTimelinePoint } from "../../domain/types";
+import { copy } from "../../lang";
 
 interface MiniMarketChartProps {
   history: number[];
@@ -100,7 +101,7 @@ export function MiniMarketChart({
       lineStyle: LineStyle.Dashed,
       axisLabelVisible: showExtremes,
       lineVisible: showExtremes,
-      title: "Máx."
+      title: copy.market.chartExtremeMax
     });
     series.createPriceLine({
       price: min,
@@ -109,7 +110,7 @@ export function MiniMarketChart({
       lineStyle: LineStyle.Dashed,
       axisLabelVisible: showExtremes,
       lineVisible: showExtremes,
-      title: "Mín."
+      title: copy.market.chartExtremeMin
     });
 
     chart.timeScale().fitContent();
@@ -138,17 +139,17 @@ export function MiniMarketChart({
         ref={containerRef}
         className={showExtremes ? "h-48 w-full" : "h-16 w-full"}
         role="img"
-        aria-label={`Evolución de la cotización. Máximo ${max} puntos, mínimo ${min} puntos.`}
+        aria-label={copy.market.chartEvolution(max, min)}
       />
       {showExtremes && showExtremeSummary ? (
         <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
           <div className="rounded-md bg-broker-soft px-3 py-2">
-            <span className="block text-broker-muted">Máximo sesión</span>
-            <strong className="text-base text-broker-greenDark">{max} pts</strong>
+            <span className="block text-broker-muted">{copy.market.sessionMax}</span>
+            <strong className="text-base text-broker-greenDark">{max} {copy.common.pointsShort}</strong>
           </div>
           <div className="rounded-md bg-broker-bg px-3 py-2">
-            <span className="block text-broker-muted">Mínimo sesión</span>
-            <strong className="text-base text-broker-bearish">{min} pts</strong>
+            <span className="block text-broker-muted">{copy.market.sessionMin}</span>
+            <strong className="text-base text-broker-bearish">{min} {copy.common.pointsShort}</strong>
           </div>
         </div>
       ) : null}

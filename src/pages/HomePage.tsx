@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
 import { GameRulesOnboarding } from "../components/onboarding/GameRulesOnboarding";
+import { copy } from "../lang";
 
 export function HomePage() {
   const { hasStartedGame, startNewGame } = useGame();
@@ -33,15 +34,15 @@ export function HomePage() {
             <Link
               to="/settings"
               className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-broker-border bg-broker-surface text-broker-ink"
-              aria-label="Abrir configuración"
+              aria-label={copy.app.openSettings}
             >
               <FontAwesomeIcon icon={faBars} className="h-5 w-5" aria-hidden="true" />
             </Link>
           </div>
         </header>
 
-        <section className="flex flex-1 items-center py-6" aria-label="Explicación inicial del juego">
-          <GameRulesOnboarding finalLabel="Comenzar partida" onComplete={handleNewGame} onSkip={handleNewGame} />
+        <section className="flex flex-1 items-center py-6" aria-label={copy.home.initialExplanation}>
+          <GameRulesOnboarding finalLabel={copy.home.startGame} onComplete={handleNewGame} onSkip={handleNewGame} />
         </section>
       </main>
     </MobileShell>

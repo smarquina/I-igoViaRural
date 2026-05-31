@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { GameEffect, GameState, Wildcard } from "../../domain/types";
 import { ActiveEffectsBar } from "../effects/ActiveEffectsBar";
 import { canUseWildcard } from "../../domain/wildcardEngine";
+import { copy } from "../../lang";
 
 interface WildcardDeckPanelProps {
   state: GameState;
@@ -28,9 +29,9 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
     <section className="rounded-md border border-broker-border bg-broker-elevated p-3">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-black text-broker-ink">Catalizadores acumulados</h2>
+          <h2 className="text-sm font-black text-broker-ink">{copy.wildcards.accumulated}</h2>
           <p className="text-xs text-broker-muted">
-            {wildcards.length} en cartera · {state.hasDrawnWildcardThisRound ? "catalizador robado" : "roba catalizador al inicio"}
+            {copy.wildcards.inPortfolio(wildcards.length)} · {state.hasDrawnWildcardThisRound ? copy.wildcards.catalystDrawn : copy.wildcards.drawAtStart}
           </p>
         </div>
         <button
@@ -40,14 +41,14 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
           className="inline-flex h-10 items-center gap-1.5 rounded-md border border-broker-border bg-broker-surface px-3 text-xs font-bold text-broker-ink disabled:cursor-not-allowed disabled:opacity-45"
         >
           <FontAwesomeIcon icon={faPlus} className="h-3.5 w-3.5" aria-hidden="true" />
-          Robar catalizador
+          {copy.wildcards.draw}
         </button>
       </div>
 
       <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
         {wildcards.length === 0 ? (
           <div className="min-h-16 w-full rounded-md border border-dashed border-broker-border p-3 text-xs text-broker-muted">
-            Sin catalizadores acumulados.
+            {copy.wildcards.empty}
           </div>
         ) : (
           wildcards.map((wildcard) => {
@@ -68,7 +69,7 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
                     type="button"
                     onClick={() => setHintWildcardId(isHintOpen ? null : wildcard.id)}
                     className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-broker-border bg-broker-bg text-broker-ink"
-                    aria-label={`Ver ayuda de ${wildcard.name}`}
+                    aria-label={copy.wildcards.helpFor(wildcard.name)}
                     aria-expanded={isHintOpen}
                   >
                     <FontAwesomeIcon icon={faCircleQuestion} className="h-3.5 w-3.5" aria-hidden="true" />
@@ -86,7 +87,7 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
                   onClick={() => onUse(wildcard.id)}
                   className="mt-3 min-h-10 w-full rounded-md bg-broker-green px-3 text-xs font-black text-white disabled:cursor-not-allowed disabled:bg-broker-border disabled:text-broker-muted"
                 >
-                  Activar
+                  {copy.wildcards.activate}
                 </button>
               </div>
             );
@@ -94,7 +95,7 @@ export function WildcardDeckPanel({ state, wildcards, effects, onUse, onDraw }: 
         )}
       </div>
       <div className="mt-3 border-t border-broker-border pt-3">
-        <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-broker-muted">Efectos acumulados</p>
+        <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-broker-muted">{copy.wildcards.accumulatedEffects}</p>
         <ActiveEffectsBar effects={effects} />
       </div>
     </section>

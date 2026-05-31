@@ -3,6 +3,7 @@ import { decrementRoundEffects } from "./effectEngine";
 import { calculateMarketStatus } from "./marketStatusEngine";
 import { calculateRoundResultScore } from "./scoreEngine";
 import type { AppConfig, BailoutChoice, GameState, Round, RoundResult, Wildcard } from "./types";
+import { copy } from "../lang";
 
 function createScorePoint(score: number, event: string) {
   return {
@@ -42,7 +43,7 @@ export function createInitialGameState(config: AppConfig, initialWildcards: Wild
     hasUsedWildcardThisRound: false,
     hasDrawnWildcardThisRound: false,
     scoreHistory: [config.initialScore],
-    scoreTimeline: [createScorePoint(config.initialScore, "Apertura de sesión")],
+    scoreTimeline: [createScorePoint(config.initialScore, copy.timeline.sessionOpening)],
     totalDrinks: 0,
     totalSuccesses: 0,
     totalFailures: 0,
@@ -95,7 +96,7 @@ export function resolveRound(state: GameState, round: Round, result: RoundResult
     score: nextScore,
     marketStatus: calculateMarketStatus(nextScore, config),
     scoreHistory: [...state.scoreHistory, nextScore],
-    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, `Ronda ${state.roundNumber}: ${round.title}`)],
+    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.roundEvent(state.roundNumber, round.title))],
     totalDrinks: state.totalDrinks + scoreResult.drinks,
     totalSuccesses: state.totalSuccesses + (result === "SUCCESS" ? 1 : 0),
     totalFailures: state.totalFailures + (result === "FAILURE" ? 1 : 0),
@@ -106,7 +107,7 @@ export function resolveRound(state: GameState, round: Round, result: RoundResult
     lastDrinkPenalty: scoreResult.drinks,
     lastEventMessage:
       scoreResult.appliedEffectLabels.length > 0
-        ? `Efectos aplicados: ${scoreResult.appliedEffectLabels.join(", ")}.`
+        ? copy.messages.appliedEffects(scoreResult.appliedEffectLabels)
         : undefined
   };
 }
@@ -174,7 +175,7 @@ export function applyMergerAttemptResult(state: GameState, successfulPhases: num
       ...state,
       isGameFinished: true,
       gameResult: "MERGER_APPROVED",
-      lastEventMessage: "Fusión aprobada por el Consejo de Administración."
+      lastEventMessage: copy.messages.mergerApproved
     };
   }
 
@@ -184,12 +185,12 @@ export function applyMergerAttemptResult(state: GameState, successfulPhases: num
     ...state,
     score: nextScore,
     scoreHistory: [...state.scoreHistory, nextScore],
-    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, "Cierre de Fusión fallido")],
+    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.mergerFailed)],
     marketStatus: calculateMarketStatus(nextScore, config),
     totalDrinks: state.totalDrinks + MERGER_FAILURE_DRINKS,
     lastScoreDelta: -MERGER_FAILURE_SCORE_PENALTY,
     lastDrinkPenalty: MERGER_FAILURE_DRINKS,
-    lastEventMessage: "La fusión no se cierra todavía. Vuelve el mercado."
+    lastEventMessage: copy.messages.mergerFailed
   };
 }
 
@@ -200,12 +201,12 @@ export function applyBailoutChoice(state: GameState, choice: BailoutChoice, conf
       ...state,
       score: nextScore,
       scoreHistory: [...state.scoreHistory, nextScore],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, "Rescate con liquidez")],
+      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.bailoutLiquidity)],
       marketStatus: calculateMarketStatus(nextScore, config),
       totalDrinks: state.totalDrinks + 5,
       lastScoreDelta: 20,
       lastDrinkPenalty: 5,
-      lastEventMessage: "Rescate con liquidez ejecutado."
+      lastEventMessage: copy.messages.bailoutLiquidity
     };
   }
 
@@ -215,12 +216,12 @@ export function applyBailoutChoice(state: GameState, choice: BailoutChoice, conf
       ...state,
       score: nextScore,
       scoreHistory: [...state.scoreHistory, nextScore],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, "Venta de activos")],
+      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.assetSale)],
       marketStatus: calculateMarketStatus(nextScore, config),
       accumulatedWildcards: [],
       lastScoreDelta: 25,
       lastDrinkPenalty: 0,
-      lastEventMessage: "Venta de activos ejecutada. Catalizadores liquidados."
+      lastEventMessage: copy.messages.assetSale
     };
   }
 
@@ -229,11 +230,11 @@ export function applyBailoutChoice(state: GameState, choice: BailoutChoice, conf
       ...state,
       score: 90,
       scoreHistory: [...state.scoreHistory, 90],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(90, "Auditoría extraordinaria superada")],
+      scoreTimeline: [...state.scoreTimeline, createScorePoint(90, copy.timeline.extraAuditSuccess)],
       marketStatus: calculateMarketStatus(90, config),
       lastScoreDelta: 90 - state.score,
       lastDrinkPenalty: 0,
-      lastEventMessage: "Auditoría extraordinaria superada."
+      lastEventMessage: copy.messages.extraAuditSuccess
     };
   }
 
@@ -241,11 +242,11 @@ export function applyBailoutChoice(state: GameState, choice: BailoutChoice, conf
     ...state,
     score: 50,
     scoreHistory: [...state.scoreHistory, 50],
-    scoreTimeline: [...state.scoreTimeline, createScorePoint(50, "Auditoría extraordinaria fallida")],
+    scoreTimeline: [...state.scoreTimeline, createScorePoint(50, copy.timeline.extraAuditFailure)],
     marketStatus: calculateMarketStatus(50, config),
     totalDrinks: state.totalDrinks + 5,
     lastScoreDelta: 50 - state.score,
     lastDrinkPenalty: 5,
-    lastEventMessage: "Auditoría extraordinaria fallida."
+    lastEventMessage: copy.messages.extraAuditFailure
   };
 }

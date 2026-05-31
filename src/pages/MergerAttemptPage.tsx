@@ -5,12 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
 import { MarketHeader } from "../components/market/MarketHeader";
+import { copy } from "../lang";
 
-const phases = [
-  "Pregunta de Rocío",
-  "Pregunta del mercado",
-  "Declaración de inversión"
-];
+const phases = copy.merger.phases;
 
 export function MergerAttemptPage() {
   const { applyMergerResult } = useGame();
@@ -29,10 +26,10 @@ export function MergerAttemptPage() {
       <MarketHeader />
       <main className="flex-1 overflow-y-auto px-4 py-5">
         <div className="rounded-md border border-broker-merger bg-broker-merger/15 p-4">
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-merger">Due Diligence final</p>
-          <h1 className="mt-2 text-2xl font-black text-broker-ink">Cierre de Fusión</h1>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-broker-merger">{copy.merger.eyebrow}</p>
+          <h1 className="mt-2 text-2xl font-black text-broker-ink">{copy.merger.title}</h1>
           <p className="mt-3 text-sm leading-relaxed text-broker-greenDark">
-            Para aprobar la operación debe superar al menos 2 de las 3 fases exigidas por el Consejo.
+            {copy.merger.text}
           </p>
         </div>
 
@@ -61,7 +58,7 @@ export function MergerAttemptPage() {
           onClick={handleSubmit}
           className="mt-5 min-h-12 w-full rounded-md bg-broker-green px-4 text-sm font-black text-white"
         >
-          Registrar resultado ({successfulPhases}/3)
+          {copy.merger.registerResult(successfulPhases)}
         </button>
       </main>
     </MobileShell>

@@ -1,6 +1,7 @@
 import { hasLimitedLiquidity, upsertEffect } from "./effectEngine";
 import { calculateMarketStatus } from "./marketStatusEngine";
 import type { AppConfig, GameState, Wildcard } from "./types";
+import { copy } from "../lang";
 
 function createScorePoint(score: number, event: string) {
   return {
@@ -36,15 +37,15 @@ export function applyMarketReset(state: GameState, drinks = 0, wildcardId = "wil
     lastDrinkPenalty: drinks,
     lastEventMessage:
       drinks > 0
-        ? `Reset de Mercado aplicado. Coste regulatorio: ${drinks} tragos.`
-        : "Reset de Mercado aplicado.",
+        ? copy.messages.marketResetWithCost(drinks)
+        : copy.messages.marketReset,
     usedWildcardIds: [...state.usedWildcardIds, wildcardId]
   };
 }
 
 export function useWildcard(state: GameState, wildcard: Wildcard, config?: AppConfig): GameState {
   if (!canUseWildcard(state, wildcard)) {
-    throw new Error("Only one wildcard can be used per round");
+    throw new Error(copy.errors.oneWildcardPerRound);
   }
 
   const removeUsedWildcard = state.accumulatedWildcards.filter((item) => item.id !== wildcard.id);
@@ -68,7 +69,7 @@ export function useWildcard(state: GameState, wildcard: Wildcard, config?: AppCo
       }),
       hasUsedWildcardThisRound: true,
       usedWildcardIds,
-      lastEventMessage: `${wildcard.name} activado.`
+      lastEventMessage: copy.messages.wildcardActivated(wildcard.name)
     };
   }
 
@@ -87,7 +88,7 @@ export function useWildcard(state: GameState, wildcard: Wildcard, config?: AppCo
       }),
       hasUsedWildcardThisRound: true,
       usedWildcardIds,
-      lastEventMessage: `${wildcard.name} limita la pérdida de esta ronda.`
+      lastEventMessage: copy.messages.wildcardLimitsLoss(wildcard.name)
     };
   }
 
@@ -106,6 +107,6 @@ export function useWildcard(state: GameState, wildcard: Wildcard, config?: AppCo
     totalDrinks: state.totalDrinks + drinks,
     lastScoreDelta: wildcard.effect.scoreDelta,
     lastDrinkPenalty: drinks,
-    lastEventMessage: `${wildcard.name} aplicado.`
+    lastEventMessage: copy.messages.wildcardApplied(wildcard.name)
   };
 }
