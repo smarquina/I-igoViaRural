@@ -48,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint-test-and-build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RURALHOLDINGS }}
 
     steps:
       - name: Checkout
@@ -69,12 +71,17 @@ jobs:
           path: dist/
 
       - name: Configure Firebase credentials
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RURALHOLDINGS }}
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-service-account.json"
 
+      - name: Skip deploy without Firebase credentials
+        if: env.FIREBASE_SERVICE_ACCOUNT == ''
+        run: |
+          echo "::notice::Skipping Firebase deploy because FIREBASE_SERVICE_ACCOUNT_RURALHOLDINGS is not configured."
+
       - name: Deploy live channel
+        if: env.FIREBASE_SERVICE_ACCOUNT != ''
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
         run: npx -y firebase-tools@15.18.0 deploy --only hosting --project ruralholdings
