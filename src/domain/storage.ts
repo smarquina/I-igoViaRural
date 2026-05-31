@@ -26,6 +26,7 @@ function normalizeGameState(state: GameState): GameState {
 
   return {
     ...withTimeline,
+    roundNumber: withTimeline.roundNumber ?? (withTimeline.resolvedRoundIds?.length ?? 0) + 1,
     hasDrawnWildcardThisRound: withTimeline.hasDrawnWildcardThisRound ?? false,
     shownRoundIds: withTimeline.shownRoundIds ?? withTimeline.resolvedRoundIds ?? [],
     lastEventMessage:

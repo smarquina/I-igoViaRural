@@ -56,6 +56,7 @@ export function createSampleState(overrides: Partial<GameState> = {}): GameState
     brideName: "Rocío",
     score,
     currentRoundIndex: 0,
+    roundNumber: 1,
     marketStatus: calculateMarketStatus(score),
     accumulatedWildcards: [sampleWildcard],
     activeEffects: [],

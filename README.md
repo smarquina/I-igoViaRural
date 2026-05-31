@@ -233,6 +233,7 @@ Persisted state includes:
 
 - Current score.
 - Current round index.
+- Visible round number, sequential and independent from the randomized question index.
 - Market status.
 - Accumulated catalysts.
 - Active effects.

@@ -175,6 +175,7 @@ El estado persistido incluye:
 
 - Puntuacion actual.
 - Indice de ronda actual.
+- Numero visible de ronda (`roundNumber`), secuencial y separado del indice aleatorio de pregunta.
 - Estado de mercado.
 - Catalizadores acumulados.
 - Efectos activos.
@@ -235,6 +236,7 @@ Al pulsar Fallo, Parcial o Acierto:
 - Se actualiza historial y timeline.
 - Se registra el ID en `resolvedRoundIds`.
 - Se elige la siguiente ronda aleatoria.
+- Se incrementa `roundNumber`, que es el numero visible para el usuario.
 - Se resetea el uso/robo de catalizador de la ronda.
 - Se muestra modal animada de nueva ronda durante 4 segundos.
 

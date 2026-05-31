@@ -35,6 +35,7 @@ export function createInitialGameState(config: AppConfig, initialWildcards: Wild
     brideName: config.brideName,
     score: config.initialScore,
     currentRoundIndex: 0,
+    roundNumber: 1,
     marketStatus: calculateMarketStatus(config.initialScore, config),
     accumulatedWildcards: initialWildcards,
     activeEffects: [],
@@ -94,7 +95,7 @@ export function resolveRound(state: GameState, round: Round, result: RoundResult
     score: nextScore,
     marketStatus: calculateMarketStatus(nextScore, config),
     scoreHistory: [...state.scoreHistory, nextScore],
-    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, `Ronda ${state.currentRoundIndex + 1}: ${round.title}`)],
+    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, `Ronda ${state.roundNumber}: ${round.title}`)],
     totalDrinks: state.totalDrinks + scoreResult.drinks,
     totalSuccesses: state.totalSuccesses + (result === "SUCCESS" ? 1 : 0),
     totalFailures: state.totalFailures + (result === "FAILURE" ? 1 : 0),
@@ -124,6 +125,7 @@ export function advanceRound(
   return {
     ...state,
     currentRoundIndex: nextRoundIndex,
+    roundNumber: state.roundNumber + 1,
     shownRoundIds: nextRound ? [...state.shownRoundIds, nextRound.id] : state.shownRoundIds,
     activeEffects: decrementRoundEffects(state.activeEffects),
     hasUsedWildcardThisRound: false,
@@ -156,6 +158,7 @@ export function resolveAndAdvanceRound(
   return {
     ...resolvedState,
     currentRoundIndex: nextRoundIndex,
+    roundNumber: resolvedState.roundNumber + 1,
     activeEffects: decrementRoundEffects(resolvedState.activeEffects),
     hasUsedWildcardThisRound: false,
     hasDrawnWildcardThisRound: false,

@@ -125,6 +125,7 @@ export interface GameState {
   brideName: string;
   score: number;
   currentRoundIndex: number;
+  roundNumber: number;
   marketStatus: MarketStatus;
   accumulatedWildcards: Wildcard[];
   activeEffects: GameEffect[];

@@ -140,6 +140,8 @@ Reglas funcionales:
 
 - La primera pregunta de una partida nueva es aleatoria.
 - Cada avance elige una ronda aleatoria no mostrada.
+- El numero que ve el usuario empieza siempre en Ronda 1 y avanza de forma secuencial.
+- El numero visible no se basa en el indice ni en el ID interno de la pregunta.
 - Se guardan los IDs mostrados en `shownRoundIds`.
 - Se guardan los IDs contestados en `resolvedRoundIds`.
 - Si se recarga, no se pierde el historial de IDs.

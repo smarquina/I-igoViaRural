@@ -66,7 +66,7 @@ export function GamePage() {
         ) : null}
         <RoundCard
           round={currentRound}
-          roundNumber={state.currentRoundIndex + 1}
+          roundNumber={state.roundNumber}
           phase={state.phase}
         />
       </main>
@@ -86,7 +86,7 @@ export function GamePage() {
       <RoundAdvanceModal
         isOpen={showRoundAdvance}
         round={currentRound}
-        roundNumber={state.currentRoundIndex + 1}
+        roundNumber={state.roundNumber}
       />
     </MobileShell>
   );

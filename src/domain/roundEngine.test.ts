@@ -52,6 +52,7 @@ describe("roundEngine", () => {
     );
 
     expect(nextState.currentRoundIndex).toBe(1);
+    expect(nextState.roundNumber).toBe(2);
     expect(nextState.phase).toBe("ANSWERING");
     expect(nextState.score).toBe(120);
     expect(nextState.hasDrawnWildcardThisRound).toBe(false);
