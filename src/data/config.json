@@ -1,0 +1,17 @@
+{
+  "gameTitle": "Despedida ViaRural Broker",
+  "groomName": "Iñigo",
+  "brideName": "Rocío",
+  "initialScore": 100,
+  "mergerTargetScore": 190,
+  "hotMarketScore": 130,
+  "stableMarketScore": 90,
+  "criticalZoneScore": 70,
+  "bailoutScore": 40,
+  "ordinaryMaxDrinks": 10,
+  "allowPartialSuccess": true,
+  "maxWildcardsPerRound": 1,
+  "theme": "rural-broker",
+  "dataVersion": "2026.05.30"
+}
+
