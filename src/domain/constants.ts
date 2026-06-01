@@ -17,5 +17,8 @@ export const STORAGE_KEYS = {
   GAME_STATE: "bachelor-market:game-state",
   SETTINGS: "bachelor-market:settings",
   DATA_VERSION: "bachelor-market:data-version",
-  HAS_STARTED_GAME: "bachelor-market:has-started-game"
+  HAS_STARTED_GAME: "bachelor-market:has-started-game",
+  CLOUD_SYNC: "bachelor-market:cloud-sync",
+  CLIENT_ID: "bachelor-market:client-id",
+  PENDING_SYNC_EVENT: "bachelor-market:pending-sync-event"
 } as const;

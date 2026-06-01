@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import {
   advanceRound,
@@ -25,6 +25,12 @@ import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Roun
 import { isPositiveWildcard, useWildcard as applyWildcard } from "../domain/wildcardEngine";
 import { copy } from "../lang";
 import { availableWildcards, bailoutOptions, defaultConfig, roundDeck } from "../data/gameContent";
+import { ensureAnonymousSession } from "../services/cloudSync/firebaseAuth";
+import {
+  hydrateFromLocalAndCloud,
+  queueCloudSync,
+  registerConnectivitySync
+} from "../services/cloudSync/syncManager";
 
 interface GameContextValue {
   config: AppConfig;
@@ -75,18 +81,38 @@ function normalizeStateForConfig(state: GameState, config: AppConfig): GameState
 }
 
 export function GameProvider({ children }: { children: ReactNode }) {
+  const shouldHydrateFromCloud = useRef(hasSavedGame());
   const [config, setConfig] = useState<AppConfig>(() => buildEffectiveConfig(defaultConfig, loadSavedSettings()));
   const [state, setState] = useState<GameState>(() => {
     const initialConfig = buildEffectiveConfig(defaultConfig, loadSavedSettings());
     const loadedState = loadGameState();
     return loadedState ? normalizeStateForConfig(loadedState, initialConfig) : createFreshState(initialConfig);
   });
-  const [hasStarted, setHasStarted] = useState(() => hasSavedGame());
+  const [hasStarted, setHasStarted] = useState(() => shouldHydrateFromCloud.current);
   const [drawnWildcardOffer, setDrawnWildcardOffer] = useState<Wildcard | null>(null);
+
+  useEffect(() => {
+    void ensureAnonymousSession();
+    return registerConnectivitySync();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted || !shouldHydrateFromCloud.current) {
+      return;
+    }
+
+    shouldHydrateFromCloud.current = false;
+    void hydrateFromLocalAndCloud().then((loadedState) => {
+      if (loadedState) {
+        setState(normalizeStateForConfig(loadedState, config));
+      }
+    });
+  }, [config, hasStarted]);
 
   useEffect(() => {
     if (hasStarted) {
       saveGameState(state);
+      queueCloudSync(state);
       return;
     }
 

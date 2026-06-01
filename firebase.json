@@ -1,5 +1,9 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "hosting": {
+    "site": "ruralholdings-despedida",
     "public": "dist",
     "ignore": [
       "firebase.json",

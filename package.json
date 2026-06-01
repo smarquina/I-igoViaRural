@@ -16,6 +16,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.3.1",
+    "firebase": "^12.14.0",
     "framer-motion": "^12.40.0",
     "lightweight-charts": "^5.2.0",
     "react": "^18.3.1",

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { copy } from "../../lang";
+import { SyncStatusBadge } from "../sync/SyncStatusBadge";
 
 export function MarketHeader() {
   return (
@@ -19,6 +20,9 @@ export function MarketHeader() {
                 {copy.app.gameTitle}
               </span>
               <span className="mt-0.5 block text-xs text-broker-muted">Iñigo Capital S.A. → Rocío Holdings</span>
+              <span className="mt-1 block">
+                <SyncStatusBadge />
+              </span>
             </span>
           </Link>
         </div>
