@@ -8,24 +8,45 @@ interface FirebaseConfig {
   storageBucket: string;
   messagingSenderId: string;
   appId: string;
+  measurementId?: string;
+}
+
+interface OptionalFirebaseConfig {
+  apiKey: string | undefined;
+  authDomain: string | undefined;
+  projectId: string | undefined;
+  storageBucket: string | undefined;
+  messagingSenderId: string | undefined;
+  appId: string | undefined;
+  measurementId?: string | undefined;
 }
 
 let firebaseApp: Promise<FirebaseApp | null> | null = null;
 let firestore: Promise<Firestore | null> | null = null;
 
+function hasRequiredFirebaseConfig(config: OptionalFirebaseConfig): config is FirebaseConfig {
+  return Boolean(
+    config.apiKey &&
+      config.authDomain &&
+      config.projectId &&
+      config.storageBucket &&
+      config.messagingSenderId &&
+      config.appId
+  );
+}
+
 function readFirebaseConfig(): FirebaseConfig | null {
-  const config = {
+  const config: OptionalFirebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
     projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
   };
 
-  return Object.values(config).every((value) => typeof value === "string" && value.length > 0)
-    ? config
-    : null;
+  return hasRequiredFirebaseConfig(config) ? config : null;
 }
 
 export function isFirebaseConfigured(): boolean {
