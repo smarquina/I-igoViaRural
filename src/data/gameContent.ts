@@ -1,4 +1,4 @@
-import auditData from "./bride-audit-questions.json";
+import auditData from "./bride-audit.json";
 import bailoutOptionsData from "./bailout-options.json";
 import configData from "./config.json";
 import generalCultureQuestionsData from "./general-culture-questions.json";
@@ -10,6 +10,7 @@ import type { AppConfig, BailoutOption, GeneralCultureQuestion, Round, StreetCha
 import { copy } from "../lang";
 
 type RawRound = Omit<Round, "title" | "text" | "answer">;
+type RawAuditRound = Omit<Round, "text"> & { question: string };
 type RoundContent = { title: string; text: string; answer?: string };
 type WildcardContent = Partial<Pick<Wildcard, "name" | "description">>;
 type RawWildcard = Wildcard & {
@@ -28,6 +29,16 @@ function hydrateRound(round: RawRound): Round {
     title: content.title,
     text: content.text,
     ...(content.answer ? { answer: content.answer } : {})
+  };
+}
+
+function hydrateAuditRound(round: RawAuditRound): Round {
+  const { question, ...roundData } = round;
+
+  return {
+    ...roundData,
+    text: question,
+    ...(round.answer ? { answer: round.answer } : {})
   };
 }
 
@@ -53,7 +64,7 @@ function hydrateWildcard(wildcard: RawWildcard): Wildcard {
 
 export const defaultConfig = { ...configData, gameTitle: copy.app.gameTitle } as AppConfig;
 export const rounds = (roundsData as RawRound[]).map(hydrateRound);
-export const auditQuestions = (auditData as RawRound[]).map(hydrateRound);
+export const auditQuestions = (auditData as RawAuditRound[]).map(hydrateAuditRound);
 export const availableWildcards = (wildcardsData as RawWildcard[]).map(hydrateWildcard);
 export const bailoutOptions = bailoutOptionsData as BailoutOption[];
 export const streetChallenges = streetChallengesData as StreetChallenge[];

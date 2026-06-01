@@ -7,7 +7,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu película favorita?",
+    "answer": "Orgullo y prejuicio"
   },
   {
     "id": "audit-002",
@@ -17,7 +20,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué talla de pie usas?",
+    "answer": "38"
   },
   {
     "id": "audit-003",
@@ -27,7 +33,10 @@
     "failureScorePenalty": 20,
     "failureDrinks": 4,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué color de bragas prevalece en su armario?",
+    "answer": "Sí, muchas."
   },
   {
     "id": "audit-004",
@@ -37,7 +46,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién es responsable de preparar la comida en casa?",
+    "answer": "A medias."
   },
   {
     "id": "audit-005",
@@ -47,7 +59,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu programa de televisión favorito?",
+    "answer": "Allá tú (trituradora). Gran Prix de niña. Y de cotilleo La isla de las tentaciones."
   },
   {
     "id": "audit-006",
@@ -57,7 +72,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu bebida alcohólica favorita?",
+    "answer": "Vino blanco (frizzante) y roooon."
   },
   {
     "id": "audit-007",
@@ -67,7 +85,10 @@
     "failureScorePenalty": 20,
     "failureDrinks": 4,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién de su familia te gusta menos?",
+    "answer": "Ninguno. Todos aceptables."
   },
   {
     "id": "audit-008",
@@ -77,7 +98,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién de sus familiares te gusta más?",
+    "answer": "Ana/Maria José."
   },
   {
     "id": "audit-009",
@@ -87,7 +111,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es su plato favorito?",
+    "answer": "Cualquier tipo de marisco."
   },
   {
     "id": "audit-010",
@@ -97,7 +124,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál era el nombre de tu primera pareja?",
+    "answer": "Íñigo"
   },
   {
     "id": "audit-011",
@@ -107,7 +137,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué edad tenías cuando besaste al primer chico?",
+    "answer": "15 años"
   },
   {
     "id": "audit-012",
@@ -117,7 +150,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu libro favorito?",
+    "answer": "Patria de Fernando Aramburu"
   },
   {
     "id": "audit-013",
@@ -127,7 +163,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu deporte favorito?",
+    "answer": "Bailar/zumba/gym"
   },
   {
     "id": "audit-014",
@@ -137,7 +176,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Te gusta bailar?",
+    "answer": "Muchísimo"
   },
   {
     "id": "audit-015",
@@ -147,7 +189,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu color favorito?",
+    "answer": "Verde"
   },
   {
     "id": "audit-016",
@@ -157,7 +202,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿En qué país te gustaría vivir?",
+    "answer": "Siempre España"
   },
   {
     "id": "audit-017",
@@ -167,7 +215,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién es el más activo?",
+    "answer": "Íñigo"
   },
   {
     "id": "audit-018",
@@ -177,7 +228,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién fue tu mejor amigo de infancia?",
+    "answer": "Delia"
   },
   {
     "id": "audit-019",
@@ -187,7 +241,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál fue tu asignatura favorita en el colegio?",
+    "answer": "Lengua"
   },
   {
     "id": "audit-020",
@@ -197,7 +254,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cómo le prefieres: en pinta deportiva, elegante para un matrimonio o en pijama?",
+    "answer": "Pijama"
   },
   {
     "id": "audit-021",
@@ -207,7 +267,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué es lo que más te enoja: que se demore en arreglarse para salir, que no haga deporte u otra cosa?",
+    "answer": "Que me mande"
   },
   {
     "id": "audit-022",
@@ -217,7 +280,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu plan ideal?",
+    "answer": "Cenita restaurante, película, bailar juntos/tontamente y dormir juntísimos."
   },
   {
     "id": "audit-023",
@@ -227,7 +293,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué es lo que más te gusta del novio?",
+    "answer": "Su bondad y lealtad."
   },
   {
     "id": "audit-024",
@@ -237,7 +306,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuándo fue el primer beso?",
+    "answer": "SAMPEDROS 2014"
   },
   {
     "id": "audit-025",
@@ -247,7 +319,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿En qué lugar os disteis el primer beso?",
+    "answer": "En un banco zona de la Quinta"
   },
   {
     "id": "audit-026",
@@ -257,7 +332,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es la anécdota que más recuerdas?",
+    "answer": "Semana Santa en León. Aventuras en Soria. Rutas en Quad."
   },
   {
     "id": "audit-027",
@@ -267,7 +345,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuándo te pidió matrimonio?",
+    "answer": "Cudillero. Rutita"
   },
   {
     "id": "audit-028",
@@ -277,7 +358,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué tipo de películas te gustan: romántica, drama, acción, comedia u otra?",
+    "answer": "Romántica, comedia y acción."
   },
   {
     "id": "audit-029",
@@ -287,7 +371,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué es lo que más te gusta hacer con tu pareja: deporte, cocinar, conversar de la vida u otra cosa?",
+    "answer": "Aventura. Cenitas. Rutina. Charletas infinitas. Planes en familia todos juntos. Lo que más"
   },
   {
     "id": "audit-030",
@@ -297,7 +384,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué es lo que más te gusta de él: sus ojos, sus anchas espaldas, sus manos, su sonrisa u otra cosa?",
+    "answer": "Su altura. Ojos. Cejas y sus bonitas manos."
   },
   {
     "id": "audit-031",
@@ -307,7 +397,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es la cosa que más te enfada del novio?",
+    "answer": "Que me mande fregar."
   },
   {
     "id": "audit-032",
@@ -317,7 +410,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu número de teléfono?",
+    "answer": "662283154."
   },
   {
     "id": "audit-033",
@@ -327,7 +423,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuántas veces al día te lavas los dientes?",
+    "answer": "3"
   },
   {
     "id": "audit-034",
@@ -337,7 +436,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿En qué posición duermes?",
+    "answer": "De lado izquierdo"
   },
   {
     "id": "audit-035",
@@ -347,7 +449,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿A qué hora pones el primer despertador para ir a trabajar?",
+    "answer": "A las 7:15"
   },
   {
     "id": "audit-036",
@@ -357,7 +462,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué tomas de desayuno usualmente?",
+    "answer": "Leche con galletas"
   },
   {
     "id": "audit-037",
@@ -367,7 +475,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál ha sido el regalo suyo que más te ha gustado?",
+    "answer": "Ramo, caja con sorpresa con viaje a Roma por mis 30 años."
   },
   {
     "id": "audit-038",
@@ -377,7 +488,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué nombre es el que más te gusta que te diga?",
+    "answer": "Bubú"
   },
   {
     "id": "audit-039",
@@ -387,7 +501,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu quinto apellido?",
+    "answer": "No me acuerdo"
   },
   {
     "id": "audit-040",
@@ -397,7 +514,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cada cuántos días te depilas?",
+    "answer": "Nunca, tengo el láser"
   },
   {
     "id": "audit-041",
@@ -407,7 +527,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cómo conseguiste su número de teléfono?",
+    "answer": "Pidiéndomelo con valentía"
   },
   {
     "id": "audit-042",
@@ -417,7 +540,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Dónde fue el primer beso?",
+    "answer": "Banco en la zona de la Quinta"
   },
   {
     "id": "audit-043",
@@ -427,7 +553,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es la anécdota que más veces le has contado a Iñigo de tu infancia?",
+    "answer": "Excursiones a Santa Casilda. Juego de la taba."
   },
   {
     "id": "audit-044",
@@ -437,7 +566,10 @@
     "failureScorePenalty": 20,
     "failureDrinks": 4,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿En qué lugar disfrutas más con el sexo?",
+    "answer": "En la bañera"
   },
   {
     "id": "audit-045",
@@ -447,7 +579,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Dónde fue la primera cita?",
+    "answer": "En Valladolid"
   },
   {
     "id": "audit-046",
@@ -457,7 +592,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién propuso la fecha de la boda?",
+    "answer": "Ambos"
   },
   {
     "id": "audit-047",
@@ -467,7 +605,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es el pasatiempo favorito para hacer en conjunto?",
+    "answer": "Dedicarnos tiempo de calidad"
   },
   {
     "id": "audit-048",
@@ -477,7 +618,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién lleva los pantalones en la relación?",
+    "answer": "Ambos"
   },
   {
     "id": "audit-049",
@@ -487,7 +631,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Esperáis tener hijos?",
+    "answer": "Siiiii"
   },
   {
     "id": "audit-050",
@@ -497,7 +644,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuántos hijos esperáis tener?",
+    "answer": "3"
   },
   {
     "id": "audit-051",
@@ -507,7 +657,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué tareas son de la novia y cuáles del novio?",
+    "answer": "Iñigo orden limpieza, Rocío compras detalles…"
   },
   {
     "id": "audit-052",
@@ -517,7 +670,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién dio el primer beso?",
+    "answer": "Ambos"
   },
   {
     "id": "audit-053",
@@ -527,7 +683,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién es mejor en la cocina?",
+    "answer": "Ambos"
   },
   {
     "id": "audit-054",
@@ -537,7 +696,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién es más desordenado?",
+    "answer": "Rocío"
   },
   {
     "id": "audit-055",
@@ -547,7 +709,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién se queda dormido en una película?",
+    "answer": "Rocío"
   },
   {
     "id": "audit-056",
@@ -557,7 +722,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Quién suele llegar más tarde cuando quedáis?",
+    "answer": "Rocío"
   },
   {
     "id": "audit-057",
@@ -567,7 +735,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál fue el primer regalo que le hiciste y cuál fue el último?",
+    "answer": "Primero perfume y el último cepillo eléctrico"
   },
   {
     "id": "audit-058",
@@ -577,7 +748,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu actor favorito?",
+    "answer": "No tengo"
   },
   {
     "id": "audit-059",
@@ -587,7 +761,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "Nombra una manía que tengas.",
+    "answer": "Lavarme las manos muchas veces"
   },
   {
     "id": "audit-060",
@@ -597,7 +774,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál fue tu primer trabajo?",
+    "answer": "Maestra"
   },
   {
     "id": "audit-061",
@@ -607,7 +787,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué sueles utilizar para dormir?",
+    "answer": "Pijama sexy"
   },
   {
     "id": "audit-062",
@@ -617,7 +800,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué día es la boda?",
+    "answer": "5 sep"
   },
   {
     "id": "audit-063",
@@ -627,7 +813,10 @@
     "failureScorePenalty": 15,
     "failureDrinks": 3,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué nombre pondrías a tu hijo e hija?",
+    "answer": "Laia Alejo"
   },
   {
     "id": "audit-064",
@@ -637,7 +826,10 @@
     "failureScorePenalty": 8,
     "failureDrinks": 1,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Cuál es tu lado favorito en la cama?",
+    "answer": "Izquierda"
   },
   {
     "id": "audit-065",
@@ -647,7 +839,10 @@
     "failureScorePenalty": 12,
     "failureDrinks": 2,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "Si no ejercieses tu profesión actual, ¿a qué te gustaría dedicarte?",
+    "answer": "Bailarina"
   },
   {
     "id": "audit-066",
@@ -657,6 +852,9 @@
     "failureScorePenalty": 20,
     "failureDrinks": 4,
     "allowsPartial": true,
-    "requiresAnswerReveal": true
+    "requiresAnswerReveal": true,
+    "title": "Auditoría interna de Rocío",
+    "question": "¿Qué mata más la pasión con Iñigo?",
+    "answer": "Conflicto sin resolver"
   }
 ]

@@ -59,7 +59,7 @@ src/
     wildcards/
   data/
     bailout-options.json
-    bride-audit-questions.json
+    bride-audit.json
     config.json
     general-culture-questions.json
     rounds.json
@@ -136,7 +136,7 @@ Los datos locales viven en `src/data`.
 - `config.json`: configuracion base del juego.
 - `bailout-options.json`: opciones de rescate bancario, efectos de puntuacion, tragos y acciones especiales.
 - `rounds.json`: rondas generales.
-- `bride-audit-questions.json`: auditorias internas de Rocio.
+- `bride-audit.json`: auditorias internas de Rocio con titulo, pregunta, respuesta vacia y puntuacion.
 - `wildcards.json`: Catalizadores de Mercado.
 - `street-challenges.json`: retos de calle disponibles para la Due Diligence final.
 - `general-culture-questions.json`: preguntas de cultura general para la Due Diligence final.

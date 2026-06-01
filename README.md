@@ -289,7 +289,7 @@ Game data is local and editable:
 ```txt
 src/data/config.json
 src/data/rounds.json
-src/data/bride-audit-questions.json
+src/data/bride-audit.json
 src/data/wildcards.json
 src/data/bailout-options.json
 src/data/street-challenges.json
