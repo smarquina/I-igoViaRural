@@ -203,12 +203,12 @@ export interface ScoreResult {
   appliedEffectLabels: string[];
 }
 
-export type BailoutChoice = "LIQUIDITY" | "SELL_ASSETS" | "STREET_CHALLENGE_SUCCESS" | "GROUP_BEER_FAILURE";
+export type BailoutChoice = "LIQUIDITY" | "SELL_ASSETS" | "STREET_CHALLENGE_SUCCESS" | "EXTRAORDINARY_GROUP_AUDIT" | "GROUP_BEER_FAILURE";
 
 export type BailoutOptionKind = "STANDARD" | "STREET_CHALLENGE";
 export type BailoutScoreMode = "ADD" | "SET";
-export type BailoutTimelineEvent = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "groupBeerBailout";
-export type BailoutMessage = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "groupBeerBailout";
+export type BailoutTimelineEvent = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "extraordinaryGroupAudit" | "groupBeerBailout";
+export type BailoutMessage = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "extraordinaryGroupAudit" | "groupBeerBailout";
 
 export interface BailoutOption {
   id: BailoutChoice;

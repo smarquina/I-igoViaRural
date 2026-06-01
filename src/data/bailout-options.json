@@ -44,6 +44,19 @@
     }
   },
   {
+    "id": "EXTRAORDINARY_GROUP_AUDIT",
+    "kind": "STANDARD",
+    "title": "Auditoría extraordinaria colectiva",
+    "detail": "Todo el grupo bebe media cerveza y la cotización se estabiliza en 60 puntos.",
+    "effect": {
+      "scoreMode": "SET",
+      "targetScore": 60,
+      "drinks": 5,
+      "timelineEvent": "extraordinaryGroupAudit",
+      "message": "extraordinaryGroupAudit"
+    }
+  },
+  {
     "id": "GROUP_BEER_FAILURE",
     "kind": "STANDARD",
     "selectable": false,

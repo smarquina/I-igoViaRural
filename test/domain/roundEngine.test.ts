@@ -133,11 +133,23 @@ describe("roundEngine", () => {
 
   it("applies the collective bailout to 60 points with group beer penalty", () => {
     const state = createInitialGameState({ ...sampleConfig, initialScore: 35 });
+    const nextState = applyBailoutChoice(state, "EXTRAORDINARY_GROUP_AUDIT", bailoutOptions, sampleConfig);
+
+    expect(nextState.score).toBe(60);
+    expect(nextState.totalDrinks).toBe(5);
+    expect(nextState.lastScoreDelta).toBe(25);
+    expect(nextState.lastDrinkPenalty).toBe(5);
+  });
+
+  it("keeps hidden street-challenge failure bailout wired to 60 points and group beer penalty", () => {
+    const state = createInitialGameState({ ...sampleConfig, initialScore: 35 });
     const nextState = applyBailoutChoice(state, "GROUP_BEER_FAILURE", bailoutOptions, sampleConfig);
 
     expect(nextState.score).toBe(60);
     expect(nextState.totalDrinks).toBe(5);
     expect(nextState.lastScoreDelta).toBe(25);
     expect(nextState.lastDrinkPenalty).toBe(5);
+    expect(nextState.lastEventMessage).toMatch(/rescate colectivo/i);
+    expect(nextState.scoreTimeline.at(-1)?.event).toBe("Rescate colectivo de emergencia");
   });
 });

@@ -36,11 +36,13 @@ describe("BailoutPage", () => {
     expect(within(bailout).getByText("Venta de activos")).toBeInTheDocument();
     expect(within(bailout).getByText("Reto de recapitalización")).toBeInTheDocument();
     expect(within(bailout).getByText("Vender un objeto absurdo")).toBeInTheDocument();
+    expect(within(bailout).getByText("Auditoría extraordinaria colectiva")).toBeInTheDocument();
     expect(within(bailout).queryByText("Rescate colectivo de emergencia")).not.toBeInTheDocument();
     expect(within(bailout).getByRole("button", { name: /ejecutar rescate: rescate con liquidez/i })).toBeInTheDocument();
     expect(within(bailout).getByRole("button", { name: /ejecutar rescate: venta de activos/i })).toBeInTheDocument();
     expect(within(bailout).getByRole("button", { name: /ejecutar rescate: reto de recapitalización: reto superado/i })).toBeInTheDocument();
     expect(within(bailout).getByRole("button", { name: /ejecutar rescate: reto de recapitalización: reto fallido/i })).toBeInTheDocument();
+    expect(within(bailout).getByRole("button", { name: /ejecutar rescate: auditoría extraordinaria colectiva/i })).toBeInTheDocument();
     expect(within(bailout).queryByRole("button", { name: /ejecutar rescate: rescate colectivo de emergencia/i })).not.toBeInTheDocument();
   });
 

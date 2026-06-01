@@ -8,6 +8,7 @@ const bailoutTimelineEvents: Record<BailoutTimelineEvent, string> = {
   bailoutLiquidity: copy.timeline.bailoutLiquidity,
   assetSale: copy.timeline.assetSale,
   streetChallengeBailout: copy.timeline.streetChallengeBailout,
+  extraordinaryGroupAudit: copy.timeline.extraordinaryGroupAudit,
   groupBeerBailout: copy.timeline.groupBeerBailout
 };
 
@@ -15,6 +16,7 @@ const bailoutMessages: Record<BailoutMessage, string> = {
   bailoutLiquidity: copy.messages.bailoutLiquidity,
   assetSale: copy.messages.assetSale,
   streetChallengeBailout: copy.messages.streetChallengeBailout,
+  extraordinaryGroupAudit: copy.messages.extraordinaryGroupAudit,
   groupBeerBailout: copy.messages.groupBeerBailout
 };
 

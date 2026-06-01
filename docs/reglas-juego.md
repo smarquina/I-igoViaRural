@@ -68,13 +68,14 @@ Opciones:
    - Suma 25 puntos.
    - Elimina Catalizadores de Mercado acumulados.
 
-3. Auditoria extraordinaria superada:
-   - Sube directamente a 90 puntos.
-   - No suma tragos.
+3. Reto de recapitalizacion:
+   - Muestra un reto aleatorio de los mismos retos disponibles en la Due Diligence final.
+   - Si Iñigo supera el reto, la cotizacion sube directamente a 80 puntos.
+   - Si Iñigo falla el reto, se aplica el rescate colectivo de emergencia: todo el grupo bebe media cerveza y la cotizacion queda en 60 puntos.
 
-4. Auditoria extraordinaria fallida:
-   - Deja la cotizacion en 50 puntos.
-   - Suma 5 tragos.
+4. Auditoria extraordinaria colectiva:
+   - Todo el grupo bebe media cerveza.
+   - La cotizacion queda en 60 puntos.
 
 Despues del rescate, la partida continua.
 

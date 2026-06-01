@@ -252,6 +252,7 @@ export const es = {
     bailoutLiquidity: "Rescate con liquidez",
     assetSale: "Venta de activos",
     streetChallengeBailout: "Reto de recapitalización superado",
+    extraordinaryGroupAudit: "Auditoría extraordinaria colectiva",
     groupBeerBailout: "Rescate colectivo de emergencia"
   },
   messages: {
@@ -269,6 +270,7 @@ export const es = {
     bailoutLiquidity: "Rescate con liquidez ejecutado.",
     assetSale: "Venta de activos ejecutada. Catalizadores liquidados.",
     streetChallengeBailout: "Reto de recapitalización superado. La cotización avanza a 80 puntos.",
+    extraordinaryGroupAudit: "Auditoría extraordinaria colectiva ejecutada. Todo el grupo bebe media cerveza y la cotización queda en 60 puntos.",
     groupBeerBailout: "Rescate colectivo ejecutado. Todo el grupo bebe media cerveza y la cotización queda en 60 puntos.",
     oldSessionOpening: "Se abre la sesión."
   },
