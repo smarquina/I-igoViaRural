@@ -35,6 +35,10 @@ export function GameOverPage() {
         accentClassName="text-broker-merger"
         alertClassName="bg-broker-merger text-broker-bg"
         modalBorderClassName="border-broker-merger"
+        modalTitleClassName="text-broker-ink"
+        titleClassName="text-broker-merger"
+        textClassName="text-white"
+        headerClassName="rounded-md border border-broker-merger/50 bg-black/85 p-4 shadow-glow"
         onRestart={handleRestart}
       />
     );

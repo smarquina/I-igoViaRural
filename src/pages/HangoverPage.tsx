@@ -27,9 +27,13 @@ export function HangoverPage() {
       icon={faHandshakeSlash}
       alertIcon={faTriangleExclamation}
       modalId="hangover-modal-title"
-      accentClassName="text-broker-warning"
-      alertClassName="bg-broker-warning text-broker-bg"
-      modalBorderClassName="border-broker-warning"
+      accentClassName="text-broker-bearish"
+      alertClassName="bg-broker-bearish text-white"
+      modalBorderClassName="border-broker-bearish"
+      modalTitleClassName="text-broker-bearish"
+      titleClassName="text-broker-bearish"
+      textClassName="text-white"
+      headerClassName="rounded-md border border-broker-bearish/60 bg-black/85 p-4 shadow-danger"
       onRestart={handleRestart}
     />
   );

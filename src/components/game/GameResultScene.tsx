@@ -24,6 +24,10 @@ interface GameResultSceneProps {
   accentClassName: string;
   alertClassName: string;
   modalBorderClassName: string;
+  modalTitleClassName?: string;
+  titleClassName?: string;
+  textClassName?: string;
+  headerClassName?: string;
   onRestart: () => void;
 }
 
@@ -43,6 +47,10 @@ export function GameResultScene({
   accentClassName,
   alertClassName,
   modalBorderClassName,
+  modalTitleClassName = "text-white",
+  titleClassName = "text-white",
+  textClassName = "text-white/85",
+  headerClassName = "",
   onRestart
 }: GameResultSceneProps) {
   const [showModal, setShowModal] = useState(true);
@@ -55,10 +63,12 @@ export function GameResultScene({
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black via-broker-bg/80 to-black/45" aria-hidden="true" />
 
-        <section className="relative z-10 flex flex-1 flex-col justify-end px-5 py-7">
-          <p className={`text-xs font-black uppercase tracking-[0.16em] ${accentClassName}`}>{eyebrow}</p>
-          <h1 className="mt-3 text-4xl font-black leading-none text-white drop-shadow">{title}</h1>
-          <p className="mt-3 max-w-sm text-sm font-semibold leading-relaxed text-white/85">{text}</p>
+        <section className="relative z-10 flex flex-1 flex-col justify-between px-5 py-7">
+          <div className={headerClassName}>
+            <p className={`text-xs font-black uppercase tracking-[0.16em] ${accentClassName}`}>{eyebrow}</p>
+            <h1 className={`mt-3 text-4xl font-black leading-none drop-shadow ${titleClassName}`}>{title}</h1>
+            <p className={`mt-3 max-w-sm text-sm font-semibold leading-relaxed ${textClassName}`}>{text}</p>
+          </div>
 
           {!showModal ? (
             <motion.div
@@ -109,7 +119,7 @@ export function GameResultScene({
                   <FontAwesomeIcon icon={alertIcon} className="h-3.5 w-3.5" aria-hidden="true" />
                   {alert}
                 </p>
-                <h2 id={modalId} className="mt-4 text-2xl font-black leading-tight text-white">
+                <h2 id={modalId} className={`mt-4 text-2xl font-black leading-tight ${modalTitleClassName}`}>
                   {modalTitle}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-broker-muted">{modalText}</p>
