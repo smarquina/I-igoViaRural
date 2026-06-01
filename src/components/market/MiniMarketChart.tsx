@@ -16,11 +16,14 @@ export function MiniMarketChart({
   showExtremes = false,
   showExtremeSummary = true
 }: MiniMarketChartProps) {
-  const values = timeline && timeline.length > 0
-    ? timeline.map((point) => point.score)
-    : history.length > 1
-      ? history
-      : [history[0] ?? 100, history[0] ?? 100];
+  const values = useMemo(
+    () => timeline && timeline.length > 0
+      ? timeline.map((point) => point.score)
+      : history.length > 1
+        ? history
+        : [history[0] ?? 100, history[0] ?? 100],
+    [history, timeline]
+  );
   const min = Math.min(...values);
   const max = Math.max(...values);
   const containerRef = useRef<HTMLDivElement | null>(null);

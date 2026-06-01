@@ -81,14 +81,15 @@ function normalizeStateForConfig(state: GameState, config: AppConfig): GameState
 }
 
 export function GameProvider({ children }: { children: ReactNode }) {
-  const shouldHydrateFromCloud = useRef(hasSavedGame());
+  const [shouldHydrateInitialGame] = useState(() => hasSavedGame());
+  const shouldHydrateFromCloud = useRef(shouldHydrateInitialGame);
   const [config, setConfig] = useState<AppConfig>(() => buildEffectiveConfig(defaultConfig, loadSavedSettings()));
   const [state, setState] = useState<GameState>(() => {
     const initialConfig = buildEffectiveConfig(defaultConfig, loadSavedSettings());
     const loadedState = loadGameState();
     return loadedState ? normalizeStateForConfig(loadedState, initialConfig) : createFreshState(initialConfig);
   });
-  const [hasStarted, setHasStarted] = useState(() => shouldHydrateFromCloud.current);
+  const [hasStarted, setHasStarted] = useState(shouldHydrateInitialGame);
   const [drawnWildcardOffer, setDrawnWildcardOffer] = useState<Wildcard | null>(null);
 
   useEffect(() => {

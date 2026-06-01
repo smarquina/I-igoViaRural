@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faMinus, faPercent, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { GamePhase, Round } from "../../domain/types";
 import { copy } from "../../lang";
 
@@ -11,11 +11,8 @@ interface RoundCardProps {
 }
 
 export function RoundCard({ round, roundNumber, phase }: RoundCardProps) {
-  const [isAnswerVisible, setIsAnswerVisible] = useState(false);
-
-  useEffect(() => {
-    setIsAnswerVisible(false);
-  }, [round.id]);
+  const [visibleAnswerRoundId, setVisibleAnswerRoundId] = useState<string | null>(null);
+  const isAnswerVisible = visibleAnswerRoundId === round.id;
 
   const canReveal = round.requiresAnswerReveal && !isAnswerVisible;
 
@@ -30,7 +27,7 @@ export function RoundCard({ round, roundNumber, phase }: RoundCardProps) {
           <button
             type="button"
             disabled={!canReveal}
-            onClick={() => setIsAnswerVisible(true)}
+            onClick={() => setVisibleAnswerRoundId(round.id)}
             className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-broker-border bg-broker-bg text-broker-audit disabled:cursor-not-allowed disabled:opacity-45"
             aria-label={isAnswerVisible ? copy.rounds.revealedAnswer : copy.rounds.revealAnswer}
           >

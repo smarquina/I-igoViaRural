@@ -3,7 +3,7 @@ import {
   CRITICAL_ZONE_EXTRA_SCORE_PENALTY,
   ORDINARY_MAX_DRINKS
 } from "./constants";
-import type { GameEffect, GameState, Round, RoundResult, ScoreResult } from "./types";
+import type { ActiveEffectType, GameEffect, GameState, Round, RoundResult, ScoreResult } from "./types";
 import { copy } from "../lang";
 
 function getBaseScore(round: Round, result: RoundResult): ScoreResult {
@@ -30,71 +30,100 @@ function getBaseScore(round: Round, result: RoundResult): ScoreResult {
   };
 }
 
-function applyScoringEffect(result: ScoreResult, effect: GameEffect, round: Round, roundResult: RoundResult): ScoreResult {
-  const next = { ...result, appliedEffectLabels: [...result.appliedEffectLabels] };
+function cloneScoreResult(result: ScoreResult): ScoreResult {
+  return { ...result, appliedEffectLabels: [...result.appliedEffectLabels] };
+}
 
-  if (effect.type === "RISK_PREMIUM" && roundResult === "FAILURE") {
-    next.drinks += effect.level ?? 1;
-    next.appliedEffectLabels.push(effect.label);
+function markEffectApplied(result: ScoreResult, effect: GameEffect): ScoreResult {
+  result.appliedEffectLabels.push(effect.label);
+  return result;
+}
+
+function applyFailureDrinkPremium(result: ScoreResult, effect: GameEffect, roundResult: RoundResult): ScoreResult {
+  if (roundResult !== "FAILURE") {
+    return result;
   }
 
-  if (effect.type === "BEAR_MARKET" && roundResult === "FAILURE") {
-    next.drinks += effect.level ?? 1;
-    next.appliedEffectLabels.push(effect.label);
+  result.drinks += effect.level ?? 1;
+  return markEffectApplied(result, effect);
+}
+
+function applyTransferDrinksOnFailure(
+  result: ScoreResult,
+  effect: GameEffect,
+  round: Round,
+  roundResult: RoundResult
+): ScoreResult {
+  if (roundResult !== "FAILURE") {
+    return result;
   }
 
-  if (effect.type === "BULL_MARKET" && roundResult === "SUCCESS") {
-    next.scoreDelta += (effect.level ?? 1) * 3;
-    next.appliedEffectLabels.push(effect.label);
+  const baseTransfer = effect.transferBaseDrinks ? Math.min(round.failureDrinks, result.drinks) : 0;
+  const transferredDrinks = effect.transferExtraDrinks ? result.drinks : baseTransfer;
+  result.drinks = Math.max(0, result.drinks - transferredDrinks);
+  return markEffectApplied(result, effect);
+}
+
+function applyRoundRule(result: ScoreResult, effect: GameEffect, roundResult: RoundResult): ScoreResult {
+  const drinks = roundResult === "SUCCESS"
+    ? effect.onSuccessDrinks
+    : roundResult === "FAILURE"
+      ? effect.onFailureDrinks
+      : undefined;
+
+  if (!drinks) {
+    return result;
   }
 
-  if (effect.type === "VOLATILITY") {
+  result.drinks += drinks;
+  return markEffectApplied(result, effect);
+}
+
+type ScoringEffectHandler = (
+  result: ScoreResult,
+  effect: GameEffect,
+  round: Round,
+  roundResult: RoundResult
+) => ScoreResult;
+
+const scoringEffectHandlers: Partial<Record<ActiveEffectType, ScoringEffectHandler>> = {
+  RISK_PREMIUM: (result, effect, _round, roundResult) => applyFailureDrinkPremium(result, effect, roundResult),
+  BEAR_MARKET: (result, effect, _round, roundResult) => applyFailureDrinkPremium(result, effect, roundResult),
+  BULL_MARKET: (result, effect, _round, roundResult) => {
+    if (roundResult !== "SUCCESS") {
+      return result;
+    }
+
+    result.scoreDelta += (effect.level ?? 1) * 3;
+    return markEffectApplied(result, effect);
+  },
+  VOLATILITY: (result, effect) => {
     const modifier = (effect.level ?? 1) * 2;
-    next.scoreDelta += next.scoreDelta >= 0 ? modifier : -modifier;
-    next.appliedEffectLabels.push(effect.label);
-  }
-
-  if (effect.type === "LEVERAGE") {
-    next.scoreDelta *= 2;
-    if (roundResult === "FAILURE") {
-      next.drinks *= 2;
-    }
-    next.appliedEffectLabels.push(effect.label);
-  }
-
-  if (effect.type === "ADD_SCORE_ON_SUCCESS" && roundResult === "SUCCESS") {
-    next.scoreDelta += effect.extraScore ?? 0;
-    next.appliedEffectLabels.push(effect.label);
-  }
-
-  if (effect.type === "TRANSFER_DRINKS_ON_FAILURE" && roundResult === "FAILURE") {
-    let transferredDrinks = 0;
-
-    if (effect.transferBaseDrinks) {
-      transferredDrinks += Math.min(round.failureDrinks, next.drinks);
+    result.scoreDelta += result.scoreDelta >= 0 ? modifier : -modifier;
+    return markEffectApplied(result, effect);
+  },
+  LEVERAGE: (result, effect, _round, roundResult) => {
+    result.scoreDelta *= 2;
+    result.drinks = roundResult === "FAILURE" ? result.drinks * 2 : result.drinks;
+    return markEffectApplied(result, effect);
+  },
+  ADD_SCORE_ON_SUCCESS: (result, effect, _round, roundResult) => {
+    if (roundResult !== "SUCCESS") {
+      return result;
     }
 
-    if (effect.transferExtraDrinks) {
-      transferredDrinks = next.drinks;
-    }
+    result.scoreDelta += effect.extraScore ?? 0;
+    return markEffectApplied(result, effect);
+  },
+  TRANSFER_DRINKS_ON_FAILURE: applyTransferDrinksOnFailure,
+  ROUND_RULE: (result, effect, _round, roundResult) => applyRoundRule(result, effect, roundResult)
+};
 
-    next.drinks = Math.max(0, next.drinks - transferredDrinks);
-    next.appliedEffectLabels.push(effect.label);
-  }
+function applyScoringEffect(result: ScoreResult, effect: GameEffect, round: Round, roundResult: RoundResult): ScoreResult {
+  const handler = scoringEffectHandlers[effect.type];
+  const next = cloneScoreResult(result);
 
-  if (effect.type === "ROUND_RULE") {
-    if (roundResult === "SUCCESS" && effect.onSuccessDrinks) {
-      next.drinks += effect.onSuccessDrinks;
-      next.appliedEffectLabels.push(effect.label);
-    }
-
-    if (roundResult === "FAILURE" && effect.onFailureDrinks) {
-      next.drinks += effect.onFailureDrinks;
-      next.appliedEffectLabels.push(effect.label);
-    }
-  }
-
-  return next;
+  return handler ? handler(next, effect, round, roundResult) : next;
 }
 
 function applyLossLimit(result: ScoreResult, effect: GameEffect, roundResult: RoundResult): ScoreResult {

@@ -1,6 +1,6 @@
 import { hasLimitedLiquidity, upsertEffect } from "./effectEngine";
 import { calculateMarketStatus } from "./marketStatusEngine";
-import type { AppConfig, GameEffect, GameState, Wildcard } from "./types";
+import type { AppConfig, GameEffect, GameState, Wildcard, WildcardEffect } from "./types";
 import { copy } from "../lang";
 
 function createScorePoint(score: number, event: string) {
@@ -43,68 +43,80 @@ export function applyMarketReset(state: GameState, drinks = 0, wildcardId = "wil
   };
 }
 
+type RoundEffectFactory = (wildcard: Wildcard) => GameEffect | null;
+
+function createBaseRoundEffect(wildcard: Wildcard): Pick<GameEffect, "id" | "label" | "remainingRounds" | "sourceWildcardId"> {
+  return {
+    id: `${wildcard.id}-effect`,
+    label: wildcard.name,
+    remainingRounds: 1,
+    sourceWildcardId: wildcard.id
+  };
+}
+
+function getRoundRuleDrinks(effect: WildcardEffect) {
+  if (effect.kind === "ON_SUCCESS_DRINK_ASSIGNMENT") {
+    return { onSuccessDrinks: effect.drinks };
+  }
+
+  if (effect.kind === "DELEGATE_ANSWER") {
+    return { onFailureDrinks: effect.onDelegateFailure?.extraDrinks };
+  }
+
+  if (effect.kind === "GROUP_HELP") {
+    return { onFailureDrinks: effect.helperCount * (effect.onFailure?.helperDrinks ?? 0) };
+  }
+
+  return {};
+}
+
+const roundEffectFactories: Partial<Record<WildcardEffect["kind"], RoundEffectFactory>> = {
+  LIMIT_ROUND_LOSS: (wildcard) => wildcard.effect.kind === "LIMIT_ROUND_LOSS"
+    ? {
+        ...createBaseRoundEffect(wildcard),
+        type: "LOSS_LIMIT",
+        maxScorePenalty: wildcard.effect.maxScorePenalty,
+        maxDrinks: wildcard.effect.maxDrinks
+      }
+    : null,
+  ADD_SCORE_ON_SUCCESS: (wildcard) => wildcard.effect.kind === "ADD_SCORE_ON_SUCCESS"
+    ? {
+        ...createBaseRoundEffect(wildcard),
+        type: "ADD_SCORE_ON_SUCCESS",
+        extraScore: wildcard.effect.extraScore
+      }
+    : null,
+  TRANSFER_DRINKS_ON_FAILURE: (wildcard) => wildcard.effect.kind === "TRANSFER_DRINKS_ON_FAILURE"
+    ? {
+        ...createBaseRoundEffect(wildcard),
+        type: "TRANSFER_DRINKS_ON_FAILURE",
+        transferBaseDrinks: wildcard.effect.transferBaseDrinks,
+        transferExtraDrinks: wildcard.effect.transferExtraDrinks
+      }
+    : null,
+  ON_SUCCESS_DRINK_ASSIGNMENT: (wildcard) => ({
+    ...createBaseRoundEffect(wildcard),
+    type: "ROUND_RULE",
+    ...getRoundRuleDrinks(wildcard.effect)
+  }),
+  DELEGATE_ANSWER: (wildcard) => ({
+    ...createBaseRoundEffect(wildcard),
+    type: "ROUND_RULE",
+    ...getRoundRuleDrinks(wildcard.effect)
+  }),
+  GROUP_HELP: (wildcard) => ({
+    ...createBaseRoundEffect(wildcard),
+    type: "ROUND_RULE",
+    ...getRoundRuleDrinks(wildcard.effect)
+  }),
+  SECOND_OPINION: (wildcard) => ({
+    ...createBaseRoundEffect(wildcard),
+    type: "ROUND_RULE"
+  })
+};
+
 function createRoundEffect(wildcard: Wildcard): GameEffect | null {
-  if (wildcard.effect.kind === "LIMIT_ROUND_LOSS") {
-    return {
-      id: `${wildcard.id}-effect`,
-      type: "LOSS_LIMIT",
-      label: wildcard.name,
-      remainingRounds: 1,
-      sourceWildcardId: wildcard.id,
-      maxScorePenalty: wildcard.effect.maxScorePenalty,
-      maxDrinks: wildcard.effect.maxDrinks
-    };
-  }
-
-  if (wildcard.effect.kind === "ADD_SCORE_ON_SUCCESS") {
-    return {
-      id: `${wildcard.id}-effect`,
-      type: "ADD_SCORE_ON_SUCCESS",
-      label: wildcard.name,
-      remainingRounds: 1,
-      sourceWildcardId: wildcard.id,
-      extraScore: wildcard.effect.extraScore
-    };
-  }
-
-  if (wildcard.effect.kind === "TRANSFER_DRINKS_ON_FAILURE") {
-    return {
-      id: `${wildcard.id}-effect`,
-      type: "TRANSFER_DRINKS_ON_FAILURE",
-      label: wildcard.name,
-      remainingRounds: 1,
-      sourceWildcardId: wildcard.id,
-      transferBaseDrinks: wildcard.effect.transferBaseDrinks,
-      transferExtraDrinks: wildcard.effect.transferExtraDrinks
-    };
-  }
-
-  if (
-    wildcard.effect.kind === "ON_SUCCESS_DRINK_ASSIGNMENT" ||
-    wildcard.effect.kind === "DELEGATE_ANSWER" ||
-    wildcard.effect.kind === "GROUP_HELP" ||
-    wildcard.effect.kind === "SECOND_OPINION"
-  ) {
-    return {
-      id: `${wildcard.id}-effect`,
-      type: "ROUND_RULE",
-      label: wildcard.name,
-      remainingRounds: 1,
-      sourceWildcardId: wildcard.id,
-      onSuccessDrinks:
-        wildcard.effect.kind === "ON_SUCCESS_DRINK_ASSIGNMENT"
-          ? wildcard.effect.drinks
-          : undefined,
-      onFailureDrinks:
-        wildcard.effect.kind === "DELEGATE_ANSWER"
-          ? wildcard.effect.onDelegateFailure?.extraDrinks
-          : wildcard.effect.kind === "GROUP_HELP"
-            ? wildcard.effect.helperCount * (wildcard.effect.onFailure?.helperDrinks ?? 0)
-            : undefined
-    };
-  }
-
-  return null;
+  return roundEffectFactories[wildcard.effect.kind]?.(wildcard) ?? null;
 }
 
 export function useWildcard(state: GameState, wildcard: Wildcard, config?: AppConfig): GameState {

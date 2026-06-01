@@ -4,7 +4,7 @@
 
 Despedida ViaRural Broker es una webapp React mobile-first para jugar una partida local de preguntas, puntuacion y eventos bursatiles ficticios. La aplicacion representa la cotizacion de `Inigo Capital S.A.` antes de su fusion con `Rocio Holdings`.
 
-La arquitectura es deliberadamente frontend-only:
+La arquitectura de juego es deliberadamente frontend-only:
 
 - No hay backend.
 - No hay autenticacion.
@@ -12,6 +12,7 @@ La arquitectura es deliberadamente frontend-only:
 - Todo el contenido se carga desde ficheros locales.
 - El estado de partida se persiste en `localStorage`.
 - La aplicacion funciona como PWA basica con manifest y service worker.
+- Firebase Analytics es una integracion opcional de medicion y no participa en reglas, datos ni estado de partida.
 
 ## 2. Stack
 
@@ -23,6 +24,7 @@ La arquitectura es deliberadamente frontend-only:
 - Font Awesome para iconografia.
 - `lightweight-charts` para la grafica bursatil.
 - `framer-motion` para animaciones de cambio de ronda.
+- Firebase Web SDK para Analytics.
 - Vitest.
 - Testing Library.
 - PWA manual con `public/manifest.webmanifest`, `public/sw.js` y registro en `src/pwa/serviceWorkerRegistration.ts`.
@@ -43,9 +45,13 @@ npm run typecheck
 src/
   app/
     App.tsx
+    firebase.ts
     GameContext.tsx
+    lazyRoutes.ts
+    offlinePrefetch.ts
   components/
     effects/
+    game/
     layout/
     market/
     onboarding/
@@ -72,7 +78,7 @@ src/
   pages/
   pwa/
   styles/
-  test/
+test/
 ```
 
 ## 4. Capas de la aplicacion
@@ -92,6 +98,7 @@ Rutas actuales:
 - `/merger`: cierre de fusion.
 - `/bailout`: rescate bancario.
 - `/game-over`: resultado final.
+- `/resacon-toledo`: resultado final por ruptura de negociaciones.
 
 `src/app/GameContext.tsx` centraliza:
 
@@ -102,6 +109,12 @@ Rutas actuales:
 - Acciones de juego.
 - Activacion de catalizadores.
 - Configuracion persistida del valor de fusion.
+
+`src/app/lazyRoutes.ts` centraliza los imports dinamicos de pantallas.
+
+`src/app/offlinePrefetch.ts` precarga en segundo plano rutas lazy, grafica, JS/CSS de entrada y assets generados para mejorar el comportamiento offline despues de la primera carga de produccion.
+
+`src/app/firebase.ts` inicializa Firebase y Analytics si existen todas las variables `VITE_FIREBASE_*` necesarias y si el navegador soporta Analytics.
 
 ### 4.2. Capa de dominio
 
@@ -145,6 +158,8 @@ Componentes principales:
 - `RoundActionBar`: botones de fallo, parcial y acierto.
 - `RoundAdvanceModal`: modal animada de nueva ronda.
 - `GameRulesOnboarding`: reglas paso a paso reutilizadas en inicio y reglas.
+- `GameResultScene`: escena comun de fin de partida con fondo, modal animada y estadisticas.
+- `GameStatsGrid`: estadisticas reutilizadas en victoria, derrota y cierre manual.
 
 ## 5. Configuracion
 
@@ -169,6 +184,24 @@ Componentes principales:
 El valor `mergerTargetScore` puede sobrescribirse desde `/settings/fusion`. La app lo guarda en `localStorage` bajo `bachelor-market:settings` y construye una configuracion efectiva combinando JSON base y ajustes locales.
 
 `negotiationBreakScore` define el umbral terminal de negociacion rota. Si una ronda resuelta deja la cotizacion en ese valor o por debajo, el motor marca `gameResult` como `NEGOTIATIONS_BROKEN` y no avanza a la siguiente ronda.
+
+El valor por defecto actual es `0`, para que mercado debil, zona critica y rescate bancario sigan siendo alcanzables en la partida normal.
+
+## 5.1. Variables de entorno
+
+La aplicacion lee variables `VITE_FIREBASE_*` solo en build/runtime de cliente:
+
+- `VITE_FIREBASE_API_KEY`.
+- `VITE_FIREBASE_AUTH_DOMAIN`.
+- `VITE_FIREBASE_PROJECT_ID`.
+- `VITE_FIREBASE_STORAGE_BUCKET`.
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`.
+- `VITE_FIREBASE_APP_ID`.
+- `VITE_FIREBASE_MEASUREMENT_ID`.
+
+En local se usan desde `.env.local`, que esta ignorado por git. En CI se inyectan como GitHub Secrets unicamente en el paso `Build`.
+
+Credenciales privadas de despliegue, como `GOOGLE_APPLICATION_CREDENTIALS` o el service account de Firebase Hosting, no deben exponerse como `VITE_*`.
 
 ## 6. Persistencia
 
@@ -246,6 +279,8 @@ Al pulsar Fallo, Parcial o Acierto:
 - Se incrementa `roundNumber`, que es el numero visible para el usuario.
 - Se resetea el uso/robo de catalizador de la ronda.
 - Se muestra modal animada de nueva ronda durante 4 segundos.
+- Si la nueva puntuacion queda en `negotiationBreakScore` o menos, se marca `NEGOTIATIONS_BROKEN` y se redirige a `/resacon-toledo`.
+- Si la puntuacion alcanza el objetivo de fusion, el estado pasa a `MERGER_ATTEMPT` y el banner de cierre se muestra por encima de la grafica.
 
 ## 8. Motor de mercado
 
@@ -327,9 +362,27 @@ Incluye:
 - `serviceWorkerRegistration.ts`.
 - Icono `public/icon.avif`.
 
-La estrategia actual es cache-first basica para recursos GET.
+La estrategia actual combina:
 
-## 13. Testing
+- Cache-first para recursos GET ya cacheados.
+- App shell en `public/sw.js`.
+- Precarga diferida desde `src/app/offlinePrefetch.ts` de rutas lazy, grafica, JS/CSS de entrada y recursos `/assets/`.
+- Fallback a `index.html` solo para navegaciones, no para scripts ni hojas de estilo.
+
+El service worker no se registra en modo dev.
+
+## 13. Firebase Analytics
+
+Firebase Analytics se inicializa desde `src/main.tsx` llamando a `initializeFirebaseAnalytics`.
+
+Reglas:
+
+- Si falta cualquier variable `VITE_FIREBASE_*`, no se inicializa Firebase.
+- Si el navegador no soporta Analytics, no se inicializa.
+- Los errores de inicializacion se capturan para no romper la partida ni el modo offline.
+- Analytics no es requisito para el funcionamiento del juego.
+
+## 14. Testing
 
 Cobertura actual:
 
@@ -344,8 +397,12 @@ Cobertura actual:
 - Menu.
 - Formulario de valor de fusion.
 - Modal de nueva ronda.
+- Banner de cierre de fusion visible al superar objetivo.
+- Rescate bancario.
+- Due Diligence final.
+- Pantallas de resultado: fusion aprobada y Resacon en Toledo.
 
-## 14. Consideraciones de implementacion
+## 15. Consideraciones de implementacion
 
 - No usar backend para datos o estado.
 - No introducir dependencias de red en runtime.

@@ -5,6 +5,7 @@
   "hosting": {
     "site": "ruralholdings-despedida",
     "public": "dist",
+    "site": "ruralholdings-despedida",
     "ignore": [
       "firebase.json",
       "**/.*",

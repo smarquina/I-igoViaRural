@@ -29,9 +29,10 @@ The merger target can also be changed from the in-app menu and is persisted in `
 ## Main Features
 
 - Mobile-first broker dashboard.
-- Local-only React app with no backend.
+- Frontend-only gameplay with no backend for rules or state.
 - Persistent game state with `localStorage`.
 - PWA shell with manifest and service worker.
+- Offline-first prefetch for route/chart chunks and entry assets.
 - Randomized question order.
 - Previously shown round IDs are stored to avoid repetition during a deck cycle.
 - Hidden audit answers that can be revealed once per round.
@@ -43,7 +44,9 @@ The merger target can also be changed from the in-app menu and is persisted in `
 - Market Catalysts system with positive and negative cards.
 - Accumulated effects integrated in the catalysts panel.
 - Firebase Hosting deployment.
+- Firebase Analytics initialized from Vite environment variables.
 - GitHub Actions CI.
+- Dedicated win/loss result scenes with animated modal and post-dismiss stats.
 
 ## Game Concepts
 
@@ -97,6 +100,7 @@ Rules:
 - Font Awesome.
 - `lightweight-charts`.
 - `framer-motion`.
+- Firebase Web SDK / Analytics.
 - Vitest.
 - Testing Library.
 - Firebase Hosting.
@@ -105,7 +109,7 @@ Rules:
 
 ```txt
 src/
-  app/             App routes and GameContext
+  app/             App routes, lazy loaders, Firebase and GameContext
   components/      UI components grouped by domain
   data/            Local JSON game content and config
   domain/          Pure game engines and types
@@ -113,14 +117,17 @@ src/
   pages/           Route-level screens
   pwa/             Service worker registration
   styles/          Global Tailwind CSS
-  test/            Test fixtures
+test/              Tests and fixtures
 docs/
   arquitectura-aplicacion.md
   funcional-aplicacion.md
   reglas-juego.md
 public/
+  crazy_guy.avif
+  due_diligence_approved_simpsom.avif
   icon.avif
   manifest.webmanifest
+  resacon_toledo.avif
   sw.js
 ```
 
@@ -190,6 +197,31 @@ firebase.json
 
 The app is configured as an SPA and rewrites all routes to `index.html`.
 
+## Environment Variables
+
+Local development can use `.env.local`. This file is ignored by git.
+
+Firebase web config variables used by Vite:
+
+```txt
+VITE_FIREBASE_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID
+VITE_FIREBASE_STORAGE_BUCKET
+VITE_FIREBASE_MESSAGING_SENDER_ID
+VITE_FIREBASE_APP_ID
+VITE_FIREBASE_MEASUREMENT_ID
+```
+
+These values are injected at build time. They are client-side Firebase web config values, so they are not treated as private server secrets. Private deploy credentials must stay out of `VITE_*` variables.
+
+Local deploy helpers:
+
+```txt
+FIREBASE_PROJECT_ID
+GOOGLE_APPLICATION_CREDENTIALS
+```
+
 ## CI
 
 GitHub Actions workflow:
@@ -209,6 +241,8 @@ CI job:
 - Test.
 - Build.
 - Upload `dist/` artifact.
+
+The `VITE_FIREBASE_*` secrets are scoped to the `Build` step only.
 
 Deploy job:
 
@@ -257,12 +291,15 @@ src/data/config.json
 src/data/rounds.json
 src/data/bride-audit-questions.json
 src/data/wildcards.json
-src/data/rules.md
+src/data/bailout-options.json
+src/data/street-challenges.json
+src/data/general-culture-questions.json
 ```
 
 Important config values:
 
 - `initialScore`.
+- `negotiationBreakScore`.
 - `mergerTargetScore`.
 - `hotMarketScore`.
 - `stableMarketScore`.
@@ -271,6 +308,31 @@ Important config values:
 - `ordinaryMaxDrinks`.
 - `maxWildcardsPerRound`.
 - `dataVersion`.
+
+`negotiationBreakScore` defaults to `0`, so weak market, critical zone, and bailout remain reachable in the normal game flow.
+
+## Firebase Analytics
+
+Firebase Analytics is initialized in `src/app/firebase.ts` and called from `src/main.tsx`.
+
+Behavior:
+
+- Firebase initializes only when all `VITE_FIREBASE_*` values are present.
+- Analytics initializes only in supported browser contexts.
+- Initialization failures are swallowed so offline-first gameplay is not blocked.
+- No analytics code is required for tests or server-side contexts.
+
+## Offline Behavior
+
+The PWA uses `public/sw.js` plus runtime prefetch in `src/app/offlinePrefetch.ts`.
+
+Offline support includes:
+
+- App shell assets.
+- Public images used by the intro and result screens.
+- Lazy route chunks.
+- Chart chunk.
+- Entry JavaScript and CSS assets after the first production load.
 
 ## Documentation
 
@@ -301,10 +363,13 @@ Current test coverage includes:
 - Rules page.
 - Settings menu.
 - Merger target settings form.
+- Main game merger alert visibility.
+- Result screens for approved merger and broken negotiations.
 
 ## Notes
 
 - This is a local frontend app; session data does not sync across devices.
 - There is no import/export state flow in the UI.
+- Firebase Analytics is optional measurement only; it does not affect gameplay or persistence.
 - Build currently emits a chunk-size warning due to animation/chart dependencies, but production build completes successfully.
 - Keep user-facing copy in the playful financial tone of the game.

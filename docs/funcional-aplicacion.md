@@ -15,7 +15,9 @@ La aplicacion permite dirigir una partida presencial de despedida de soltero. El
 
 ### 3.1. Inicio
 
-Si no hay partida iniciada, muestra el onboarding con reglas basicas:
+Si no hay partida iniciada, muestra una pantalla inicial con la imagen `crazy_guy.avif` y el boton `Iniciar juego`.
+
+Al pulsar `Iniciar juego`, muestra el onboarding con reglas basicas:
 
 1. Dinamica de rondas.
 2. Objetivo de llegar al valor de fusion.
@@ -25,6 +27,7 @@ Si no hay partida iniciada, muestra el onboarding con reglas basicas:
 
 Acciones:
 
+- Iniciar juego.
 - Siguiente.
 - Atras.
 - Omitir explicacion.
@@ -43,6 +46,7 @@ Muestra:
 - Maximo y minimo de sesion.
 - Grafica bursatil.
 - Estado de mercado.
+- Banner de Cierre de Fusion o Rescate cuando corresponda, situado por encima de la grafica para ser visible en movil.
 - Siguiente umbral.
 - Barra de estados con la puntuacion actual dentro.
 - Catalizadores acumulados.
@@ -84,7 +88,17 @@ Funcionamiento:
 
 Pantalla final cuando se alcanza el objetivo.
 
-El grupo marca cuantas fases se superan.
+El grupo resuelve 3 fases:
+
+1. Pregunta de Rocio.
+2. Reto aleatorio de calle.
+3. Pregunta aleatoria de cultura general.
+
+La operacion se aprueba si supera al menos 2 de 3 fases.
+
+Las fases de pregunta pueden ocultar la respuesta hasta pulsar `Revelar respuesta`.
+
+Si no supera el minimo, se aplican las penalizaciones de las fases falladas y la partida vuelve al mercado.
 
 ### 3.7. Rescate bancario
 
@@ -94,7 +108,12 @@ Permite seleccionar una de las opciones de rescate.
 
 ### 3.8. Fin de partida
 
-Muestra resultado, puntuacion y resumen.
+Hay dos resultados principales:
+
+- Fusion aprobada: usa la pantalla de resultado con fondo `due_diligence_approved_simpsom.avif`, modal animada inicial y estadisticas tras cerrar la modal.
+- Resacon en Toledo: usa la pantalla de ruptura de negociaciones con fondo `resacon_toledo.avif`, modal animada inicial y estadisticas tras cerrar la modal.
+
+En ambas pantallas el bloque de titulo se muestra en la parte superior con fondo oscuro para asegurar contraste sobre la imagen.
 
 ## 4. Flujo de partida
 
@@ -113,7 +132,8 @@ Muestra resultado, puntuacion y resumen.
 13. Si la cotizacion queda en `negotiationBreakScore` o menos, por defecto 0 puntos, la partida termina en la pantalla `Resacon en Toledo`.
 14. Si no hay fin terminal, la app elige la siguiente ronda aleatoria sin repetir.
 15. Se muestra modal animada de nueva ronda durante 4 segundos.
-16. El juego continua hasta ruptura de negociaciones, rescate, cierre o fin.
+16. Si alcanza el objetivo de fusion, se muestra el banner `Cierre de Fusion disponible` por encima de la grafica.
+17. El juego continua hasta ruptura de negociaciones, rescate, cierre o fin.
 
 ## 5. Rondas
 
@@ -232,6 +252,8 @@ Debe usarse cuando la puntuacion es 40 o menos.
 
 Debe usarse cuando se alcanza el objetivo configurado.
 
+Al aparecer, la app hace scroll al inicio de la pantalla principal para que el banner sea visible.
+
 ## 13. Persistencia funcional
 
 La aplicacion guarda automaticamente:
@@ -267,6 +289,7 @@ El reinicio:
 - El estado vive en el navegador actual.
 - No se importa ni exporta estado.
 - La app debe ser usable en movil.
+- La app debe poder funcionar offline despues de la primera carga de produccion, con service worker y precarga de chunks.
 - La identidad visual debe ser ficticia y parodica.
 - No debe parecer una app oficial de Caja Rural.
 
@@ -285,8 +308,10 @@ El reinicio:
 - El objetivo de fusion configurable se persiste.
 - El menu permite abrir reglas, valor de fusion y reiniciar.
 - Recargar `/` con partida iniciada lleva a `/game`.
+- Superar el objetivo de fusion muestra un banner visible para intentar cerrar la fusion.
 - Los Catalizadores positivos abren modal de decision.
 - Los Catalizadores negativos se aplican inmediatamente.
 - Solo se activa 1 Catalizador por ronda.
 - El build de produccion debe compilar.
 - La suite de tests debe pasar.
+- Firebase Analytics se activa solo si existe configuracion `VITE_FIREBASE_*` completa y el navegador lo soporta.

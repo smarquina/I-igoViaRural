@@ -14,6 +14,8 @@ Ese valor puede modificarse desde el menu en la pantalla `Valor de fusion`. Si s
 
 Al alcanzar el objetivo de fusion, Iñigo no gana automaticamente. Se desbloquea el `Cierre de Fusion`.
 
+La alerta de Cierre de Fusion se muestra en la pantalla principal por encima de la grafica, con acceso a la Due Diligence final.
+
 ## 3. Puntuacion inicial
 
 La partida empieza con:
@@ -265,15 +267,24 @@ Al alcanzar el objetivo de fusion se desbloquea el intento final.
 La prueba final tiene 3 fases:
 
 1. Pregunta de Rocio.
-2. Pregunta del mercado.
-3. Declaracion de inversion.
+2. Reto aleatorio de calle.
+3. Pregunta aleatoria de cultura general.
 
 Reglas:
 
 - Si supera al menos 2 de 3 fases, la fusion queda aprobada.
-- Si falla, pierde 25 puntos.
-- Si falla, suma 5 tragos.
-- Si falla, vuelve al mercado con la nueva cotizacion.
+- Cada fase puede marcarse como acierto, parcial si aplica, o fallo.
+- Los aciertos suman los puntos definidos en la fase.
+- Los parciales suman `partialSuccessScore` cuando exista.
+- Los fallos restan `failureScorePenalty` y suman `failureDrinks` de esa fase.
+- Si no supera al menos 2 fases, vuelve al mercado con el resultado neto aplicado.
+- Las preguntas de Rocio y cultura general ocultan la respuesta hasta pulsar `Revelar respuesta`.
+
+Fuentes de datos:
+
+- Pregunta de Rocio: mazo de auditoria interna.
+- Reto de calle: `street-challenges.json`.
+- Cultura general: `general-culture-questions.json`.
 
 ## 18. Victoria
 
@@ -287,6 +298,19 @@ Resultado:
 
 - `MERGER_APPROVED`.
 - Fin de partida.
+- Pantalla de fusion aprobada con fondo `due_diligence_approved_simpsom.avif`.
+- Modal animada inicial de fusion superada.
+- Al cerrar la modal, se muestran las estadisticas finales.
+
+## 18.1. Derrota por ruptura de negociaciones
+
+Si se activa `NEGOTIATIONS_BROKEN`, la app muestra la pantalla `Resacon en Toledo`.
+
+Resultado:
+
+- Fondo `resacon_toledo.avif`.
+- Modal animada inicial indicando que se han roto las negociaciones.
+- Al cerrar la modal, se muestran las estadisticas finales.
 
 ## 19. Persistencia de reglas
 
