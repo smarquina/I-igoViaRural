@@ -203,7 +203,33 @@ export interface ScoreResult {
   appliedEffectLabels: string[];
 }
 
-export type BailoutChoice = "LIQUIDITY" | "SELL_ASSETS" | "EXTRA_AUDIT_SUCCESS" | "EXTRA_AUDIT_FAILURE";
+export type BailoutChoice = "LIQUIDITY" | "SELL_ASSETS" | "STREET_CHALLENGE_SUCCESS" | "GROUP_BEER_FAILURE";
+
+export type BailoutOptionKind = "STANDARD" | "STREET_CHALLENGE";
+export type BailoutScoreMode = "ADD" | "SET";
+export type BailoutTimelineEvent = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "groupBeerBailout";
+export type BailoutMessage = "bailoutLiquidity" | "assetSale" | "streetChallengeBailout" | "groupBeerBailout";
+
+export interface BailoutOption {
+  id: BailoutChoice;
+  kind: BailoutOptionKind;
+  selectable?: boolean;
+  title: string;
+  detail: string;
+  effect: {
+    scoreMode: BailoutScoreMode;
+    scoreDelta?: number;
+    targetScore?: number;
+    drinks: number;
+    clearsWildcards?: boolean;
+    timelineEvent: BailoutTimelineEvent;
+    message: BailoutMessage;
+  };
+  actions?: {
+    successChoiceId: BailoutChoice;
+    failureChoiceId: BailoutChoice;
+  };
+}
 
 export interface StreetChallenge {
   id: string;

@@ -52,6 +52,7 @@ src/
     rounds/
     wildcards/
   data/
+    bailout-options.json
     bride-audit-questions.json
     config.json
     general-culture-questions.json
@@ -120,6 +121,7 @@ La carpeta `src/domain` contiene la logica pura.
 Los datos locales viven en `src/data`.
 
 - `config.json`: configuracion base del juego.
+- `bailout-options.json`: opciones de rescate bancario, efectos de puntuacion, tragos y acciones especiales.
 - `rounds.json`: rondas generales.
 - `bride-audit-questions.json`: auditorias internas de Rocio.
 - `wildcards.json`: Catalizadores de Mercado.

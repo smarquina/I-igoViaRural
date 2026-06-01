@@ -1,8 +1,22 @@
 import { decrementRoundEffects } from "./effectEngine";
 import { calculateMarketStatus } from "./marketStatusEngine";
 import { calculateRoundResultScore } from "./scoreEngine";
-import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "./types";
+import type { AppConfig, BailoutChoice, BailoutMessage, BailoutOption, BailoutTimelineEvent, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "./types";
 import { copy } from "../lang";
+
+const bailoutTimelineEvents: Record<BailoutTimelineEvent, string> = {
+  bailoutLiquidity: copy.timeline.bailoutLiquidity,
+  assetSale: copy.timeline.assetSale,
+  streetChallengeBailout: copy.timeline.streetChallengeBailout,
+  groupBeerBailout: copy.timeline.groupBeerBailout
+};
+
+const bailoutMessages: Record<BailoutMessage, string> = {
+  bailoutLiquidity: copy.messages.bailoutLiquidity,
+  assetSale: copy.messages.assetSale,
+  streetChallengeBailout: copy.messages.streetChallengeBailout,
+  groupBeerBailout: copy.messages.groupBeerBailout
+};
 
 function createScorePoint(score: number, event: string) {
   return {
@@ -208,59 +222,32 @@ export function applyMergerAttemptResult(state: GameState, resolution: MergerAtt
   };
 }
 
-export function applyBailoutChoice(state: GameState, choice: BailoutChoice, config?: AppConfig): GameState {
-  if (choice === "LIQUIDITY") {
-    const nextScore = state.score + 20;
-    return {
-      ...state,
-      score: nextScore,
-      scoreHistory: [...state.scoreHistory, nextScore],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.bailoutLiquidity)],
-      marketStatus: calculateMarketStatus(nextScore, config),
-      totalDrinks: state.totalDrinks + 5,
-      lastScoreDelta: 20,
-      lastDrinkPenalty: 5,
-      lastEventMessage: copy.messages.bailoutLiquidity
-    };
+export function applyBailoutChoice(
+  state: GameState,
+  choice: BailoutChoice,
+  bailoutOptions: BailoutOption[],
+  config?: AppConfig
+): GameState {
+  const option = bailoutOptions.find((item) => item.id === choice);
+
+  if (!option) {
+    return state;
   }
 
-  if (choice === "SELL_ASSETS") {
-    const nextScore = state.score + 25;
-    return {
-      ...state,
-      score: nextScore,
-      scoreHistory: [...state.scoreHistory, nextScore],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, copy.timeline.assetSale)],
-      marketStatus: calculateMarketStatus(nextScore, config),
-      accumulatedWildcards: [],
-      lastScoreDelta: 25,
-      lastDrinkPenalty: 0,
-      lastEventMessage: copy.messages.assetSale
-    };
-  }
-
-  if (choice === "EXTRA_AUDIT_SUCCESS") {
-    return {
-      ...state,
-      score: 90,
-      scoreHistory: [...state.scoreHistory, 90],
-      scoreTimeline: [...state.scoreTimeline, createScorePoint(90, copy.timeline.extraAuditSuccess)],
-      marketStatus: calculateMarketStatus(90, config),
-      lastScoreDelta: 90 - state.score,
-      lastDrinkPenalty: 0,
-      lastEventMessage: copy.messages.extraAuditSuccess
-    };
-  }
+  const nextScore = option.effect.scoreMode === "SET"
+    ? option.effect.targetScore ?? state.score
+    : state.score + (option.effect.scoreDelta ?? 0);
 
   return {
     ...state,
-    score: 50,
-    scoreHistory: [...state.scoreHistory, 50],
-    scoreTimeline: [...state.scoreTimeline, createScorePoint(50, copy.timeline.extraAuditFailure)],
-    marketStatus: calculateMarketStatus(50, config),
-    totalDrinks: state.totalDrinks + 5,
-    lastScoreDelta: 50 - state.score,
-    lastDrinkPenalty: 5,
-    lastEventMessage: copy.messages.extraAuditFailure
+    score: nextScore,
+    scoreHistory: [...state.scoreHistory, nextScore],
+    scoreTimeline: [...state.scoreTimeline, createScorePoint(nextScore, bailoutTimelineEvents[option.effect.timelineEvent])],
+    marketStatus: calculateMarketStatus(nextScore, config),
+    totalDrinks: state.totalDrinks + option.effect.drinks,
+    accumulatedWildcards: option.effect.clearsWildcards ? [] : state.accumulatedWildcards,
+    lastScoreDelta: nextScore - state.score,
+    lastDrinkPenalty: option.effect.drinks,
+    lastEventMessage: bailoutMessages[option.effect.message]
   };
 }

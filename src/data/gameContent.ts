@@ -1,11 +1,12 @@
 import auditData from "./bride-audit-questions.json";
+import bailoutOptionsData from "./bailout-options.json";
 import configData from "./config.json";
 import generalCultureQuestionsData from "./general-culture-questions.json";
 import roundsData from "./rounds.json";
 import streetChallengesData from "./street-challenges.json";
 import wildcardsData from "./wildcards.json";
 import { buildRoundDeck } from "../domain/roundEngine";
-import type { AppConfig, GeneralCultureQuestion, Round, StreetChallenge, Wildcard } from "../domain/types";
+import type { AppConfig, BailoutOption, GeneralCultureQuestion, Round, StreetChallenge, Wildcard } from "../domain/types";
 import { copy } from "../lang";
 
 type RawRound = Omit<Round, "title" | "text" | "answer">;
@@ -54,6 +55,7 @@ export const defaultConfig = { ...configData, gameTitle: copy.app.gameTitle } as
 export const rounds = (roundsData as RawRound[]).map(hydrateRound);
 export const auditQuestions = (auditData as RawRound[]).map(hydrateRound);
 export const availableWildcards = (wildcardsData as RawWildcard[]).map(hydrateWildcard);
+export const bailoutOptions = bailoutOptionsData as BailoutOption[];
 export const streetChallenges = streetChallengesData as StreetChallenge[];
 export const generalCultureQuestions = generalCultureQuestionsData as GeneralCultureQuestion[];
 export const roundDeck = buildRoundDeck(rounds, auditQuestions);

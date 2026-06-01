@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGame } from "../app/GameContext";
 import { MobileShell } from "../components/layout/MobileShell";
@@ -40,7 +40,7 @@ export function HomePage() {
               className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-broker-border bg-broker-surface text-broker-ink"
               aria-label={copy.app.openSettings}
             >
-              <FontAwesomeIcon icon={faBars} className="h-5 w-5" aria-hidden="true" />
+              <FontAwesomeIcon icon={faScrewdriverWrench} className="h-5 w-5" aria-hidden="true" />
             </Link>
           </div>
         </header>

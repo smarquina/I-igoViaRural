@@ -188,25 +188,16 @@ export const es = {
   bailout: {
     eyebrow: "Banco Central",
     title: "Rescate Bancario",
-    text: "La cotización ha caído a 40 puntos o menos. Elige una medida urgente para evitar la quiebra sentimental.",
-    choices: {
-      LIQUIDITY: {
-        title: "Rescate con liquidez",
-        detail: "Bebe media cerveza y recupera 20 puntos."
-      },
-      SELL_ASSETS: {
-        title: "Venta de activos",
-        detail: "Pierde todos los catalizadores acumulados y recupera 25 puntos."
-      },
-      EXTRA_AUDIT_SUCCESS: {
-        title: "Auditoría extraordinaria superada",
-        detail: "Sube directamente a 90 puntos."
-      },
-      EXTRA_AUDIT_FAILURE: {
-        title: "Auditoría extraordinaria fallida",
-        detail: "Bebe media cerveza y se queda en 50 puntos."
-      }
-    }
+    text: "La cotización ha caído a 40 puntos o menos. Elige una única medida urgente; al ejecutarla, el rescate queda resuelto.",
+    execute: "Ejecutar rescate",
+    executeChoice: (title: string) => `Ejecutar rescate: ${title}`,
+    challengeSuccess: "Reto superado",
+    challengeFailure: "Reto fallido",
+    instructions: "Instrucciones",
+    examplePitch: "Discurso sugerido",
+    successCriteria: "Criterio de superación",
+    failureCriteria: "Criterio de fallo",
+    safetyNote: "Nota de seguridad"
   },
   merger: {
     eyebrow: "Due Diligence final",
@@ -260,8 +251,8 @@ export const es = {
     mergerFailed: "Cierre de Fusión fallido",
     bailoutLiquidity: "Rescate con liquidez",
     assetSale: "Venta de activos",
-    extraAuditSuccess: "Auditoría extraordinaria superada",
-    extraAuditFailure: "Auditoría extraordinaria fallida"
+    streetChallengeBailout: "Reto de recapitalización superado",
+    groupBeerBailout: "Rescate colectivo de emergencia"
   },
   messages: {
     appliedEffects: (labels: string[]) => `Efectos aplicados: ${labels.join(", ")}.`,
@@ -277,8 +268,8 @@ export const es = {
       `La fusión no se cierra todavía. Resultado neto: +${successScore} puntos por aciertos, -${scorePenalty} puntos por fallos y ${drinks} tragos.`,
     bailoutLiquidity: "Rescate con liquidez ejecutado.",
     assetSale: "Venta de activos ejecutada. Catalizadores liquidados.",
-    extraAuditSuccess: "Auditoría extraordinaria superada.",
-    extraAuditFailure: "Auditoría extraordinaria fallida.",
+    streetChallengeBailout: "Reto de recapitalización superado. La cotización avanza a 80 puntos.",
+    groupBeerBailout: "Rescate colectivo ejecutado. Todo el grupo bebe media cerveza y la cotización queda en 60 puntos.",
     oldSessionOpening: "Se abre la sesión."
   },
   gameContent: {

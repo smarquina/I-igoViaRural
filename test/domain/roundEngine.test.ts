@@ -1,4 +1,5 @@
-import { applyMergerAttemptResult, createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "../../src/domain/roundEngine";
+import { applyBailoutChoice, applyMergerAttemptResult, createInitialGameState, getNextRandomRoundIndex, resolveAndAdvanceRound } from "../../src/domain/roundEngine";
+import { bailoutOptions } from "../../src/data/gameContent";
 import type { AppConfig, Round } from "../../src/domain/types";
 import { sampleRound, sampleWildcard } from "../fixtures";
 
@@ -119,5 +120,24 @@ describe("roundEngine", () => {
     expect(nextState.lastScoreDelta).toBe(-2);
     expect(nextState.lastDrinkPenalty).toBe(5);
     expect(nextState.isGameFinished).toBe(false);
+  });
+
+  it("moves bailout challenge success to 80 points", () => {
+    const state = createInitialGameState({ ...sampleConfig, initialScore: 35 });
+    const nextState = applyBailoutChoice(state, "STREET_CHALLENGE_SUCCESS", bailoutOptions, sampleConfig);
+
+    expect(nextState.score).toBe(80);
+    expect(nextState.lastScoreDelta).toBe(45);
+    expect(nextState.lastDrinkPenalty).toBe(0);
+  });
+
+  it("applies the collective bailout to 60 points with group beer penalty", () => {
+    const state = createInitialGameState({ ...sampleConfig, initialScore: 35 });
+    const nextState = applyBailoutChoice(state, "GROUP_BEER_FAILURE", bailoutOptions, sampleConfig);
+
+    expect(nextState.score).toBe(60);
+    expect(nextState.totalDrinks).toBe(5);
+    expect(nextState.lastScoreDelta).toBe(25);
+    expect(nextState.lastDrinkPenalty).toBe(5);
   });
 });

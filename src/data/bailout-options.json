@@ -1,0 +1,60 @@
+[
+  {
+    "id": "LIQUIDITY",
+    "kind": "STANDARD",
+    "title": "Rescate con liquidez",
+    "detail": "Iñigo bebe 5 tragos y recupera 20 puntos.",
+    "effect": {
+      "scoreMode": "ADD",
+      "scoreDelta": 20,
+      "drinks": 5,
+      "timelineEvent": "bailoutLiquidity",
+      "message": "bailoutLiquidity"
+    }
+  },
+  {
+    "id": "SELL_ASSETS",
+    "kind": "STANDARD",
+    "title": "Venta de activos",
+    "detail": "Pierde todos los catalizadores acumulados y recupera 25 puntos.",
+    "effect": {
+      "scoreMode": "ADD",
+      "scoreDelta": 25,
+      "drinks": 0,
+      "clearsWildcards": true,
+      "timelineEvent": "assetSale",
+      "message": "assetSale"
+    }
+  },
+  {
+    "id": "STREET_CHALLENGE_SUCCESS",
+    "kind": "STREET_CHALLENGE",
+    "title": "Reto de recapitalización",
+    "detail": "Si Iñigo supera el reto aleatorio, la cotización avanza directamente a 80 puntos.",
+    "effect": {
+      "scoreMode": "SET",
+      "targetScore": 80,
+      "drinks": 0,
+      "timelineEvent": "streetChallengeBailout",
+      "message": "streetChallengeBailout"
+    },
+    "actions": {
+      "successChoiceId": "STREET_CHALLENGE_SUCCESS",
+      "failureChoiceId": "GROUP_BEER_FAILURE"
+    }
+  },
+  {
+    "id": "GROUP_BEER_FAILURE",
+    "kind": "STANDARD",
+    "selectable": false,
+    "title": "Rescate colectivo de emergencia",
+    "detail": "Todo el grupo bebe media cerveza y la cotización se queda en 60 puntos.",
+    "effect": {
+      "scoreMode": "SET",
+      "targetScore": 60,
+      "drinks": 5,
+      "timelineEvent": "groupBeerBailout",
+      "message": "groupBeerBailout"
+    }
+  }
+]

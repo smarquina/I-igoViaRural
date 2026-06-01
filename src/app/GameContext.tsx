@@ -24,7 +24,7 @@ import { calculateMarketStatus } from "../domain/marketStatusEngine";
 import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "../domain/types";
 import { isPositiveWildcard, useWildcard as applyWildcard } from "../domain/wildcardEngine";
 import { copy } from "../lang";
-import { availableWildcards, defaultConfig, roundDeck } from "../data/gameContent";
+import { availableWildcards, bailoutOptions, defaultConfig, roundDeck } from "../data/gameContent";
 
 interface GameContextValue {
   config: AppConfig;
@@ -219,7 +219,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [config]);
 
   const applyBailout = useCallback((choice: BailoutChoice) => {
-    setState((previousState) => applyBailoutChoice(previousState, choice, config));
+    setState((previousState) => applyBailoutChoice(previousState, choice, bailoutOptions, config));
   }, [config]);
 
   const updateMergerTargetScore = useCallback((score: number) => {
