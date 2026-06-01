@@ -28,6 +28,7 @@ export function GamePage() {
     dismissDrawnWildcard
   } = useGame();
   const navigate = useNavigate();
+  const contentRef = useRef<HTMLElement | null>(null);
   const previousRoundIndexRef = useRef(state.currentRoundIndex);
   const [roundModalMode, setRoundModalMode] = useState<RoundModalMode | null>(() =>
     state.roundNumber === 1 && state.phase === "ANSWERING" ? "opening" : null
@@ -58,12 +59,18 @@ export function GamePage() {
     return () => window.clearTimeout(timeoutId);
   }, [roundModalMode]);
 
+  useEffect(() => {
+    if (state.marketStatus === "MERGER_ATTEMPT" || state.marketStatus === "BAILOUT_REQUIRED") {
+      contentRef.current?.scrollTo?.({ top: 0, behavior: "smooth" });
+    }
+  }, [state.marketStatus]);
+
   return (
     <MobileShell>
       <MarketHeader />
-      <main className="flex-1 space-y-3 overflow-y-auto px-3 py-3 pb-5">
-        <QuoteTicker config={config} state={state} />
+      <main ref={contentRef} className="flex-1 space-y-3 overflow-y-auto px-3 py-3 pb-5">
         <MarketStatusBanner status={state.marketStatus} />
+        <QuoteTicker config={config} state={state} />
         <WildcardDeckPanel
           state={state}
           wildcards={state.accumulatedWildcards}

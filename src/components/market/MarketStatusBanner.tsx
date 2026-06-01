@@ -38,13 +38,13 @@ export function MarketStatusBanner({ status }: MarketStatusBannerProps) {
 
   if (status === "MERGER_ATTEMPT") {
     return (
-      <div className="rounded-md border border-broker-merger bg-broker-merger/15 p-3 text-sm text-broker-greenDark">
+      <div className="rounded-md border border-broker-merger bg-broker-merger p-3 text-sm text-broker-ink shadow-glow">
         <div className="flex items-center gap-2 font-black uppercase">
           <FontAwesomeIcon icon={faCircleCheck} className="h-4 w-4" aria-hidden="true" />
           {copy.market.banners.mergerTitle}
         </div>
-        <p className="mt-1 text-xs text-broker-ink">{copy.market.banners.mergerText}</p>
-        <Link className="mt-2 inline-flex text-xs font-bold text-broker-ink underline" to="/merger">
+        <p className="mt-1 text-xs font-semibold text-broker-ink">{copy.market.banners.mergerText}</p>
+        <Link className="mt-2 inline-flex text-xs font-black text-broker-ink underline" to="/merger">
           {copy.market.banners.tryMerger}
         </Link>
       </div>
