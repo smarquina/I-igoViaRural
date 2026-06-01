@@ -110,9 +110,10 @@ Muestra resultado, puntuacion y resumen.
 10. La app calcula puntos y tragos.
 11. La app registra la evolucion en la grafica.
 12. La app guarda el ID de la ronda mostrada/resuelta.
-13. La app elige la siguiente ronda aleatoria sin repetir.
-14. Se muestra modal animada de nueva ronda durante 4 segundos.
-15. El juego continua hasta rescate, cierre o fin.
+13. Si la cotizacion queda en `negotiationBreakScore` o menos, por defecto 0 puntos, la partida termina en la pantalla `Resacon en Toledo`.
+14. Si no hay fin terminal, la app elige la siguiente ronda aleatoria sin repetir.
+15. Se muestra modal animada de nueva ronda durante 4 segundos.
+16. El juego continua hasta ruptura de negociaciones, rescate, cierre o fin.
 
 ## 5. Rondas
 

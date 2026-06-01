@@ -4,9 +4,10 @@ import { lazy, Suspense } from "react";
 import { getMarketStatusLabel, getNextThreshold } from "../../domain/marketStatusEngine";
 import type { AppConfig, GameState } from "../../domain/types";
 import { ScoreProgress } from "./ScoreProgress";
+import { loadMiniMarketChart } from "./chartLoader";
 import { copy } from "../../lang";
 
-const MiniMarketChart = lazy(() => import("./MiniMarketChart").then((module) => ({ default: module.MiniMarketChart })));
+const MiniMarketChart = lazy(loadMiniMarketChart);
 
 interface QuoteTickerProps {
   config: AppConfig;

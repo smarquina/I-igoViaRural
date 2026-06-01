@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { GameProvider } from "../../src/app/GameContext";
 import { STORAGE_KEYS } from "../../src/domain/constants";
@@ -24,12 +25,30 @@ describe("HomePage", () => {
 
     expect(screen.queryByRole("link", { name: /continuar partida/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /^reglas$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /siguiente/i })).not.toBeInTheDocument();
   });
 
   it("uses the app image in the initial page header", () => {
     renderHome();
 
     expect(screen.getByRole("img", { name: /icono de despedida viarural broker/i })).toHaveAttribute("src", "/icon.avif");
+  });
+
+  it("shows the animated start screen before loading the rules", async () => {
+    const user = userEvent.setup();
+
+    renderHome();
+
+    const splash = screen.getByRole("region", { name: /inicio del juego/i });
+    expect(splash).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /iñigo preparado para abrir el mercado/i })).toHaveAttribute("src", "/crazy_guy.avif");
+    expect(screen.getByRole("button", { name: /iniciar juego/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /siguiente/i })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /iniciar juego/i }));
+
+    expect(screen.getByRole("region", { name: /explicación inicial del juego/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /siguiente/i })).toBeInTheDocument();
   });
 
   it("redirects to the game page when a game has already started", () => {

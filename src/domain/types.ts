@@ -39,7 +39,7 @@ export type ActiveEffectType =
   | "TRANSFER_DRINKS_ON_FAILURE"
   | "ROUND_RULE";
 
-export type GameResult = "MERGER_APPROVED" | "MANUAL_END" | "IN_PROGRESS";
+export type GameResult = "MERGER_APPROVED" | "NEGOTIATIONS_BROKEN" | "MANUAL_END" | "IN_PROGRESS";
 
 export type GamePhase = "ANSWERING" | "RESOLVED";
 
@@ -109,6 +109,7 @@ export interface AppConfig {
   groomName: string;
   brideName: string;
   initialScore: number;
+  negotiationBreakScore: number;
   mergerTargetScore: number;
   hotMarketScore: number;
   stableMarketScore: number;

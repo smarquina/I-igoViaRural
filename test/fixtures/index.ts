@@ -6,6 +6,7 @@ export const sampleConfig: AppConfig = {
   groomName: "Iñigo",
   brideName: "Rocío",
   initialScore: 100,
+  negotiationBreakScore: 0,
   mergerTargetScore: 190,
   hotMarketScore: 130,
   stableMarketScore: 90,

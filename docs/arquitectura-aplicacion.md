@@ -154,6 +154,7 @@ Componentes principales:
 - `groomName`.
 - `brideName`.
 - `initialScore`.
+- `negotiationBreakScore`.
 - `mergerTargetScore`.
 - `hotMarketScore`.
 - `stableMarketScore`.
@@ -166,6 +167,8 @@ Componentes principales:
 - `dataVersion`.
 
 El valor `mergerTargetScore` puede sobrescribirse desde `/settings/fusion`. La app lo guarda en `localStorage` bajo `bachelor-market:settings` y construye una configuracion efectiva combinando JSON base y ajustes locales.
+
+`negotiationBreakScore` define el umbral terminal de negociacion rota. Si una ronda resuelta deja la cotizacion en ese valor o por debajo, el motor marca `gameResult` como `NEGOTIATIONS_BROKEN` y no avanza a la siguiente ronda.
 
 ## 6. Persistencia
 

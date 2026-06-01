@@ -1,5 +1,13 @@
 const CACHE_NAME = "bachelor-market-v1";
-const APP_SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icon.avif"];
+const APP_SHELL = [
+  "/",
+  "/index.html",
+  "/manifest.webmanifest",
+  "/icon.avif",
+  "/crazy_guy.avif",
+  "/resacon_toledo.avif",
+  "/due_diligence_approved_simpsom.avif"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -36,7 +44,13 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("/index.html"));
+        .catch(() => {
+          if (event.request.mode === "navigate") {
+            return caches.match("/index.html");
+          }
+
+          return Response.error();
+        });
     })
   );
 });

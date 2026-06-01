@@ -105,6 +105,7 @@ export function resolveRound(state: GameState, round: Round, result: RoundResult
 
   const scoreResult = calculateRoundResultScore(state, round, result);
   const nextScore = state.score + scoreResult.scoreDelta;
+  const breaksNegotiations = nextScore <= (config?.negotiationBreakScore ?? 0);
 
   return {
     ...state,
@@ -118,10 +119,12 @@ export function resolveRound(state: GameState, round: Round, result: RoundResult
     totalPartialSuccesses: state.totalPartialSuccesses + (result === "PARTIAL_SUCCESS" ? 1 : 0),
     resolvedRoundIds: [...state.resolvedRoundIds, round.id],
     phase: "RESOLVED",
+    isGameFinished: breaksNegotiations,
+    gameResult: breaksNegotiations ? "NEGOTIATIONS_BROKEN" : state.gameResult,
     lastScoreDelta: scoreResult.scoreDelta,
     lastDrinkPenalty: scoreResult.drinks,
     lastEventMessage:
-      scoreResult.appliedEffectLabels.length > 0
+      breaksNegotiations ? copy.messages.negotiationsBroken : scoreResult.appliedEffectLabels.length > 0
         ? copy.messages.appliedEffects(scoreResult.appliedEffectLabels)
         : undefined
   };
@@ -166,6 +169,10 @@ export function resolveAndAdvanceRound(
 
   if (resolvedState === state) {
     return state;
+  }
+
+  if (resolvedState.isGameFinished) {
+    return resolvedState;
   }
 
   const nextRoundIndex = getNextRandomRoundIndex(rounds, resolvedState.shownRoundIds, random);

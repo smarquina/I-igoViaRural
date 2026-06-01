@@ -1,17 +1,30 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { GameProvider } from "./GameContext";
+import {
+  loadBailoutPage,
+  loadGameOverPage,
+  loadGamePage,
+  loadHangoverPage,
+  loadHomePage,
+  loadIntroPage,
+  loadMergerAttemptPage,
+  loadMergerTargetSettingsPage,
+  loadRulesPage,
+  loadSettingsPage
+} from "./lazyRoutes";
 import { copy } from "../lang";
 
-const BailoutPage = lazy(() => import("../pages/BailoutPage").then((module) => ({ default: module.BailoutPage })));
-const GameOverPage = lazy(() => import("../pages/GameOverPage").then((module) => ({ default: module.GameOverPage })));
-const GamePage = lazy(() => import("../pages/GamePage").then((module) => ({ default: module.GamePage })));
-const HomePage = lazy(() => import("../pages/HomePage").then((module) => ({ default: module.HomePage })));
-const IntroPage = lazy(() => import("../pages/IntroPage").then((module) => ({ default: module.IntroPage })));
-const MergerAttemptPage = lazy(() => import("../pages/MergerAttemptPage").then((module) => ({ default: module.MergerAttemptPage })));
-const MergerTargetSettingsPage = lazy(() => import("../pages/MergerTargetSettingsPage").then((module) => ({ default: module.MergerTargetSettingsPage })));
-const RulesPage = lazy(() => import("../pages/RulesPage").then((module) => ({ default: module.RulesPage })));
-const SettingsPage = lazy(() => import("../pages/SettingsPage").then((module) => ({ default: module.SettingsPage })));
+const BailoutPage = lazy(loadBailoutPage);
+const GameOverPage = lazy(loadGameOverPage);
+const GamePage = lazy(loadGamePage);
+const HangoverPage = lazy(loadHangoverPage);
+const HomePage = lazy(loadHomePage);
+const IntroPage = lazy(loadIntroPage);
+const MergerAttemptPage = lazy(loadMergerAttemptPage);
+const MergerTargetSettingsPage = lazy(loadMergerTargetSettingsPage);
+const RulesPage = lazy(loadRulesPage);
+const SettingsPage = lazy(loadSettingsPage);
 
 function RouteFallback() {
   return <div className="min-h-screen bg-broker-bg p-4 text-sm font-bold text-broker-muted">{copy.app.loadingMarket}</div>;
@@ -31,6 +44,7 @@ export function App() {
           <Route path="/merger" element={<MergerAttemptPage />} />
           <Route path="/bailout" element={<BailoutPage />} />
           <Route path="/game-over" element={<GameOverPage />} />
+          <Route path="/resacon-toledo" element={<HangoverPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

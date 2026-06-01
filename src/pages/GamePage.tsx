@@ -35,9 +35,9 @@ export function GamePage() {
 
   useEffect(() => {
     if (state.isGameFinished) {
-      navigate("/game-over");
+      navigate(state.gameResult === "NEGOTIATIONS_BROKEN" ? "/resacon-toledo" : "/game-over");
     }
-  }, [navigate, state.isGameFinished]);
+  }, [navigate, state.gameResult, state.isGameFinished]);
 
   useEffect(() => {
     if (previousRoundIndexRef.current === state.currentRoundIndex) {

@@ -41,7 +41,13 @@ Los estados dependen de la cotizacion:
 
 La prioridad del rescate es superior a la zona critica: si la puntuacion es 40 o menos, el estado es rescate.
 
-## 5. Zona critica
+## 5. Ruptura de negociaciones
+
+Si una ronda resuelta deja la cotizacion en `negotiationBreakScore` o menos, por defecto 0 puntos, la partida termina inmediatamente con el resultado `Resacon en Toledo`.
+
+Esta regla es terminal: cuando se activa, no se avanza a la siguiente ronda. El valor por defecto queda por debajo del rescate bancario para que los estados de mercado debil, zona critica y rescate sigan siendo alcanzables durante la partida normal.
+
+## 6. Zona critica
 
 Iñigo entra en Zona Critica con 70 puntos o menos.
 
@@ -54,7 +60,7 @@ Mientras este en Zona Critica:
 
 Para salir de Zona Critica debe volver a 90 puntos o mas.
 
-## 6. Rescate bancario
+## 7. Rescate bancario
 
 Si Iñigo cae a 40 puntos o menos, se activa rescate bancario obligatorio.
 
@@ -79,7 +85,7 @@ Opciones:
 
 Despues del rescate, la partida continua.
 
-## 7. Estructura de ronda
+## 8. Estructura de ronda
 
 Cada ronda sigue esta secuencia:
 
@@ -96,7 +102,7 @@ Cada ronda sigue esta secuencia:
 11. Se comprueban umbrales de mercado.
 12. La app avanza automaticamente a una nueva ronda aleatoria.
 
-## 8. Orden de preguntas
+## 9. Orden de preguntas
 
 Las preguntas salen en orden aleatorio.
 
@@ -106,9 +112,9 @@ Tambien guarda `resolvedRoundIds` para saber que rondas han sido contestadas.
 
 Cuando todas las rondas disponibles han salido, el mazo puede abrir un nuevo ciclo.
 
-## 9. Tipos de ronda
+## 10. Tipos de ronda
 
-### 9.1. Auditoria interna de Rocio
+### 10.1. Auditoria interna de Rocio
 
 Preguntas enviadas por Rocio, con respuesta correcta opcional.
 
@@ -125,35 +131,35 @@ Puntuacion habitual:
 - Acierto parcial: puntos de `partialSuccessScore`.
 - Fallo: resta `failureScorePenalty` y suma `failureDrinks`.
 
-### 9.2. Mercado sentimental
+### 10.2. Mercado sentimental
 
 Preguntas sobre relacion, convivencia, planes de futuro y vida de pareja.
 
-### 9.3. Bolsa y banca
+### 10.3. Bolsa y banca
 
 Preguntas o situaciones de banca, inversion, mercados o economia, mezcladas con humor sobre Iñigo.
 
-### 9.4. OPA hostil
+### 10.4. OPA hostil
 
 Preguntas o intervenciones de amigos que ponen presion al novio.
 
-### 9.5. Pregunta de riesgo
+### 10.5. Pregunta de riesgo
 
 Preguntas mas gamberras o comprometidas.
 
-### 9.6. Roast de mercado
+### 10.6. Roast de mercado
 
 Rondas humoristicas en las que el grupo puede castigar o premiar segun respuesta.
 
-### 9.7. Prueba de calle
+### 10.7. Prueba de calle
 
 Retos o acciones fuera de la respuesta verbal.
 
-### 9.8. Evento de mercado
+### 10.8. Evento de mercado
 
 Eventos que pueden modificar puntuacion, efectos o reglas de ronda.
 
-## 10. Resultados de ronda
+## 11. Resultados de ronda
 
 Cada ronda puede resolverse como:
 
@@ -169,7 +175,7 @@ Reglas:
 - El fallo suma `failureDrinks`.
 - En Zona Critica, el fallo resta 5 puntos adicionales y suma 1 trago adicional.
 
-## 11. Catalizadores de Mercado
+## 12. Catalizadores de Mercado
 
 Durante la partida, Iñigo puede recibir Catalizadores de Mercado: eventos espontaneos que alteran la cotizacion, modifican reglas de ronda o activan efectos acumulados.
 
@@ -182,7 +188,7 @@ Reglas:
 - Cada catalizador tiene un boton `?` con informacion de ayuda.
 - Los catalizadores defensivos se bloquean si existe `Liquidez limitada`.
 
-## 12. Catalizadores positivos y negativos
+## 13. Catalizadores positivos y negativos
 
 Catalizadores positivos:
 
@@ -196,7 +202,7 @@ Catalizadores negativos o mixtos:
 - Se aplican inmediatamente al robarlos.
 - No se pueden guardar.
 
-## 13. Catalizadores incluidos
+## 14. Catalizadores incluidos
 
 ### Stop Loss
 
@@ -218,7 +224,7 @@ Elimina catalizadores y efectos acumulados sin tocar la cotizacion.
 
 Bloquea catalizadores defensivos durante dos rondas.
 
-## 14. Reset de Mercado
+## 15. Reset de Mercado
 
 Reset de Mercado elimina:
 
@@ -236,7 +242,7 @@ No modifica la puntuacion.
 
 Puede tener coste de tragos segun la definicion del catalizador.
 
-## 15. Efectos acumulados
+## 16. Efectos acumulados
 
 Los efectos pueden modificar varias rondas.
 
@@ -252,7 +258,7 @@ Efectos soportados:
 
 Los efectos expiran si tienen `remainingRounds`.
 
-## 16. Cierre de Fusion
+## 17. Cierre de Fusion
 
 Al alcanzar el objetivo de fusion se desbloquea el intento final.
 
@@ -269,7 +275,7 @@ Reglas:
 - Si falla, suma 5 tragos.
 - Si falla, vuelve al mercado con la nueva cotizacion.
 
-## 17. Victoria
+## 18. Victoria
 
 Iñigo gana cuando:
 
@@ -282,7 +288,7 @@ Resultado:
 - `MERGER_APPROVED`.
 - Fin de partida.
 
-## 18. Persistencia de reglas
+## 19. Persistencia de reglas
 
 La partida se guarda automaticamente.
 
@@ -292,7 +298,7 @@ Al recargar:
 - Si hay partida iniciada, `/` redirige a `/game`.
 - La ronda actual, puntuacion, catalizadores, efectos y preguntas ya mostradas se restauran.
 
-## 19. Ajustes permitidos
+## 20. Ajustes permitidos
 
 Desde el menu se puede cambiar el valor de fusion.
 

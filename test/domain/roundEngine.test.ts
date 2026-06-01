@@ -8,6 +8,7 @@ const sampleConfig: AppConfig = {
   groomName: "Iñigo",
   brideName: "Rocío",
   initialScore: 100,
+  negotiationBreakScore: 0,
   mergerTargetScore: 190,
   hotMarketScore: 130,
   stableMarketScore: 90,
@@ -60,6 +61,54 @@ describe("roundEngine", () => {
     expect(nextState.hasUsedWildcardThisRound).toBe(false);
     expect(nextState.shownRoundIds).toEqual([sampleRound.id, nextRound.id]);
     expect(nextState.resolvedRoundIds).toContain(sampleRound.id);
+  });
+
+  it("continues the market flow when a round leaves the quote at 100 with the default rupture threshold", () => {
+    const state = createInitialGameState({ ...sampleConfig, initialScore: 115 });
+    const nextRound: Round = { ...sampleRound, id: "round-next", title: "Siguiente ronda" };
+    const nextState = resolveAndAdvanceRound(
+      {
+        ...state,
+        shownRoundIds: [sampleRound.id]
+      },
+      [sampleRound, nextRound],
+      sampleRound,
+      "FAILURE",
+      sampleConfig,
+      () => 0
+    );
+
+    expect(nextState.score).toBe(100);
+    expect(nextState.isGameFinished).toBe(false);
+    expect(nextState.gameResult).toBe("IN_PROGRESS");
+    expect(nextState.currentRoundIndex).toBe(1);
+    expect(nextState.roundNumber).toBe(2);
+    expect(nextState.phase).toBe("ANSWERING");
+  });
+
+  it("finishes the game when a configured rupture threshold is reached", () => {
+    const config = { ...sampleConfig, negotiationBreakScore: 100, initialScore: 115 };
+    const state = createInitialGameState(config);
+    const nextRound: Round = { ...sampleRound, id: "round-next", title: "Siguiente ronda" };
+    const nextState = resolveAndAdvanceRound(
+      {
+        ...state,
+        shownRoundIds: [sampleRound.id]
+      },
+      [sampleRound, nextRound],
+      sampleRound,
+      "FAILURE",
+      config,
+      () => 0
+    );
+
+    expect(nextState.score).toBe(100);
+    expect(nextState.isGameFinished).toBe(true);
+    expect(nextState.gameResult).toBe("NEGOTIATIONS_BROKEN");
+    expect(nextState.currentRoundIndex).toBe(0);
+    expect(nextState.roundNumber).toBe(1);
+    expect(nextState.phase).toBe("RESOLVED");
+    expect(nextState.lastEventMessage).toMatch(/negociaciones/i);
   });
 
   it("selects a random unresolved round index and skips already resolved IDs", () => {

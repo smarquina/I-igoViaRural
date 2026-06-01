@@ -46,6 +46,9 @@ export const es = {
   },
   home: {
     initialExplanation: "Explicación inicial del juego",
+    splashLabel: "Inicio del juego",
+    crazyGuyAlt: "Iñigo preparado para abrir el mercado",
+    startIntro: "Iniciar juego",
     startGame: "Comenzar partida"
   },
   intro: {
@@ -231,6 +234,10 @@ export const es = {
     manualTitle: "Partida cerrada",
     approvedText: "Iñigo Capital S.A. y Rocío Holdings quedan autorizadas para la operación.",
     manualText: "El Consejo de Administración ha cerrado la sesión bursátil.",
+    approvedAlert: "Due Diligence superada",
+    approvedModalTitle: "Fusión superada",
+    approvedModalText: "El Consejo aprueba la operación. Iñigo Capital S.A. y Rocío Holdings pueden cerrar la fusión con la cotización en verde y sin más objeciones regulatorias.",
+    approvedDismiss: "Ver estadísticas",
     stats: {
       score: "Puntuación",
       rounds: "Rondas",
@@ -244,11 +251,21 @@ export const es = {
     newSession: "Nueva sesión",
     backHome: "Volver al inicio"
   },
+  hangover: {
+    eyebrow: "Cotización suspendida",
+    title: "Resacón en Toledo",
+    text: "La sesión se ha ido de las manos y el mercado ha perdido la confianza. El Consejo exige levantar acta antes de cualquier nueva operación.",
+    alert: "Negociación rota",
+    modalTitle: "Se han roto las negociaciones",
+    modalText: "La cotización ha caído hasta el umbral de ruptura configurado. Rocío Holdings congela la operación y manda a Iñigo Capital S.A. a explicar los daños.",
+    dismiss: "Ver estadísticas"
+  },
   timeline: {
     sessionOpening: "Apertura de sesión",
     historicalMove: (index: number) => `Movimiento histórico ${index}`,
     roundEvent: (roundNumber: number, title: string) => `Ronda ${roundNumber}: ${title}`,
     mergerFailed: "Cierre de Fusión fallido",
+    negotiationsBroken: "Negociaciones rotas",
     bailoutLiquidity: "Rescate con liquidez",
     assetSale: "Venta de activos",
     streetChallengeBailout: "Reto de recapitalización superado",
@@ -267,6 +284,7 @@ export const es = {
     mergerFailed: "La fusión no se cierra todavía. Vuelve el mercado.",
     mergerFailedWithPenalty: (scorePenalty: number, successScore: number, drinks: number) =>
       `La fusión no se cierra todavía. Resultado neto: +${successScore} puntos por aciertos, -${scorePenalty} puntos por fallos y ${drinks} tragos.`,
+    negotiationsBroken: "Se han roto las negociaciones. La cotización ha alcanzado el umbral de ruptura configurado.",
     bailoutLiquidity: "Rescate con liquidez ejecutado.",
     assetSale: "Venta de activos ejecutada. Catalizadores liquidados.",
     streetChallengeBailout: "Reto de recapitalización superado. La cotización avanza a 80 puntos.",
