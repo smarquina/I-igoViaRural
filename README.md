@@ -169,7 +169,7 @@ Script details:
 - `test`: runs Vitest once.
 - `build`: builds production assets into `dist/`.
 - `preview`: previews the production build.
-- `deploy`: builds and deploys Firebase Hosting to `ruralholdings-despedida`.
+- `deploy`: builds and deploys Firebase Hosting plus Firestore rules to `ruralholdings-despedida`.
 
 ## Deployment
 
@@ -189,7 +189,7 @@ Hosting URL:
 
 [https://ruralholdings-despedida.web.app](https://ruralholdings-despedida.web.app)
 
-Firebase Hosting config lives in:
+Firebase Hosting and Firestore rules config lives in:
 
 ```txt
 firebase.json
@@ -249,7 +249,7 @@ Deploy job:
 
 - Runs on push to `main`.
 - Downloads the build artifact.
-- Deploys to Firebase Hosting if `FIREBASE_SERVICE_ACCOUNT_RURALHOLDINGS` is configured.
+- Deploys Firebase Hosting and Firestore rules if `FIREBASE_SERVICE_ACCOUNT_RURALHOLDINGS` is configured.
 - Skips deployment explicitly if the secret is missing.
 
 ## Persistence

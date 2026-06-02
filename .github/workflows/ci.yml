@@ -93,4 +93,4 @@ jobs:
         if: env.FIREBASE_SERVICE_ACCOUNT != ''
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
-        run: npx -y firebase-tools@15.18.0 deploy --only hosting --project ruralholdings-despedida
+        run: npx -y firebase-tools@15.18.0 deploy --only hosting,firestore:rules --project ruralholdings-despedida
