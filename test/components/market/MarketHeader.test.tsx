@@ -8,7 +8,7 @@ describe("MarketHeader", () => {
     window.localStorage.clear();
   });
 
-  it("uses the app image as navbar brand icon", () => {
+  it("uses an inline navbar brand icon instead of downloading the full app image", () => {
     render(
       <MemoryRouter>
         <GameProvider>
@@ -17,7 +17,7 @@ describe("MarketHeader", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole("img", { name: /icono de despedida viarural broker/i })).toHaveAttribute("src", "/icon.avif");
+    expect(screen.queryByRole("img", { name: /icono de despedida viarural broker/i })).not.toBeInTheDocument();
   });
 
   it("disables manual sync before a game has started", () => {

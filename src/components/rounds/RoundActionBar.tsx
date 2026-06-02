@@ -8,9 +8,25 @@ interface RoundActionBarProps {
   allowsPartial: boolean;
   onResolve: (result: RoundResult) => void;
   onNext: () => void;
+  isLoading?: boolean;
 }
 
-export function RoundActionBar({ phase, allowsPartial, onResolve, onNext }: RoundActionBarProps) {
+export function RoundActionBar({ phase, allowsPartial, onResolve, onNext, isLoading }: RoundActionBarProps) {
+  if (isLoading) {
+    return (
+      <div className="sticky bottom-0 z-20 grid grid-cols-3 gap-2 border-t border-broker-border bg-broker-bg2/95 p-3 backdrop-blur animate-pulse" aria-busy="true">
+        <div className="inline-flex min-h-12 items-center justify-center rounded-md border border-broker-border bg-broker-bg text-transparent select-none bg-broker-border/30">
+          ---
+        </div>
+        <div className="inline-flex min-h-12 items-center justify-center rounded-md border border-broker-border bg-broker-bg text-transparent select-none bg-broker-border/30">
+          ---
+        </div>
+        <div className="inline-flex min-h-12 items-center justify-center rounded-md border border-broker-border bg-broker-bg text-transparent select-none bg-broker-border/30">
+          ---
+        </div>
+      </div>
+    );
+  }
   if (phase === "RESOLVED") {
     return (
       <div className="sticky bottom-0 z-20 border-t border-broker-border bg-broker-bg2/95 p-3 backdrop-blur">

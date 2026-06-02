@@ -33,6 +33,7 @@ import {
   registerConnectivitySync,
   synchronizeGameStateByTimestamp
 } from "../services/cloudSync/syncManager";
+import { isFirebaseConfigured } from "../services/cloudSync/firebaseApp";
 
 interface GameContextValue {
   config: AppConfig;
@@ -42,6 +43,7 @@ interface GameContextValue {
   availableWildcards: Wildcard[];
   drawnWildcardOffer: Wildcard | null;
   hasStartedGame: boolean;
+  isLoading: boolean;
   updateMergerTargetScore: (score: number) => void;
   startNewGame: () => void;
   resolveCurrentRound: (result: RoundResult) => void;
@@ -58,6 +60,32 @@ interface GameContextValue {
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
+const INITIAL_CLOUD_HYDRATION_TIMEOUT_MS = 2500;
+const INITIAL_CLOUD_HYDRATION_DELAY_MS = 100;
+const CLOUD_AUTH_START_DELAY_MS = 500;
+
+function scheduleIdleTask(task: () => void, delayMs: number): () => void {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  let idleId: number | undefined;
+  const timeoutId = window.setTimeout(() => {
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(task, { timeout: 5000 });
+      return;
+    }
+
+    task();
+  }, delayMs);
+
+  return () => {
+    window.clearTimeout(timeoutId);
+    if (idleId !== undefined && "cancelIdleCallback" in window) {
+      window.cancelIdleCallback(idleId);
+    }
+  };
+}
 
 function createFreshState(config: AppConfig): GameState {
   const initialRoundIndex = getNextRandomRoundIndex(roundDeck, []);
@@ -85,9 +113,11 @@ function normalizeStateForConfig(state: GameState, config: AppConfig): GameState
 
 export function GameProvider({ children }: { children: ReactNode }) {
   const [shouldHydrateInitialGame] = useState(() => hasSavedGame());
-  const shouldHydrateFromCloud = useRef(shouldHydrateInitialGame);
   const shouldPreserveNextPersistedState = useRef(false);
+  const [shouldCheckCloudOnStart] = useState(() => isFirebaseConfigured());
+  const [isInitialHydrationComplete, setIsInitialHydrationComplete] = useState(() => !shouldCheckCloudOnStart);
   const [config, setConfig] = useState<AppConfig>(() => buildEffectiveConfig(defaultConfig, loadSavedSettings()));
+  const initialHydrationConfig = useRef(config);
   const [state, setState] = useState<GameState>(() => {
     const initialConfig = buildEffectiveConfig(defaultConfig, loadSavedSettings());
     const loadedState = loadGameState();
@@ -97,25 +127,73 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [drawnWildcardOffer, setDrawnWildcardOffer] = useState<Wildcard | null>(null);
 
   useEffect(() => {
-    void ensureAnonymousSession();
-    return registerConnectivitySync();
-  }, []);
+    const unregisterConnectivitySync = registerConnectivitySync();
+    const cancelAuthWarmup = shouldCheckCloudOnStart
+      ? scheduleIdleTask(() => {
+          void ensureAnonymousSession();
+        }, CLOUD_AUTH_START_DELAY_MS)
+      : () => undefined;
+
+    return () => {
+      cancelAuthWarmup();
+      unregisterConnectivitySync();
+    };
+  }, [shouldCheckCloudOnStart]);
 
   useEffect(() => {
-    if (!hasStarted || !shouldHydrateFromCloud.current) {
+    if (!shouldCheckCloudOnStart) {
       return;
     }
 
-    shouldHydrateFromCloud.current = false;
-    void hydrateFromLocalAndCloud().then((loadedState) => {
-      if (loadedState) {
-        shouldPreserveNextPersistedState.current = true;
-        setState(normalizeStateForConfig(loadedState, config));
+    let isCancelled = false;
+    let fallbackTimer: number | undefined;
+    const cancelHydration = scheduleIdleTask(() => {
+      fallbackTimer = window.setTimeout(() => {
+        if (!isCancelled) {
+          setIsInitialHydrationComplete(true);
+        }
+      }, INITIAL_CLOUD_HYDRATION_TIMEOUT_MS);
+
+      void hydrateFromLocalAndCloud().then((loadedState) => {
+        if (isCancelled) {
+          return;
+        }
+
+        window.clearTimeout(fallbackTimer);
+        if (loadedState) {
+          markGameAsStarted();
+          shouldPreserveNextPersistedState.current = true;
+          setHasStarted(true);
+          setState(normalizeStateForConfig(loadedState, initialHydrationConfig.current));
+        }
+        setIsInitialHydrationComplete(true);
+      }).catch(() => {
+        if (isCancelled) {
+          return;
+        }
+
+        window.clearTimeout(fallbackTimer);
+        setIsInitialHydrationComplete(true);
+      });
+    }, INITIAL_CLOUD_HYDRATION_DELAY_MS);
+
+    return () => {
+      isCancelled = true;
+      cancelHydration();
+      if (fallbackTimer !== undefined) {
+        window.clearTimeout(fallbackTimer);
       }
-    });
-  }, [config, hasStarted]);
+    };
+  }, [shouldCheckCloudOnStart]);
 
   useEffect(() => {
+    if (!isInitialHydrationComplete) {
+      if (hasStarted) {
+        saveGameState(state);
+      }
+      return;
+    }
+
     if (hasStarted) {
       if (shouldPreserveNextPersistedState.current) {
         shouldPreserveNextPersistedState.current = false;
@@ -130,7 +208,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
 
     clearGameState();
-  }, [hasStarted, state]);
+  }, [hasStarted, isInitialHydrationComplete, state]);
 
   const currentRound = useMemo(
     () => getCurrentRound(roundDeck, state.currentRoundIndex),
@@ -303,6 +381,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       availableWildcards,
       drawnWildcardOffer,
       hasStartedGame: hasStarted,
+      isLoading: !isInitialHydrationComplete,
       updateMergerTargetScore,
       startNewGame,
       resolveCurrentRound,
@@ -321,6 +400,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       state,
       drawnWildcardOffer,
       hasStarted,
+      isInitialHydrationComplete,
       currentRound,
       config,
       updateMergerTargetScore,

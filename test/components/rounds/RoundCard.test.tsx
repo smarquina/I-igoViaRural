@@ -37,4 +37,13 @@ describe("RoundCard", () => {
     expect(screen.queryByText("La siguiente respuesta.")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /revelar respuesta/i })).toBeEnabled();
   });
+
+  it("renders a skeleton layout when isLoading is true", () => {
+    const { container } = render(<RoundCard round={sampleRound} roundNumber={3} phase="ANSWERING" isLoading={true} />);
+
+    expect(screen.queryByText("Ronda 3")).not.toBeInTheDocument();
+    expect(screen.queryByText("¿Cuál es la primera pregunta auditada?")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /revelar respuesta/i })).not.toBeInTheDocument();
+    expect(container.querySelector(".animate-pulse")).toBeInTheDocument();
+  });
 });

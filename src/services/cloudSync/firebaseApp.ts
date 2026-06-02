@@ -58,7 +58,7 @@ function readFirebaseConfig(): FirebaseConfig | null {
 }
 
 export function isFirebaseConfigured(): boolean {
-  return readFirebaseConfig() !== null;
+  return import.meta.env.MODE !== "test" && readFirebaseConfig() !== null;
 }
 
 export function getFirebaseApp(): Promise<FirebaseApp | null> {
@@ -66,7 +66,7 @@ export function getFirebaseApp(): Promise<FirebaseApp | null> {
     return firebaseApp;
   }
 
-  const config = readFirebaseConfig();
+  const config = isFirebaseConfigured() ? readFirebaseConfig() : null;
   if (!config) {
     return Promise.resolve(null);
   }

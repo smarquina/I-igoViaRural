@@ -16,4 +16,13 @@ describe("QuoteTicker", () => {
     expect(screen.getByText("190 pts para cierre")).toBeInTheDocument();
     expect(screen.getByText("Fusión")).toBeInTheDocument();
   });
+
+  it("renders a skeleton layout when isLoading is true", () => {
+    const { container } = render(<QuoteTicker config={sampleConfig} state={createSampleState({ score: 142 })} isLoading={true} />);
+
+    expect(screen.queryByText("Cotización")).not.toBeInTheDocument();
+    expect(screen.queryByText("142")).not.toBeInTheDocument();
+    expect(screen.queryByText("Mercado caliente")).not.toBeInTheDocument();
+    expect(container.querySelector(".animate-pulse")).toBeInTheDocument();
+  });
 });

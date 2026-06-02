@@ -1,7 +1,8 @@
 import { routeModuleLoaders } from "./lazyRoutes";
 import { loadMiniMarketChart } from "../components/market/chartLoader";
 
-const appCacheName = "bachelor-market-v1";
+const appCacheName = "bachelor-market-v2";
+const OFFLINE_PREFETCH_DELAY_MS = 15000;
 
 const sameOrigin = (url: string) => new URL(url, window.location.href).origin === window.location.origin;
 
@@ -67,12 +68,14 @@ export function scheduleOfflineFirstPrefetch(): void {
   window.addEventListener(
     "load",
     () => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(runPrefetch, { timeout: 5000 });
-        return;
-      }
+      globalThis.setTimeout(() => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(runPrefetch, { timeout: 10000 });
+          return;
+        }
 
-      globalThis.setTimeout(runPrefetch, 1500);
+        globalThis.setTimeout(runPrefetch, 5000);
+      }, OFFLINE_PREFETCH_DELAY_MS);
     },
     { once: true }
   );

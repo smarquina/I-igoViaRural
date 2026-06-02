@@ -12,9 +12,63 @@ const MiniMarketChart = lazy(loadMiniMarketChart);
 interface QuoteTickerProps {
   config: AppConfig;
   state: GameState;
+  isLoading?: boolean;
 }
 
-export function QuoteTicker({ config, state }: QuoteTickerProps) {
+export function QuoteTicker({ config, state, isLoading }: QuoteTickerProps) {
+  if (isLoading) {
+    return (
+      <section className="rounded-md border border-broker-border bg-broker-surface p-4 shadow-sm animate-pulse" aria-busy="true">
+        <div>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="h-4 w-32 rounded bg-broker-border/60" />
+              <div className="mt-3 flex gap-2">
+                <div className="h-5 w-24 rounded-md bg-broker-bg px-2 py-1 text-[11px] font-bold text-transparent select-none bg-broker-border/40">
+                  MAX ---
+                </div>
+                <div className="h-5 w-24 rounded-md bg-broker-bg px-2 py-1 text-[11px] font-bold text-transparent select-none bg-broker-border/40">
+                  MIN ---
+                </div>
+              </div>
+            </div>
+            <div className="shrink-0 rounded-md bg-broker-bg px-3 py-2 text-right min-w-[80px]">
+              <div className="h-2.5 w-10 ml-auto rounded bg-broker-border/40" />
+              <div className="mt-1.5 h-6 w-12 ml-auto rounded bg-broker-border/60" />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 h-48 w-full rounded-md bg-broker-bg border border-broker-border/30 flex items-end justify-center p-3">
+          <div className="w-full h-[80%] flex items-end gap-2 opacity-25">
+            <div className="flex-1 bg-broker-border/50 h-[30%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[45%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[38%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[60%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[52%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[75%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[65%] rounded-t" />
+            <div className="flex-1 bg-broker-border/50 h-[85%] rounded-t" />
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="rounded-md bg-broker-bg p-3">
+            <div className="h-3 w-16 rounded bg-broker-border/40" />
+            <div className="mt-2 h-4 w-24 rounded bg-broker-border/60" />
+          </div>
+          <div className="rounded-md bg-broker-bg p-3 flex flex-col items-end">
+            <div className="h-3 w-24 rounded bg-broker-border/40" />
+            <div className="mt-2 h-4 w-16 rounded bg-broker-border/60" />
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <div className="h-2.5 w-full rounded-full bg-broker-border/30" />
+        </div>
+      </section>
+    );
+  }
   const sessionMax = Math.max(...state.scoreHistory);
   const sessionMin = Math.min(...state.scoreHistory);
   const statusLabel = getMarketStatusLabel(state.marketStatus);

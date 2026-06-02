@@ -27,7 +27,7 @@ const RulesPage = lazy(loadRulesPage);
 const SettingsPage = lazy(loadSettingsPage);
 
 function RouteFallback() {
-  return <div className="min-h-screen bg-broker-bg p-4 text-sm font-bold text-broker-muted">{copy.app.loadingMarket}</div>;
+  return <div className="min-h-screen bg-broker-bg p-4 text-sm font-bold text-broker-ink">{copy.app.loadingMarket}</div>;
 }
 
 export function App() {

@@ -106,4 +106,22 @@ describe("WildcardDeckPanel", () => {
 
     expect(section).toContainElement(screen.getByText("Stop Loss limita la pérdida de esta ronda."));
   });
+
+  it("renders a skeleton layout when isLoading is true", () => {
+    const { container } = render(
+      <WildcardDeckPanel
+        state={createSampleState()}
+        wildcards={[sampleWildcard]}
+        effects={[]}
+        onUse={vi.fn()}
+        onDraw={vi.fn()}
+        isLoading={true}
+      />
+    );
+
+    expect(screen.queryByText("Catalizadores acumulados")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /robar/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /ver ayuda de stop loss/i })).not.toBeInTheDocument();
+    expect(container.querySelector(".animate-pulse")).toBeInTheDocument();
+  });
 });

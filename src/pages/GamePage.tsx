@@ -19,6 +19,7 @@ export function GamePage() {
     config,
     currentRound,
     drawnWildcardOffer,
+    isLoading,
     resolveCurrentRound,
     goToNextRound,
     useWildcardById,
@@ -31,23 +32,29 @@ export function GamePage() {
   const contentRef = useRef<HTMLElement | null>(null);
   const previousRoundIndexRef = useRef(state.currentRoundIndex);
   const [roundModalMode, setRoundModalMode] = useState<RoundModalMode | null>(() =>
-    state.roundNumber === 1 && state.phase === "ANSWERING" ? "opening" : null
+    state.roundNumber === 1 && state.phase === "ANSWERING" && !isLoading ? "opening" : null
   );
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     if (state.isGameFinished) {
       navigate(state.gameResult === "NEGOTIATIONS_BROKEN" ? "/resacon-toledo" : "/game-over");
     }
-  }, [navigate, state.gameResult, state.isGameFinished]);
+  }, [isLoading, navigate, state.gameResult, state.isGameFinished]);
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     if (previousRoundIndexRef.current === state.currentRoundIndex) {
       return undefined;
     }
 
     previousRoundIndexRef.current = state.currentRoundIndex;
     setRoundModalMode("advance");
-  }, [state.currentRoundIndex]);
+  }, [isLoading, state.currentRoundIndex]);
 
   useEffect(() => {
     if (!roundModalMode) {
@@ -69,8 +76,8 @@ export function GamePage() {
     <MobileShell>
       <MarketHeader />
       <main ref={contentRef} className="flex-1 space-y-3 overflow-y-auto px-3 py-3 pb-5">
-        <MarketStatusBanner status={state.marketStatus} />
-        <QuoteTicker config={config} state={state} />
+        {!isLoading && <MarketStatusBanner status={state.marketStatus} />}
+        <QuoteTicker config={config} state={state} isLoading={isLoading} />
         <WildcardDeckPanel
           state={state}
           wildcards={state.accumulatedWildcards}
@@ -78,11 +85,13 @@ export function GamePage() {
           activityMessage={state.lastEventMessage}
           onUse={useWildcardById}
           onDraw={drawWildcard}
+          isLoading={isLoading}
         />
         <RoundCard
           round={currentRound}
           roundNumber={state.roundNumber}
           phase={state.phase}
+          isLoading={isLoading}
         />
       </main>
       <RoundActionBar
@@ -90,6 +99,7 @@ export function GamePage() {
         allowsPartial={currentRound.allowsPartial}
         onResolve={resolveCurrentRound}
         onNext={goToNextRound}
+        isLoading={isLoading}
       />
       {drawnWildcardOffer ? (
         <WildcardDrawModal
