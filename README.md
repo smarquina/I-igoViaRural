@@ -1,3 +1,5 @@
+[![CI](https://github.com/smarquina/I-igoViaRural/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/smarquina/I-igoViaRural/actions/workflows/ci.yml)
+
 # Despedida ViaRural Broker
 
 Mobile-first React webapp for a bachelor-party game where `Inigo Capital S.A.` trades as a fictional market asset before its merger with `Rocio Holdings`.
