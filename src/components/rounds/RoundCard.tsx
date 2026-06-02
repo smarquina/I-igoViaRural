@@ -12,6 +12,8 @@ interface RoundCardProps {
 }
 
 export function RoundCard({ round, roundNumber, phase, isLoading }: RoundCardProps) {
+  const [visibleAnswerRoundId, setVisibleAnswerRoundId] = useState<string | null>(null);
+
   if (isLoading) {
     return (
       <article className="flex min-h-[260px] flex-col rounded-md border border-broker-border bg-broker-surface p-4 animate-pulse" aria-busy="true">
@@ -45,7 +47,6 @@ export function RoundCard({ round, roundNumber, phase, isLoading }: RoundCardPro
       </article>
     );
   }
-  const [visibleAnswerRoundId, setVisibleAnswerRoundId] = useState<string | null>(null);
   const isAnswerVisible = visibleAnswerRoundId === round.id;
 
   const canReveal = round.requiresAnswerReveal && !isAnswerVisible;

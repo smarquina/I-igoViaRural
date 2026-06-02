@@ -24,6 +24,8 @@ const typeClass: Record<Wildcard["type"], string> = {
 };
 
 export function WildcardDeckPanel({ state, wildcards, effects, activityMessage, onUse, onDraw, isLoading }: WildcardDeckPanelProps) {
+  const [hintWildcardId, setHintWildcardId] = useState<string | null>(null);
+
   if (isLoading) {
     return (
       <section className="rounded-md border border-broker-border bg-broker-elevated p-3 animate-pulse" aria-busy="true">
@@ -63,7 +65,6 @@ export function WildcardDeckPanel({ state, wildcards, effects, activityMessage, 
       </section>
     );
   }
-  const [hintWildcardId, setHintWildcardId] = useState<string | null>(null);
   const canDraw = state.phase === "ANSWERING" && !state.hasDrawnWildcardThisRound && !state.hasUsedWildcardThisRound;
 
   return (
