@@ -1,5 +1,5 @@
 import type { Analytics } from "firebase/analytics";
-import { getFirebaseApp } from "../services/cloudSync/firebaseApp";
+import { getFirebaseApp } from "../cloudSync/firebaseApp";
 
 let analyticsInstance: Analytics | null = null;
 const ANALYTICS_START_DELAY_MS = 15000;

@@ -111,19 +111,23 @@ Rules:
 
 ```txt
 src/
-  app/             App routes, lazy loaders, Firebase and GameContext
+  app/             App routes, providers, lazy loaders and app bootstrap helpers
   components/      UI components grouped by domain
   data/            Local JSON game content and config
   domain/          Pure game engines and types
   hooks/           Shared React hooks
+  lang/            UI copy and localization entrypoint
   pages/           Route-level screens
   pwa/             Service worker registration
+  services/        External integrations and sync services
   styles/          Global Tailwind CSS
 test/              Tests and fixtures
 docs/
   arquitectura-aplicacion.md
   funcional-aplicacion.md
   reglas-juego.md
+  releases/
+    v1.0.0.md
 public/
   crazy_guy.avif
   due_diligence_approved_simpsom.avif
@@ -316,7 +320,7 @@ Important config values:
 
 ## Firebase Analytics
 
-Firebase Analytics is initialized in `src/app/firebase.ts` and called from `src/main.tsx`.
+Firebase Analytics is scheduled from `src/main.tsx` through `src/services/analytics/firebaseAnalytics.ts`.
 
 Behavior:
 
@@ -359,6 +363,7 @@ Detailed documentation is split into three files:
 - [Architecture](docs/arquitectura-aplicacion.md)
 - [Functional Specification](docs/funcional-aplicacion.md)
 - [Game Rules](docs/reglas-juego.md)
+- [Release notes](docs/releases/v1.0.0.md)
 
 ## Testing
 
@@ -389,5 +394,5 @@ Current test coverage includes:
 - This is a local frontend app; session data does not sync across devices.
 - There is no import/export state flow in the UI.
 - Firebase Analytics is optional measurement only; it does not affect gameplay or persistence.
-- Build currently emits a chunk-size warning due to animation/chart dependencies, but production build completes successfully.
+- Build may emit a Vite warning when a module is both statically and dynamically imported; production build still completes successfully.
 - Keep user-facing copy in the playful financial tone of the game.

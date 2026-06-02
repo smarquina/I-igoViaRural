@@ -7,12 +7,13 @@ Despedida ViaRural Broker es una webapp React mobile-first para jugar una partid
 La arquitectura de juego es deliberadamente frontend-only:
 
 - No hay backend.
-- No hay autenticacion.
-- No hay base de datos remota.
+- No hay autenticacion de usuario para jugar.
+- No hay base de datos remota obligatoria.
 - Todo el contenido se carga desde ficheros locales.
 - El estado de partida se persiste en `localStorage`.
 - La aplicacion funciona como PWA basica con manifest y service worker.
 - Firebase Analytics es una integracion opcional de medicion y no participa en reglas, datos ni estado de partida.
+- Firestore y Auth anonima son opcionales y solo se usan para sincronizacion cloud best-effort cuando la configuracion Firebase existe.
 
 ## 2. Stack
 
@@ -24,7 +25,7 @@ La arquitectura de juego es deliberadamente frontend-only:
 - Font Awesome para iconografia.
 - `lightweight-charts` para la grafica bursatil.
 - `framer-motion` para animaciones de cambio de ronda.
-- Firebase Web SDK para Analytics.
+- Firebase Web SDK para Analytics, Auth anonima y Firestore opcionales.
 - Vitest.
 - Testing Library.
 - PWA manual con `public/manifest.webmanifest`, `public/sw.js` y registro en `src/pwa/serviceWorkerRegistration.ts`.
@@ -45,7 +46,6 @@ npm run typecheck
 src/
   app/
     App.tsx
-    firebase.ts
     GameContext.tsx
     lazyRoutes.ts
     offlinePrefetch.ts
@@ -75,10 +75,16 @@ src/
     types.ts
     wildcardEngine.ts
   hooks/
+  lang/
   pages/
   pwa/
+  services/
+    analytics/
+    cloudSync/
   styles/
 test/
+docs/
+  releases/
 ```
 
 ## 4. Capas de la aplicacion
@@ -114,7 +120,9 @@ Rutas actuales:
 
 `src/app/offlinePrefetch.ts` precarga en segundo plano rutas lazy, grafica, JS/CSS de entrada y assets generados para mejorar el comportamiento offline despues de la primera carga de produccion.
 
-`src/app/firebase.ts` inicializa Firebase y Analytics si existen todas las variables `VITE_FIREBASE_*` necesarias y si el navegador soporta Analytics.
+`src/services/analytics/firebaseAnalytics.ts` programa e inicializa Firebase Analytics de forma diferida si existen todas las variables `VITE_FIREBASE_*` necesarias y si el navegador soporta Analytics.
+
+`src/services/cloudSync/` encapsula Firebase App, Auth anonima, Firestore, outbox local y resolucion manual de conflictos por `updatedAt`.
 
 ### 4.2. Capa de dominio
 
@@ -393,12 +401,13 @@ El service worker no se registra en modo dev.
 
 ## 13. Firebase Analytics
 
-Firebase Analytics se inicializa desde `src/main.tsx` llamando a `initializeFirebaseAnalytics`.
+Firebase Analytics se programa desde `src/main.tsx` llamando a `scheduleFirebaseAnalytics`.
 
 Reglas:
 
 - Si falta cualquier variable `VITE_FIREBASE_*`, no se inicializa Firebase.
 - Si el navegador no soporta Analytics, no se inicializa.
+- La inicializacion se retrasa hasta despues de la carga inicial y se intenta durante tiempo idle.
 - Los errores de inicializacion se capturan para no romper la partida ni el modo offline.
 - Analytics no es requisito para el funcionamiento del juego.
 
@@ -425,7 +434,7 @@ Cobertura actual:
 ## 15. Consideraciones de implementacion
 
 - No usar backend para datos o estado.
-- No introducir dependencias de red en runtime.
+- No introducir dependencias de red obligatorias en runtime.
 - No copiar logos oficiales ni marcas de Caja Rural.
 - Mantener datos de juego separados de componentes.
 - Versionar/normalizar estado persistido cuando cambie la forma.
