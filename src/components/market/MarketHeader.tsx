@@ -8,7 +8,7 @@ export function MarketHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-broker-border bg-broker-bg2/95 px-4 py-3 backdrop-blur">
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
+        <div className="min-w-0 space-y-2">
           <Link to="/" className="flex items-center gap-2">
             <img
               src="/icon.avif"
@@ -20,11 +20,9 @@ export function MarketHeader() {
                 {copy.app.gameTitle}
               </span>
               <span className="mt-0.5 block text-xs text-broker-muted">Iñigo Capital S.A. → Rocío Holdings</span>
-              <span className="mt-1 block">
-                <SyncStatusBadge />
-              </span>
             </span>
           </Link>
+          <SyncStatusBadge />
         </div>
         <Link
           to="/settings"

@@ -217,6 +217,7 @@ Claves de `localStorage`:
 
 El estado persistido incluye:
 
+- `updatedAt`, timestamp ISO de la ultima modificacion persistida.
 - Puntuacion actual.
 - Indice de ronda actual.
 - Numero visible de ronda (`roundNumber`), secuencial y separado del indice aleatorio de pregunta.
@@ -250,6 +251,8 @@ La aplicacion es local-first. Firestore no sustituye a `localStorage`; mantiene 
 - `queueCloudSync` guarda un evento pendiente y, si hay conexion y Firebase esta configurado, programa `flushCloudSync`.
 - `flushCloudSync` exige una sesion anonima Firebase antes de escribir.
 - La escritura se realiza en el documento `gameState/main`.
+- El documento remoto guarda `updatedAt` y el objeto `state` tambien contiene `updatedAt`.
+- El boton de sincronizacion del navbar compara el `updatedAt` local con el `updatedAt` de Firestore: si local es posterior, actualiza Firestore; si Firestore es posterior, actualiza `localStorage` y el estado de la app.
 - Si `VITE_FIRESTORE_DATABASE_ID` no esta definido, la SDK apunta a la base `(default)`.
 - Si el proyecto usa una base Firestore nombrada, esa base debe indicarse mediante `VITE_FIRESTORE_DATABASE_ID`.
 - Si falla Auth, reglas de Firestore, configuracion o red, el error queda en `bachelor-market:cloud-sync`.

@@ -12,6 +12,17 @@ export const es = {
     openSettings: "Abrir configuración",
     loadingMarket: "Cargando mercado..."
   },
+  sync: {
+    action: "Sincronizar",
+    ariaLabel: "Sincronizar partida con Firestore",
+    statusLabels: {
+      SYNCED: "Sincronizado",
+      PENDING: "Pendiente",
+      SYNCING: "Sincronizando",
+      OFFLINE: "Sin conexión",
+      ERROR: "Error sync"
+    }
+  },
   onboarding: {
     steps: [
       {

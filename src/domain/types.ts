@@ -171,6 +171,7 @@ export interface ScoreTimelinePoint {
 }
 
 export interface GameState {
+  updatedAt: string;
   groomName: string;
   brideName: string;
   score: number;

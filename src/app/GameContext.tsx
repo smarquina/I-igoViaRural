@@ -18,7 +18,8 @@ import {
   loadGameState,
   markGameAsStarted,
   saveMergerTargetScore,
-  saveGameState
+  saveGameState,
+  stampGameState
 } from "../domain/storage";
 import { calculateMarketStatus } from "../domain/marketStatusEngine";
 import type { AppConfig, BailoutChoice, GameState, MergerAttemptResolution, Round, RoundResult, Wildcard } from "../domain/types";
@@ -29,7 +30,8 @@ import { ensureAnonymousSession } from "../services/cloudSync/firebaseAuth";
 import {
   hydrateFromLocalAndCloud,
   queueCloudSync,
-  registerConnectivitySync
+  registerConnectivitySync,
+  synchronizeGameStateByTimestamp
 } from "../services/cloudSync/syncManager";
 
 interface GameContextValue {
@@ -51,6 +53,7 @@ interface GameContextValue {
   dismissDrawnWildcard: () => void;
   applyMergerResult: (resolution: MergerAttemptResolution) => void;
   applyBailout: (choice: BailoutChoice) => void;
+  synchronizeGame: () => Promise<void>;
   clearSavedGame: () => void;
 }
 
@@ -83,6 +86,7 @@ function normalizeStateForConfig(state: GameState, config: AppConfig): GameState
 export function GameProvider({ children }: { children: ReactNode }) {
   const [shouldHydrateInitialGame] = useState(() => hasSavedGame());
   const shouldHydrateFromCloud = useRef(shouldHydrateInitialGame);
+  const shouldPreserveNextPersistedState = useRef(false);
   const [config, setConfig] = useState<AppConfig>(() => buildEffectiveConfig(defaultConfig, loadSavedSettings()));
   const [state, setState] = useState<GameState>(() => {
     const initialConfig = buildEffectiveConfig(defaultConfig, loadSavedSettings());
@@ -105,6 +109,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     shouldHydrateFromCloud.current = false;
     void hydrateFromLocalAndCloud().then((loadedState) => {
       if (loadedState) {
+        shouldPreserveNextPersistedState.current = true;
         setState(normalizeStateForConfig(loadedState, config));
       }
     });
@@ -112,8 +117,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (hasStarted) {
-      saveGameState(state);
-      queueCloudSync(state);
+      if (shouldPreserveNextPersistedState.current) {
+        shouldPreserveNextPersistedState.current = false;
+        saveGameState(state);
+        return;
+      }
+
+      const timestampedState = stampGameState(state);
+      saveGameState(timestampedState);
+      queueCloudSync(timestampedState);
       return;
     }
 
@@ -249,6 +261,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setState((previousState) => applyBailoutChoice(previousState, choice, bailoutOptions, config));
   }, [config]);
 
+  const synchronizeGame = useCallback(async () => {
+    if (!hasStarted) {
+      return;
+    }
+
+    const synchronizedState = await synchronizeGameStateByTimestamp(state);
+
+    if (synchronizedState) {
+      shouldPreserveNextPersistedState.current = true;
+      setState(normalizeStateForConfig(synchronizedState, config));
+    }
+  }, [config, hasStarted, state]);
+
   const updateMergerTargetScore = useCallback((score: number) => {
     const nextConfig = {
       ...config,
@@ -289,6 +314,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       dismissDrawnWildcard,
       applyMergerResult,
       applyBailout,
+      synchronizeGame,
       clearSavedGame
     }),
     [
@@ -308,6 +334,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       dismissDrawnWildcard,
       applyMergerResult,
       applyBailout,
+      synchronizeGame,
       clearSavedGame
     ]
   );

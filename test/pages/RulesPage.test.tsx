@@ -1,12 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { GameProvider } from "../../src/app/GameContext";
 import { RulesPage } from "../../src/pages/RulesPage";
 
 describe("RulesPage", () => {
   it("reuses the initial onboarding rules flow", () => {
     render(
       <MemoryRouter>
-        <RulesPage />
+        <GameProvider>
+          <RulesPage />
+        </GameProvider>
       </MemoryRouter>
     );
 

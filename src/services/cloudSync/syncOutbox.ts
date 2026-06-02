@@ -77,7 +77,7 @@ export function enqueueLatestState(state: GameState): PendingSyncEvent {
   const event: PendingSyncEvent = {
     id: createId(),
     stateVersion: getNextStateVersion(),
-    createdAt: new Date().toISOString(),
+    createdAt: state.updatedAt,
     clientId: getClientId(),
     state
   };
@@ -104,4 +104,12 @@ export function clearPendingSyncEvent(eventId: string): void {
   if (current?.id === eventId) {
     window.localStorage.removeItem(STORAGE_KEYS.PENDING_SYNC_EVENT);
   }
+}
+
+export function clearPendingSyncEvents(): void {
+  if (!hasBrowserStorage()) {
+    return;
+  }
+
+  window.localStorage.removeItem(STORAGE_KEYS.PENDING_SYNC_EVENT);
 }

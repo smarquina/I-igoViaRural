@@ -17,6 +17,10 @@ function buildLegacyTimeline(scoreHistory: number[]) {
   }));
 }
 
+function getStateUpdatedAt(state: GameState): string {
+  return state.updatedAt ?? state.scoreTimeline[state.scoreTimeline.length - 1]?.timestamp ?? new Date().toISOString();
+}
+
 function normalizeGameState(state: GameState): GameState {
   const withTimeline = Array.isArray(state.scoreTimeline) && state.scoreTimeline.length > 0
     ? state
@@ -27,11 +31,19 @@ function normalizeGameState(state: GameState): GameState {
 
   return {
     ...withTimeline,
+    updatedAt: getStateUpdatedAt(withTimeline),
     roundNumber: withTimeline.roundNumber ?? (withTimeline.resolvedRoundIds?.length ?? 0) + 1,
     hasDrawnWildcardThisRound: withTimeline.hasDrawnWildcardThisRound ?? false,
     shownRoundIds: withTimeline.shownRoundIds ?? withTimeline.resolvedRoundIds ?? [],
     lastEventMessage:
       withTimeline.lastEventMessage === copy.messages.oldSessionOpening ? undefined : withTimeline.lastEventMessage
+  };
+}
+
+export function stampGameState(state: GameState, updatedAt: string = new Date().toISOString()): GameState {
+  return {
+    ...state,
+    updatedAt
   };
 }
 

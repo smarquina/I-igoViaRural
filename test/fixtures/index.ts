@@ -53,6 +53,7 @@ export function createSampleState(overrides: Partial<GameState> = {}): GameState
   const score = overrides.score ?? 100;
 
   return {
+    updatedAt: "2999-01-01T00:00:00.000Z",
     groomName: "Iñigo",
     brideName: "Rocío",
     score,

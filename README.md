@@ -332,6 +332,8 @@ Behavior:
 - No Firestore collection is created just by loading the splash or onboarding screen.
 - The first write is queued after a match has started and `GameProvider` persists a `GameState`.
 - The app writes to `gameState/main`.
+- Local and cloud states both store `updatedAt`.
+- The navbar sync button compares local `updatedAt` with Firestore `updatedAt`; the newest side wins and updates the older side.
 - The write requires Firebase web config, online connectivity, Firestore enabled in the Firebase project, and Anonymous Auth enabled if Firestore rules require authenticated users.
 - Sync errors are stored in `localStorage` under `bachelor-market:cloud-sync`.
 - If `VITE_FIRESTORE_DATABASE_ID` is not set, the SDK targets the `(default)` Firestore database.

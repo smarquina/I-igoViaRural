@@ -46,7 +46,10 @@ export function buildRoundDeck(rounds: Round[], auditQuestions: Round[]): Round[
 }
 
 export function createInitialGameState(config: AppConfig, initialWildcards: Wildcard[] = []): GameState {
+  const createdAt = new Date().toISOString();
+
   return {
+    updatedAt: createdAt,
     groomName: config.groomName,
     brideName: config.brideName,
     score: config.initialScore,
@@ -58,7 +61,13 @@ export function createInitialGameState(config: AppConfig, initialWildcards: Wild
     hasUsedWildcardThisRound: false,
     hasDrawnWildcardThisRound: false,
     scoreHistory: [config.initialScore],
-    scoreTimeline: [createScorePoint(config.initialScore, copy.timeline.sessionOpening)],
+    scoreTimeline: [
+      {
+        score: config.initialScore,
+        timestamp: createdAt,
+        event: copy.timeline.sessionOpening
+      }
+    ],
     totalDrinks: 0,
     totalSuccesses: 0,
     totalFailures: 0,

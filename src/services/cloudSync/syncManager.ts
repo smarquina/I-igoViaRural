@@ -4,8 +4,10 @@ import { loadCloudGameState, saveCloudGameState } from "./cloudGameStateReposito
 import { ensureAnonymousSession } from "./firebaseAuth";
 import { isFirebaseConfigured } from "./firebaseApp";
 import {
+  clearPendingSyncEvents,
   clearPendingSyncEvent,
   enqueueLatestState,
+  getClientId,
   loadPendingSyncEvent,
   loadSyncState,
   saveSyncState
@@ -16,12 +18,77 @@ let isFlushing = false;
 
 const FLUSH_DEBOUNCE_MS = 800;
 
+function getTimestampValue(timestamp: string | undefined): number {
+  const value = timestamp ? Date.parse(timestamp) : Number.NaN;
+  return Number.isFinite(value) ? value : 0;
+}
+
+function getNewestLocalState(localState: GameState | null): GameState | null {
+  const pendingState = loadPendingSyncEvent()?.state ?? null;
+
+  if (!localState) {
+    return pendingState;
+  }
+
+  if (!pendingState) {
+    return localState;
+  }
+
+  return getTimestampValue(pendingState.updatedAt) > getTimestampValue(localState.updatedAt)
+    ? pendingState
+    : localState;
+}
+
 function canUseConnectivity(): boolean {
   return typeof window !== "undefined" && typeof navigator !== "undefined";
 }
 
 function canFlushCloudSync(): boolean {
   return !isFlushing && canUseConnectivity() && navigator.onLine && isFirebaseConfigured();
+}
+
+async function requireAnonymousSession(): Promise<void> {
+  const userId = await ensureAnonymousSession();
+  if (!userId) {
+    throw new Error("Firebase anonymous authentication is not available");
+  }
+}
+
+function applyCloudState(cloudDocument: Awaited<ReturnType<typeof loadCloudGameState>>): GameState | null {
+  if (!cloudDocument) {
+    return null;
+  }
+
+  saveGameState(cloudDocument.state);
+  clearPendingSyncEvents();
+  saveSyncState({
+    status: "SYNCED",
+    lastSyncedVersion: cloudDocument.stateVersion,
+    lastSyncedAt: cloudDocument.updatedAt
+  });
+
+  return cloudDocument.state;
+}
+
+async function uploadLocalState(localState: GameState, cloudDocument: Awaited<ReturnType<typeof loadCloudGameState>>): Promise<GameState> {
+  const nextStateVersion = Math.max(loadSyncState().lastSyncedVersion ?? 0, cloudDocument?.stateVersion ?? 0) + 1;
+
+  await saveCloudGameState({
+    schemaVersion: 1,
+    stateVersion: nextStateVersion,
+    updatedAt: localState.updatedAt,
+    updatedBy: getClientId(),
+    source: "localStorage-sync",
+    state: localState
+  });
+  clearPendingSyncEvents();
+  saveSyncState({
+    status: "SYNCED",
+    lastSyncedVersion: nextStateVersion,
+    lastSyncedAt: localState.updatedAt
+  });
+
+  return localState;
 }
 
 export function queueCloudSync(state: GameState): void {
@@ -75,10 +142,7 @@ export async function flushCloudSync(): Promise<void> {
   });
 
   try {
-    const userId = await ensureAnonymousSession();
-    if (!userId) {
-      throw new Error("Firebase anonymous authentication is not available");
-    }
+    await requireAnonymousSession();
 
     await saveCloudGameState({
       schemaVersion: 1,
@@ -110,7 +174,7 @@ export async function flushCloudSync(): Promise<void> {
 }
 
 export async function hydrateFromLocalAndCloud(): Promise<GameState | null> {
-  const localState = loadGameState();
+  const localState = getNewestLocalState(loadGameState());
 
   if (!isFirebaseConfigured()) {
     return localState;
@@ -122,9 +186,8 @@ export async function hydrateFromLocalAndCloud(): Promise<GameState | null> {
       return localState;
     }
 
-    const localPending = loadPendingSyncEvent();
-    if (localPending && localPending.stateVersion >= cloudDocument.stateVersion) {
-      return localPending.state;
+    if (localState && getTimestampValue(localState.updatedAt) >= getTimestampValue(cloudDocument.updatedAt)) {
+      return localState;
     }
 
     saveGameState(cloudDocument.state);
@@ -137,6 +200,52 @@ export async function hydrateFromLocalAndCloud(): Promise<GameState | null> {
     return cloudDocument.state;
   } catch {
     return localState;
+  }
+}
+
+export async function synchronizeGameStateByTimestamp(currentState: GameState): Promise<GameState | null> {
+  if (!canUseConnectivity() || !navigator.onLine) {
+    saveSyncState({
+      ...loadSyncState(),
+      status: "OFFLINE"
+    });
+    return null;
+  }
+
+  if (!isFirebaseConfigured()) {
+    saveSyncState({
+      ...loadSyncState(),
+      status: "ERROR",
+      lastError: "Firebase is not configured"
+    });
+    return null;
+  }
+
+  saveSyncState({
+    ...loadSyncState(),
+    status: "SYNCING"
+  });
+
+  try {
+    await requireAnonymousSession();
+
+    const localState = getNewestLocalState(loadGameState()) ?? currentState;
+    const cloudDocument = await loadCloudGameState();
+    const localUpdatedAt = getTimestampValue(localState.updatedAt);
+    const cloudUpdatedAt = getTimestampValue(cloudDocument?.updatedAt);
+
+    if (cloudDocument && cloudUpdatedAt > localUpdatedAt) {
+      return applyCloudState(cloudDocument);
+    }
+
+    return uploadLocalState(localState, cloudDocument);
+  } catch (error) {
+    saveSyncState({
+      ...loadSyncState(),
+      status: navigator.onLine ? "ERROR" : "OFFLINE",
+      lastError: error instanceof Error ? error.message : String(error)
+    });
+    return null;
   }
 }
 
