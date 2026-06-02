@@ -59,7 +59,7 @@ src/
     wildcards/
   data/
     bailout-options.json
-    bride-audit.json
+    bride-audit-questions.json
     config.json
     general-culture-questions.json
     rounds.json
@@ -136,7 +136,7 @@ Los datos locales viven en `src/data`.
 - `config.json`: configuracion base del juego.
 - `bailout-options.json`: opciones de rescate bancario, efectos de puntuacion, tragos y acciones especiales.
 - `rounds.json`: rondas generales.
-- `bride-audit.json`: auditorias internas de Rocio con titulo, pregunta, respuesta vacia y puntuacion.
+- `bride-audit-questions.json`: auditorias internas de Rocio con titulo, pregunta, respuesta vacia y puntuacion.
 - `wildcards.json`: Catalizadores de Mercado.
 - `street-challenges.json`: retos de calle disponibles para la Due Diligence final.
 - `general-culture-questions.json`: preguntas de cultura general para la Due Diligence final.
@@ -198,6 +198,7 @@ La aplicacion lee variables `VITE_FIREBASE_*` solo en build/runtime de cliente:
 - `VITE_FIREBASE_MESSAGING_SENDER_ID`.
 - `VITE_FIREBASE_APP_ID`.
 - `VITE_FIREBASE_MEASUREMENT_ID`.
+- `VITE_FIRESTORE_DATABASE_ID` opcional, solo si se usa una base Firestore nombrada distinta de `(default)`.
 
 En local se usan desde `.env.local`, que esta ignorado por git. En CI se inyectan como GitHub Secrets unicamente en el paso `Build`.
 
@@ -210,6 +211,9 @@ Claves de `localStorage`:
 - `bachelor-market:game-state`: estado completo de partida.
 - `bachelor-market:has-started-game`: bandera de partida iniciada.
 - `bachelor-market:settings`: ajustes locales, incluido `mergerTargetScore`.
+- `bachelor-market:cloud-sync`: estado diagnostico de sincronizacion Firestore.
+- `bachelor-market:pending-sync-event`: ultimo estado pendiente de enviar a Firestore.
+- `bachelor-market:client-id`: identificador local del cliente.
 
 El estado persistido incluye:
 
@@ -236,6 +240,19 @@ El estado persistido incluye:
 - Inicializar `hasDrawnWildcardThisRound`.
 - Inicializar `shownRoundIds`.
 - Eliminar el mensaje antiguo `Se abre la sesion.`.
+
+### 6.1. Sincronizacion Firestore
+
+La aplicacion es local-first. Firestore no sustituye a `localStorage`; mantiene una copia remota best-effort del estado actual.
+
+- No se crea ninguna coleccion al cargar la pantalla inicial si no hay partida iniciada.
+- Al iniciar o modificar una partida, `GameProvider` guarda en `localStorage` y llama a `queueCloudSync`.
+- `queueCloudSync` guarda un evento pendiente y, si hay conexion y Firebase esta configurado, programa `flushCloudSync`.
+- `flushCloudSync` exige una sesion anonima Firebase antes de escribir.
+- La escritura se realiza en el documento `gameState/main`.
+- Si `VITE_FIRESTORE_DATABASE_ID` no esta definido, la SDK apunta a la base `(default)`.
+- Si el proyecto usa una base Firestore nombrada, esa base debe indicarse mediante `VITE_FIRESTORE_DATABASE_ID`.
+- Si falla Auth, reglas de Firestore, configuracion o red, el error queda en `bachelor-market:cloud-sync`.
 
 ## 7. Flujo de estado
 

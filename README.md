@@ -211,9 +211,10 @@ VITE_FIREBASE_STORAGE_BUCKET
 VITE_FIREBASE_MESSAGING_SENDER_ID
 VITE_FIREBASE_APP_ID
 VITE_FIREBASE_MEASUREMENT_ID
+VITE_FIRESTORE_DATABASE_ID
 ```
 
-These values are injected at build time. They are client-side Firebase web config values, so they are not treated as private server secrets. Private deploy credentials must stay out of `VITE_*` variables.
+These values are injected at build time. They are client-side Firebase web config values, so they are not treated as private server secrets. `VITE_FIRESTORE_DATABASE_ID` is optional and should only be set when the app must write to a named Firestore database instead of `(default)`. Private deploy credentials must stay out of `VITE_*` variables.
 
 Local deploy helpers:
 
@@ -289,7 +290,7 @@ Game data is local and editable:
 ```txt
 src/data/config.json
 src/data/rounds.json
-src/data/bride-audit.json
+src/data/bride-audit-questions.json
 src/data/wildcards.json
 src/data/bailout-options.json
 src/data/street-challenges.json
@@ -321,6 +322,19 @@ Behavior:
 - Analytics initializes only in supported browser contexts.
 - Initialization failures are swallowed so offline-first gameplay is not blocked.
 - No analytics code is required for tests or server-side contexts.
+
+## Firestore Sync
+
+The game is local-first. Firestore is used as a best-effort cloud copy of the current saved match.
+
+Behavior:
+
+- No Firestore collection is created just by loading the splash or onboarding screen.
+- The first write is queued after a match has started and `GameProvider` persists a `GameState`.
+- The app writes to `gameState/main`.
+- The write requires Firebase web config, online connectivity, Firestore enabled in the Firebase project, and Anonymous Auth enabled if Firestore rules require authenticated users.
+- Sync errors are stored in `localStorage` under `bachelor-market:cloud-sync`.
+- If `VITE_FIRESTORE_DATABASE_ID` is not set, the SDK targets the `(default)` Firestore database.
 
 ## Offline Behavior
 

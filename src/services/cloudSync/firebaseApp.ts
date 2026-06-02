@@ -9,6 +9,7 @@ interface FirebaseConfig {
   messagingSenderId: string;
   appId: string;
   measurementId?: string;
+  databaseId?: string;
 }
 
 interface OptionalFirebaseConfig {
@@ -19,10 +20,16 @@ interface OptionalFirebaseConfig {
   messagingSenderId: string | undefined;
   appId: string | undefined;
   measurementId?: string | undefined;
+  databaseId?: string | undefined;
 }
 
 let firebaseApp: Promise<FirebaseApp | null> | null = null;
 let firestore: Promise<Firestore | null> | null = null;
+
+function normalizeOptionalEnvValue(value: string | undefined): string | undefined {
+  const normalizedValue = value?.trim();
+  return normalizedValue ? normalizedValue : undefined;
+}
 
 function hasRequiredFirebaseConfig(config: OptionalFirebaseConfig): config is FirebaseConfig {
   return Boolean(
@@ -43,7 +50,8 @@ function readFirebaseConfig(): FirebaseConfig | null {
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+    databaseId: normalizeOptionalEnvValue(import.meta.env.VITE_FIRESTORE_DATABASE_ID)
   };
 
   return hasRequiredFirebaseConfig(config) ? config : null;
@@ -74,15 +82,21 @@ export function getDb(): Promise<Firestore | null> {
 
   firestore = Promise.all([getFirebaseApp(), import("firebase/firestore")]).then(
     ([app, { initializeFirestore, persistentLocalCache, persistentSingleTabManager }]) => {
+      const config = readFirebaseConfig();
+
       if (!app) {
         return null;
       }
 
-      return initializeFirestore(app, {
-        localCache: persistentLocalCache({
-          tabManager: persistentSingleTabManager(undefined)
-        })
-      });
+      return initializeFirestore(
+        app,
+        {
+          localCache: persistentLocalCache({
+            tabManager: persistentSingleTabManager(undefined)
+          })
+        },
+        config?.databaseId
+      );
     }
   );
 

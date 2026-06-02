@@ -1,4 +1,4 @@
-import auditData from "./bride-audit.json";
+import auditData from "./bride-audit-questions.json";
 import bailoutOptionsData from "./bailout-options.json";
 import configData from "./config.json";
 import generalCultureQuestionsData from "./general-culture-questions.json";

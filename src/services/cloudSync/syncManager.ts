@@ -20,6 +20,10 @@ function canUseConnectivity(): boolean {
   return typeof window !== "undefined" && typeof navigator !== "undefined";
 }
 
+function canFlushCloudSync(): boolean {
+  return !isFlushing && canUseConnectivity() && navigator.onLine && isFirebaseConfigured();
+}
+
 export function queueCloudSync(state: GameState): void {
   enqueueLatestState(state);
 
@@ -55,7 +59,7 @@ export function scheduleFlush(): void {
 }
 
 export async function flushCloudSync(): Promise<void> {
-  if (isFlushing || !canUseConnectivity() || !navigator.onLine || !isFirebaseConfigured()) {
+  if (!canFlushCloudSync()) {
     return;
   }
 
@@ -71,7 +75,11 @@ export async function flushCloudSync(): Promise<void> {
   });
 
   try {
-    await ensureAnonymousSession();
+    const userId = await ensureAnonymousSession();
+    if (!userId) {
+      throw new Error("Firebase anonymous authentication is not available");
+    }
+
     await saveCloudGameState({
       schemaVersion: 1,
       stateVersion: pending.stateVersion,
