@@ -20,6 +20,7 @@ export function GamePage() {
     currentRound,
     drawnWildcardOffer,
     isLoading,
+    hasStartedGame,
     resolveCurrentRound,
     goToNextRound,
     useWildcardById,
@@ -39,10 +40,14 @@ export function GamePage() {
     if (isLoading) {
       return;
     }
+    if (!hasStartedGame) {
+      navigate("/", { replace: true });
+      return;
+    }
     if (state.isGameFinished) {
       navigate(state.gameResult === "NEGOTIATIONS_BROKEN" ? "/resacon-toledo" : "/game-over");
     }
-  }, [isLoading, navigate, state.gameResult, state.isGameFinished]);
+  }, [isLoading, hasStartedGame, navigate, state.gameResult, state.isGameFinished]);
 
   useEffect(() => {
     if (isLoading) {

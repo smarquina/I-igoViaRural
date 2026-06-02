@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { GameProvider } from "./GameContext";
+import { GameProvider, useGame } from "./GameContext";
 import {
   loadBailoutPage,
   loadGameOverPage,
@@ -30,23 +30,35 @@ function RouteFallback() {
   return <div className="min-h-screen bg-broker-bg p-4 text-sm font-bold text-broker-ink">{copy.app.loadingMarket}</div>;
 }
 
+function AppContent() {
+  const { isLoading } = useGame();
+
+  if (isLoading) {
+    return <GamePage />;
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/intro" element={<IntroPage />} />
+      <Route path="/game" element={<GamePage />} />
+      <Route path="/rules" element={<RulesPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/settings/fusion" element={<MergerTargetSettingsPage />} />
+      <Route path="/merger" element={<MergerAttemptPage />} />
+      <Route path="/bailout" element={<BailoutPage />} />
+      <Route path="/game-over" element={<GameOverPage />} />
+      <Route path="/resacon-toledo" element={<HangoverPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
 export function App() {
   return (
     <GameProvider>
       <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/intro" element={<IntroPage />} />
-          <Route path="/game" element={<GamePage />} />
-          <Route path="/rules" element={<RulesPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/settings/fusion" element={<MergerTargetSettingsPage />} />
-          <Route path="/merger" element={<MergerAttemptPage />} />
-          <Route path="/bailout" element={<BailoutPage />} />
-          <Route path="/game-over" element={<GameOverPage />} />
-          <Route path="/resacon-toledo" element={<HangoverPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <AppContent />
       </Suspense>
     </GameProvider>
   );

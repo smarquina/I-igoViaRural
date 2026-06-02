@@ -124,6 +124,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     return loadedState ? normalizeStateForConfig(loadedState, initialConfig) : createFreshState(initialConfig);
   });
   const [hasStarted, setHasStarted] = useState(shouldHydrateInitialGame);
+  const [hasGameLoaded, setHasGameLoaded] = useState(() => hasSavedGame());
   const [drawnWildcardOffer, setDrawnWildcardOffer] = useState<Wildcard | null>(null);
 
   useEffect(() => {
@@ -161,10 +162,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
         window.clearTimeout(fallbackTimer);
         if (loadedState) {
-          markGameAsStarted();
+          setHasGameLoaded(true);
           shouldPreserveNextPersistedState.current = true;
-          setHasStarted(true);
           setState(normalizeStateForConfig(loadedState, initialHydrationConfig.current));
+          if (hasSavedGame()) {
+            setHasStarted(true);
+          }
         }
         setIsInitialHydrationComplete(true);
       }).catch(() => {
@@ -219,8 +222,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
     markGameAsStarted();
     setHasStarted(true);
     setDrawnWildcardOffer(null);
-    setState(createFreshState(config));
-  }, [config]);
+    if (!hasGameLoaded) {
+      setState(createFreshState(config));
+    }
+  }, [config, hasGameLoaded]);
 
   const resolveCurrentRound = useCallback((result: RoundResult) => {
     setDrawnWildcardOffer(null);
@@ -369,7 +374,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setConfig(resetConfig);
     setHasStarted(false);
     setDrawnWildcardOffer(null);
-    setState(createFreshState(resetConfig));
+    setHasGameLoaded(false);
+    const fresh = createFreshState(resetConfig);
+    setState(fresh);
+    if (isFirebaseConfigured()) {
+      queueCloudSync(fresh);
+    }
   }, []);
 
   const value = useMemo<GameContextValue>(
