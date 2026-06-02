@@ -258,7 +258,9 @@ La aplicacion es local-first. Firestore no sustituye a `localStorage`; mantiene 
 - Al iniciar o modificar una partida, `GameProvider` guarda en `localStorage` y llama a `queueCloudSync`.
 - `queueCloudSync` guarda un evento pendiente y, si hay conexion y Firebase esta configurado, programa `flushCloudSync`.
 - `flushCloudSync` exige una sesion anonima Firebase antes de escribir.
-- La escritura se realiza en el documento `gameState/main`.
+- La escritura se realiza en el documento `gameState/{anonymousAuthUid}`. Ya no se usa un documento singleton publico.
+- Las reglas Firestore solo permiten leer, escribir o borrar al owner autenticado cuyo `request.auth.uid` coincide con el documento.
+- Las reglas Firestore validan el wrapper de sincronizacion y la forma base de `GameState` antes de aceptar escrituras.
 - El documento remoto guarda `updatedAt` y el objeto `state` tambien contiene `updatedAt`.
 - El boton de sincronizacion del navbar compara el `updatedAt` local con el `updatedAt` de Firestore: si local es posterior, actualiza Firestore; si Firestore es posterior, actualiza `localStorage` y el estado de la app.
 - Si `VITE_FIRESTORE_DATABASE_ID` no esta definido, la SDK apunta a la base `(default)`.

@@ -2,10 +2,12 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /gameState/main {
-      allow read: if true;
-      allow create, update: if request.auth != null
-        && request.resource.data.keys().hasOnly([
+    function isSignedOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    function isValidSyncDocument(data, userId) {
+      return data.keys().hasAll([
           "schemaVersion",
           "stateVersion",
           "updatedAt",
@@ -14,9 +16,142 @@ service cloud.firestore {
           "state",
           "serverUpdatedAt"
         ])
-        && request.resource.data.schemaVersion == 1
-        && request.resource.data.source == "localStorage-sync";
-      allow delete: if request.auth != null;
+        && data.keys().hasOnly([
+          "schemaVersion",
+          "stateVersion",
+          "updatedAt",
+          "updatedBy",
+          "source",
+          "state",
+          "serverUpdatedAt"
+        ])
+        && data.schemaVersion == 1
+        && data.stateVersion is number
+        && data.stateVersion >= 0
+        && data.updatedAt is string
+        && data.updatedBy == userId
+        && data.source == "localStorage-sync"
+        && data.serverUpdatedAt == request.time
+        && isValidGameState(data.state);
+    }
+
+    function isValidGameState(state) {
+      return state is map
+        && state.keys().hasAll([
+          "updatedAt",
+          "groomName",
+          "brideName",
+          "score",
+          "currentRoundIndex",
+          "roundNumber",
+          "marketStatus",
+          "accumulatedWildcards",
+          "activeEffects",
+          "hasUsedWildcardThisRound",
+          "hasDrawnWildcardThisRound",
+          "scoreHistory",
+          "scoreTimeline",
+          "totalDrinks",
+          "totalSuccesses",
+          "totalFailures",
+          "totalPartialSuccesses",
+          "usedWildcardIds",
+          "shownRoundIds",
+          "resolvedRoundIds",
+          "isGameFinished",
+          "gameResult",
+          "phase",
+          "lastScoreDelta",
+          "lastDrinkPenalty"
+        ])
+        && state.keys().hasOnly([
+          "updatedAt",
+          "groomName",
+          "brideName",
+          "score",
+          "currentRoundIndex",
+          "roundNumber",
+          "marketStatus",
+          "accumulatedWildcards",
+          "activeEffects",
+          "hasUsedWildcardThisRound",
+          "hasDrawnWildcardThisRound",
+          "scoreHistory",
+          "scoreTimeline",
+          "totalDrinks",
+          "totalSuccesses",
+          "totalFailures",
+          "totalPartialSuccesses",
+          "usedWildcardIds",
+          "shownRoundIds",
+          "resolvedRoundIds",
+          "isGameFinished",
+          "gameResult",
+          "phase",
+          "lastScoreDelta",
+          "lastDrinkPenalty",
+          "lastEventMessage"
+        ])
+        && state.updatedAt is string
+        && state.groomName is string
+        && state.brideName is string
+        && state.score is number
+        && state.score >= -500
+        && state.score <= 500
+        && state.currentRoundIndex is number
+        && state.currentRoundIndex >= 0
+        && state.roundNumber is number
+        && state.roundNumber >= 1
+        && state.marketStatus in [
+          "MERGER_ATTEMPT",
+          "HOT_MARKET",
+          "STABLE_MARKET",
+          "WEAK_MARKET",
+          "CRITICAL_ZONE",
+          "BAILOUT_REQUIRED"
+        ]
+        && state.accumulatedWildcards is list
+        && state.accumulatedWildcards.size() <= 50
+        && state.activeEffects is list
+        && state.activeEffects.size() <= 50
+        && state.hasUsedWildcardThisRound is bool
+        && state.hasDrawnWildcardThisRound is bool
+        && state.scoreHistory is list
+        && state.scoreHistory.size() <= 500
+        && state.scoreTimeline is list
+        && state.scoreTimeline.size() <= 500
+        && state.totalDrinks is number
+        && state.totalDrinks >= 0
+        && state.totalSuccesses is number
+        && state.totalSuccesses >= 0
+        && state.totalFailures is number
+        && state.totalFailures >= 0
+        && state.totalPartialSuccesses is number
+        && state.totalPartialSuccesses >= 0
+        && state.usedWildcardIds is list
+        && state.usedWildcardIds.size() <= 100
+        && state.shownRoundIds is list
+        && state.shownRoundIds.size() <= 500
+        && state.resolvedRoundIds is list
+        && state.resolvedRoundIds.size() <= 500
+        && state.isGameFinished is bool
+        && state.gameResult in [
+          "MERGER_APPROVED",
+          "NEGOTIATIONS_BROKEN",
+          "MANUAL_END",
+          "IN_PROGRESS"
+        ]
+        && state.phase in ["ANSWERING", "RESOLVED"]
+        && state.lastScoreDelta is number
+        && state.lastDrinkPenalty is number
+        && (!state.keys().hasAny(["lastEventMessage"]) || state.lastEventMessage is string);
+    }
+
+    match /gameState/{userId} {
+      allow read: if isSignedOwner(userId);
+      allow create, update: if isSignedOwner(userId)
+        && isValidSyncDocument(request.resource.data, userId);
+      allow delete: if isSignedOwner(userId);
     }
 
     match /{document=**} {

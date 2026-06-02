@@ -7,7 +7,6 @@ import {
   clearPendingSyncEvents,
   clearPendingSyncEvent,
   enqueueLatestState,
-  getClientId,
   loadPendingSyncEvent,
   loadSyncState,
   saveSyncState
@@ -77,7 +76,6 @@ async function uploadLocalState(localState: GameState, cloudDocument: Awaited<Re
     schemaVersion: 1,
     stateVersion: nextStateVersion,
     updatedAt: localState.updatedAt,
-    updatedBy: getClientId(),
     source: "localStorage-sync",
     state: localState
   });
@@ -148,7 +146,6 @@ export async function flushCloudSync(): Promise<void> {
       schemaVersion: 1,
       stateVersion: pending.stateVersion,
       updatedAt: pending.createdAt,
-      updatedBy: pending.clientId,
       source: "localStorage-sync",
       state: pending.state
     });
