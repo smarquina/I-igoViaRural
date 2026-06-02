@@ -8,7 +8,7 @@ export function MarketHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-broker-border bg-broker-bg2/95 px-4 py-3 backdrop-blur">
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 space-y-2">
+        <div className="min-w-0">
           <Link to="/" className="flex items-center gap-2">
             <img
               src="/icon.avif"
@@ -22,15 +22,17 @@ export function MarketHeader() {
               <span className="mt-0.5 block text-xs text-broker-muted">Iñigo Capital S.A. → Rocío Holdings</span>
             </span>
           </Link>
-          <SyncStatusBadge />
         </div>
-        <Link
-          to="/settings"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-broker-border bg-broker-surface text-broker-ink"
-          aria-label={copy.app.openSettings}
-        >
-          <FontAwesomeIcon icon={faScrewdriverWrench} className="h-5 w-5" aria-hidden="true" />
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <SyncStatusBadge />
+          <Link
+            to="/settings"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-broker-border bg-broker-surface text-broker-ink"
+            aria-label={copy.app.openSettings}
+          >
+            <FontAwesomeIcon icon={faScrewdriverWrench} className="h-5 w-5" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </header>
   );

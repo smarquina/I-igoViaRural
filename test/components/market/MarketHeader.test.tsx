@@ -31,4 +31,18 @@ describe("MarketHeader", () => {
 
     expect(screen.getByRole("button", { name: /sincronizar partida con firestore/i })).toBeDisabled();
   });
+
+  it("renders manual sync as an icon-only navbar control", () => {
+    render(
+      <MemoryRouter>
+        <GameProvider>
+          <MarketHeader />
+        </GameProvider>
+      </MemoryRouter>
+    );
+
+    const syncButton = screen.getByRole("button", { name: /sincronizar partida con firestore/i });
+    expect(syncButton).toHaveClass("h-11", "w-11");
+    expect(syncButton).not.toHaveTextContent(/sincronizado|pendiente|sincronizando|error sync/i);
+  });
 });

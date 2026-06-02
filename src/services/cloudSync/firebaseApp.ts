@@ -91,6 +91,7 @@ export function getDb(): Promise<Firestore | null> {
       return initializeFirestore(
         app,
         {
+          ignoreUndefinedProperties: true,
           localCache: persistentLocalCache({
             tabManager: persistentSingleTabManager(undefined)
           })
