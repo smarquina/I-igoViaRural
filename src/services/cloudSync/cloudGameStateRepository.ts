@@ -43,3 +43,17 @@ export async function saveCloudGameState(document: CloudGameDocument): Promise<v
     { merge: false }
   );
 }
+
+export async function deleteCloudGameState(): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    return;
+  }
+
+  const { ensureAnonymousSession } = await import("./firebaseAuth");
+  await ensureAnonymousSession();
+
+  const { doc, deleteDoc } = await import("firebase/firestore");
+  const gameStateRef = doc(db, "gameState", "main");
+  await deleteDoc(gameStateRef);
+}

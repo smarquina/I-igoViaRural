@@ -34,6 +34,7 @@ import {
   synchronizeGameStateByTimestamp
 } from "../services/cloudSync/syncManager";
 import { isFirebaseConfigured } from "../services/cloudSync/firebaseApp";
+import { deleteCloudGameState } from "../services/cloudSync/cloudGameStateRepository";
 
 interface GameContextValue {
   config: AppConfig;
@@ -375,10 +376,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setHasStarted(false);
     setDrawnWildcardOffer(null);
     setHasGameLoaded(false);
-    const fresh = createFreshState(resetConfig);
-    setState(fresh);
+    setState(createFreshState(resetConfig));
     if (isFirebaseConfigured()) {
-      queueCloudSync(fresh);
+      void deleteCloudGameState();
     }
   }, []);
 
@@ -391,7 +391,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       availableWildcards,
       drawnWildcardOffer,
       hasStartedGame: hasStarted,
-      isLoading: !isInitialHydrationComplete,
+      isLoading: !isInitialHydrationComplete && shouldHydrateInitialGame,
       updateMergerTargetScore,
       startNewGame,
       resolveCurrentRound,
@@ -411,6 +411,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       drawnWildcardOffer,
       hasStarted,
       isInitialHydrationComplete,
+      shouldHydrateInitialGame,
       currentRound,
       config,
       updateMergerTargetScore,
